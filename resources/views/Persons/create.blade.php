@@ -71,6 +71,7 @@
 		        </div>
 
 		        <div class="col-md-4">
+							<div class="form-group">
 			        {!! Form::label('start_date', 'Fecha (Año/mes/día)') !!}
 			        <div class="input-group date">
 				        <div class="input-group-addon">
@@ -78,7 +79,20 @@
 				        </div>
 				        {!! Form::text('start_date', \Carbon\Carbon::now()->format('Y/m/d'),['class'=>' form-control pull-righ']) !!}
 			        </div>
+							</div>
 		        </div>
+
+						<div class="col-md-4">
+								<div class="form-group">
+									{!! Form::label('','Vive en la Urbanización') !!}
+									<div class="input-group">
+										<div class="btn-group" role="group" aria-label="...">
+										  <button type="button" class="btn btn-success">SI</button>
+										  <button type="button" class="btn btn-default">NO</button>
+										</div>
+									</div>
+								</div>
+						</div>
 
 			</div>
 			<!-- /.box-body -->

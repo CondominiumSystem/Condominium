@@ -68,19 +68,16 @@
                           <a href="{{ route('Persons.edit', $person->id )}}" type="button" class="btn btn-xs btn-warning">
                             <i class="fa fa-pencil" aria-hidden="true"></i> Editar
                           </a>
-                          <a href="{{ route('Persons.destroy', $person->id )}}" type="button"
-                            onclick="return confirm('Seguro en Eliminar?')" class="btn btn-xs btn-danger">
-                            <i class="fa fa-trash" aria-hidden="true"></i> Borrar
-                          </a>
-						  <a href="{{ route('Properties.index', [ 'id' => $person->id] )}}" type="button" class="btn btn-xs btn-warning">
+												  <a href="{{ route('Properties.index', [ 'id' => $person->id] )}}" type="button" class="btn btn-xs btn-warning">
                             <i class="fa fa-pencil" aria-hidden="true"></i> Propiedades
                           </a>
 
-						  <a href="" alt="Borrar"
-	                         data-href="{{ route('Persons.destroy', $person->id )}}"
-	                         type="button"
-	                         class="btn btn-xs btn-danger"  data-toggle="modal" data-target="#confirm-delete">
-	                        <i class="fa fa-trash" aria-hidden="true"></i> </a>
+						  						<a href="" alt="Borrar"
+														data-href="{{ route('Persons.destroy', $person->id )}}"
+														type="button"
+														class="btn btn-xs btn-danger"  data-toggle="modal" data-target="#confirm-delete">
+	                        	<i class="fa fa-trash" aria-hidden="true"></i> Borrar
+													</a>
 
 
                       </td>
@@ -114,8 +111,8 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-danger btn-ok">Delete</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-danger btn-ok">Borrar</a>
           </div>
         </div>
       </div>
@@ -124,12 +121,3 @@
 
 
 @endsection
-
-
-<script>
-  $('#confirm-delete').on('show.bs.modal', function(e) {
-	$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-
-	$('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
-  });
-</script>
