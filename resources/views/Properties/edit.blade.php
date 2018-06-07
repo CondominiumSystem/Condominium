@@ -25,7 +25,7 @@
 					<div class="col-md-4">
                     	<div class="form-group">
                     		{!! Form::label('lot_number', 'Lote') !!}
-                    		{!! Form::text('lot_number', $property->lot_number ,['class'=>'form-control','placeholder'=>'Numero de Lote', 'requerid' ]) !!}
+                    		{!! Form::text('lot_number', $property->lot_number ,['class'=>'form-control','placeholder'=>'Numero de Lote','maxlength' => 3, 'requerid' ]) !!}
                 		</div>
 				   </div>
 			 	</div>
@@ -38,7 +38,7 @@
                                 <span class="input-group-addon" id="sizing-addon2">
                                     <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                 </span>
-                                {!! Form::text('note',$property->note,['class'=>'form-control','placeholder'=>'Descripcion', 'requerid' ]) !!}
+                                {!! Form::text('note',$property->note,['class'=>'form-control','placeholder'=>'Descripcion','maxlength' => 60, 'requerid' ]) !!}
                             </div>
                         </div>
                     </div>

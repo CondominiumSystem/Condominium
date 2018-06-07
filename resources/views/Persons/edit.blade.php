@@ -22,7 +22,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         {!! Form::label('name', 'Nombre') !!}
-                        {!! Form::text('name', $person->name ,['class'=>'form-control','placeholder'=>'Nombre del Cliente', 'requerid' ]) !!}
+                        {!! Form::text('name', $person->name ,['class'=>'form-control','placeholder'=>'Nombre del Cliente','maxlength' => 30, 'requerid' ]) !!}
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -32,7 +32,7 @@
                             <span class="input-group-addon" id="sizing-addon2">
                                 <i class="fa fa-envelope-o" aria-hidden="true"></i>
                             </span>
-                            {!! Form::text('email',$person->document_number,['class'=>'form-control','placeholder'=>'Documento', 'requerid' ]) !!}
+                            {!! Form::text('email',$person->document_number,['class'=>'form-control','placeholder'=>'Documento','maxlength' => 13, 'requerid' ]) !!}
                         </div>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                             <span class="input-group-addon" id="sizing-addon2">
                                 <i class="fa fa-phone"></i>
                             </span>
-                            {!! Form::text('phone',$person->phone,['class'=>'form-control','placeholder'=>'Teléfono', 'requerid' ]) !!}
+                            {!! Form::text('phone',$person->phone,['class'=>'form-control','placeholder'=>'Teléfono','maxlength' => 10,'requerid' ]) !!}
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                             <span class="input-group-addon" id="sizing-addon2">
                                 <i class="fa fa-mobile"></i>
                             </span>
-                            {!! Form::text('cell_phone',$person->cell_phone,['class'=>'form-control','placeholder'=>'Celular', 'requerid' ]) !!}
+                            {!! Form::text('cell_phone',$person->cell_phone,['class'=>'form-control','placeholder'=>'Celular','maxlength' => 10, 'requerid' ]) !!}
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                             <span class="input-group-addon" id="sizing-addon2">
                                 <i class="fal fa-address-card"></i>
                             </span>
-                            {!! Form::text('address',$person->address,['class'=>'form-control','placeholder'=>'Dirección', 'requerid' ]) !!}
+                            {!! Form::text('address',$person->address,['class'=>'form-control','placeholder'=>'Dirección','maxlength' => 30,'requerid' ]) !!}
                         </div>
                     </div>
                 </div>

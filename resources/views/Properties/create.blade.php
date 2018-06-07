@@ -32,7 +32,7 @@
                             <span class="input-group-addon" id="sizing-addon2">
                                 <i class="fa fa-envelope-o" aria-hidden="true"></i>
                             </span>
-                            {!! Form::text('address',null,['class'=>'form-control','placeholder'=>'Dirección', 'requerid' ]) !!}
+                            {!! Form::text('address',null,['class'=>'form-control','placeholder'=>'Dirección','maxlength' => 80, 'requerid' ]) !!}
                         </div>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
 							<span class="input-group-addon" id="sizing-addon2">
 								<i class="fa fa-envelope-o" aria-hidden="true"></i>
 							</span>
-							{!! Form::text('note',null,['class'=>'form-control','placeholder'=>'Nota', 'requerid' ]) !!}
+							{!! Form::text('note',null,['class'=>'form-control','placeholder'=>'Nota','maxlength' => 60, 'requerid' ]) !!}
 						</div>
 					</div>
 				</div>
