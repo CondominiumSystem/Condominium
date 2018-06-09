@@ -23,7 +23,7 @@ class CreatePropertiesTable extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('lot_number');
-            $table->string('note',60);
+            $table->string('note',80);
             $table->string('address',80);
             $table->boolean('active')->default(true);
             $table->integer('property_type_id')->unsigned();
@@ -36,7 +36,7 @@ class CreatePropertiesTable extends Migration
             $table->integer('person_id')->unsigned();
             $table->integer('property_id')->unsigned();
             $table->boolean('owner')->default(0);
-            $table->boolean('life_here')->default(0);
+            
             $table->foreign('person_id')->references('id')->on('persons');
             $table->foreign('property_id')->references('id')->on('properties');
 

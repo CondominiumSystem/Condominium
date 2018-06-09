@@ -10,17 +10,28 @@
 	@if( $person != null)
 	[ {{ $person->name }} ]
 	@endif
-@endsection
 
-@section('main-content')
-	<div class ="input-group" >
+    <!-- Inicio Buscador por Nombre -->
+        {!! Form::open(['route'=>'Properties.index', 'method' =>'GET', 'class' => 'navbar-form pull-right']) !!}
+        <div class ="input-group" >
+            {!! Form::text('lot_number',null,['class'=> 'form-control','placeholder'=>'Buscar Propiedad..','aria-describedby'=>'search'])!!}
+            <span class="input-group-addon" id="search">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+        </div>
+        {!! Form::close() !!}
+    <!-- Fin Buscador --> 
+
+    <div class ="input-group" >
       <a href="{{url('Properties/create')}}" type="button" class="btn btn-primary">
           <i class="fa fa-plus" aria-hidden="true"></i> Agregar
       </a>
     </div>
+
+@endsection
+
+@section('main-content')   
 	<div class="container-fluid spark-screen">
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
 
 				<!-- Default box -->
 				<div class="box">
@@ -73,12 +84,15 @@
                             	</tbody>
 
                             </table>
+                             <!-- Paginado -->
+                              {{ $properties->links() }}
+                             <!-- Fin Paginado -->
                         </div>
 					<!-- /.box-body -->
 				</div>
 				<!-- /.box -->
 
 			</div>
-		</div>
+
 	</div>
 @endsection
