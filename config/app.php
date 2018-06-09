@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -164,6 +164,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+        Laravel\Dusk\DuskServiceProvider::class,
 
 
     ],

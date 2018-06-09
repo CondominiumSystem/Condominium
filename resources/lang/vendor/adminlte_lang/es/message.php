@@ -131,4 +131,9 @@ return [
     'loggedin'                => 'Login correcto!',
     'entering'                => 'Entrando...',
     'registered'              => 'Usuario registrado!',
+
+    'security'                => 'Seguridad',
+    'users'                   => 'Usuarios',
+    'roles'                   => 'Roles'
+
 ];

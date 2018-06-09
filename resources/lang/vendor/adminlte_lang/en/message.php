@@ -134,4 +134,8 @@ return [
     'loggedin'                => 'Logged in!',
     'entering'                => 'Entering...',
     'registered'              => 'User Registered!',
+
+    'security'                => 'Security',
+    'users'                   => 'Users',
+    'roles'                   => 'Roles',
 ];
