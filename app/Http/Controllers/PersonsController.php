@@ -13,7 +13,7 @@ class PersonsController extends Controller
      */
     public function index(Request $request )
     {
-        $persons = Person::Search($request->name,$request->document_number)->paginate(2);
+        $persons = Person::Search($request->name,$request->document_number)->paginate(10);
         //dd($persons);
         $data = [
             'persons' => $persons,

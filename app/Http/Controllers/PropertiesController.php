@@ -20,12 +20,12 @@ class PropertiesController extends Controller
         $person_id = $request->id;
 
         if($person_id == null){
-            $properties = Property::all();
+            $properties = Property::paginate(10);
             $person = null;
         }
         else{
             $person = Person::find($person_id);
-            $properties = $person->properties;
+            $properties = $person->properties()->paginate(10);
         }
 
         //dd($properties);
