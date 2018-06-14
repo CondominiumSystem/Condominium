@@ -15,7 +15,7 @@ class PaymentsController extends Controller
      public function index(Request $request )
      {
          $persons = Person::Search($request->name,$request->document_number)->paginate(2);
-         dd($persons);
+         //dd($persons);
          $data = [
              'persons' => $persons,
          ];
