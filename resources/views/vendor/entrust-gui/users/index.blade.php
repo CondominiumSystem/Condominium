@@ -12,6 +12,7 @@
     <th>Email</th>
     <th>Actions</th>
   </tr>
+
   @foreach($users as $userAdmin)
     <tr>
       <td>{{ $userAdmin->name }}</th>

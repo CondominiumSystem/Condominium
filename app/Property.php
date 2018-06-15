@@ -32,10 +32,22 @@ class Property extends Model
         return $this->hasMany('App\Payments');
     }
 
-    public function  scopeSearchByPersonId($query,$person_id)
+    public function  scopeSearch($query,$person_id)
     {
         $query =  $query->Where('id','=',"%%");
         return $query;
     }
 
+    /*
+    public function  scopeSearch($query,$name,$document_number)
+    {
+        if ( $name != ""){
+           $query =  $query->Where('name','LIKE',"%$name%");
+        }
+        else{
+           $query = $query->Where('document_number','LIKE',"$document_number%");
+        }
+        return $query;
+    }
+    */
 }

@@ -13,7 +13,13 @@ return [
     |
     */
 
-    'persons' => 'Personas',
+    'persons'                 => 'Personas',
+    'payments'                => 'Pagos',
+    'properties'              => 'Propiedades',
+
+    'security'                => 'Seguridad',
+    'users'                   => 'Usuarios',
+    'roles'                   => 'Roles',
 
 
 ];

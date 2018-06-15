@@ -17,5 +17,8 @@ return [
     'payments' => 'Payments',
     'properties' => 'Properties',
 
+    'security'                => 'Security',
+    'users'                   => 'Users',
+    'roles'                   => 'Roles',
 
 ];

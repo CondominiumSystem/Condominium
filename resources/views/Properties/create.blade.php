@@ -50,6 +50,7 @@
 				</div>
 
 				{{ Form::hidden('active', '1') }}
+                {{ Form::hidden('personId', $personId) }}
 
 			</div>
 			<!-- /.box-body -->

@@ -30,6 +30,11 @@ Route::group(['middleware' => 'auth'], function () {
 					'uses' => 'PersonsController@properties',
 					'as' => 'Persons.properties'		]
 	);
+    Route::get('/Properties/{id}/create', [
+                    'uses' => 'PropertiesController@create',
+                    'as' => 'Properties.create'
+            ]
+    );
 
 
 

@@ -14,12 +14,12 @@ class PaymentsController extends Controller
      */
      public function index(Request $request )
      {
-         $persons = Person::Search($request->name,$request->document_number)->paginate(2);
-         dd($persons);
-         $data = [
-             'persons' => $persons,
-         ];
-        return View("Payments.index");
+         $persons = Person::Search($request->name,$request->document_number)->paginate(4);
+         //dd($persons);
+         // $data = [
+         //     'persons' => $persons,
+         // ];
+        return View("Payments.index",compact('persons'));
     }
 
     /**
@@ -87,4 +87,5 @@ class PaymentsController extends Controller
     {
         //
     }
+        
 }

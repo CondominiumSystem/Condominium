@@ -49,13 +49,13 @@
 
             <li class="treeview">
                 <a href="#"><i class='fa fa-link'></i> 
-                    <span>{{ trans('adminlte_lang::message.security') }}</span> 
+                    <span>{{ trans('menu.security') }}</span> 
                     <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li>
-                        <a href="{{url('admin/users')}}">{{ trans('adminlte_lang::message.users') }}</a>
+                        <a href="{{url('admin/users')}}">{{ trans('menu.users') }}</a>
                     </li>
-                    <li><a href="{{url('admin/roles')}}">{{ trans('adminlte_lang::message.roles') }}</a></li>
+                    <li><a href="{{url('admin/roles')}}">{{ trans('menu.roles') }}</a></li>
                 </ul>
             </li>
 

@@ -27,6 +27,8 @@
 			</div>
     	</div>
 
+    	{{ $persons->count() }}
+
 	<table class="table table-bordered table-hover">
 		<thead>
 			<th>Tipo Propiedad</th>

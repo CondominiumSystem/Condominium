@@ -2,16 +2,14 @@
 
 @section('contentheader_title', 'Create User')
 @section('main-content')
-<form action="{{ route('entrust-gui::users.store') }}" method="post" role="form">
+<form action="{{ route('entrust-gui::users.store') }}" method="post" role="form" autocomplete="off">
 
-    <!-- @include('entrust-gui::users.partials.form') -->
-
-
-    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <div class="form-group">
         <label for="name">Name</label>
         <input type="name" class="form-control" id="name" placeholder="Name" name="name" value="">
     </div>
+    <h1>sdfgsd</h1>
     <div class="form-group {{ $errors->has('email') ? 'has-error' : ''}}">
         <label for="email">Email address</label>
         <input type="email" class="form-control" id="email" placeholder="Email" name="email" value="">

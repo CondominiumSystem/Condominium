@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Property;
 use App\Person;
 use App\PropertyType;
+use App\PersonProperty;
 use Illuminate\Support\Facades\DB;
 class PropertiesController extends Controller
 
@@ -21,11 +22,13 @@ class PropertiesController extends Controller
 
         if($person_id == null){
             $properties = Property::paginate(10);
+
             $person = null;
         }
         else{
             $person = Person::find($person_id);
-            $properties = $person->properties()->paginate(10);
+            $properties = Property::SearchByPersonId($request->lot_number)->paginate(10);
+            //$properties = $person->properties()->paginate(10);
         }
 
         //dd($properties);
@@ -38,30 +41,39 @@ class PropertiesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function create()
+     public function create($personId)
      {
         $propertyTypes = PropertyType::pluck('name','id');
-         //
-         return view("Properties.create",compact('propertyTypes'));
+         return view("Properties.create",compact('propertyTypes','personId'));
      }
 
      public function store(Request $request){
-
-             $property = new Property($request->all());
-             DB::beginTransaction();
-             try{
-                 $property ->save();
+         //dd($request);
+            $property = new Property($request->all());
+            DB::beginTransaction();
+            try{
+                    $property->save();
+                    if ($request->personId != 0)
+                    { 
+                        $personProperty = new PersonProperty();
+                        $personProperty->person_id = $request->personId; 
+                        $personProperty->property_id = $property->id;
+                        $personProperty->owner = false;
+                        $personProperty->save();
+                        //$person= Person::find($request->personId);
+                        //$person->properties()->save($property);
+                    }
 
                  //$property->tags()->sync($request->tags);
                  flash('Propiedad Creada.', 'info')->important();
-             }
-             catch(Exception $ex)
-             {
+            }
+            catch(Exception $ex)
+            {
                  DB::rollBack();
                  flash('Propiedad no fue Creada.', 'info')->important();
-             }
-             DB::commit();
-             return redirect()->route('Properties.index');
+            }
+            DB::commit();
+            return redirect()->route('Properties.index');
          }
 
 

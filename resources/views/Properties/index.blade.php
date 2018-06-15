@@ -22,7 +22,7 @@
     <!-- Fin Buscador --> 
 
     <div class ="input-group" >
-      <a href="{{url('Properties/create')}}" type="button" class="btn btn-primary">
+      <a href="{{route('Properties.create',($person)?$person->id:0)}}" type="button" class="btn btn-primary">
           <i class="fa fa-plus" aria-hidden="true"></i> Agregar
       </a>
     </div>

@@ -13,6 +13,5 @@ class PersonProperty extends Pivot
         'person_id',
         'property_id',
         'owner',
-        'life_here'
     ];
 }

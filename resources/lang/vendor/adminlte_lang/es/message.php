@@ -132,8 +132,6 @@ return [
     'entering'                => 'Entrando...',
     'registered'              => 'Usuario registrado!',
 
-    'security'                => 'Seguridad',
-    'users'                   => 'Usuarios',
-    'roles'                   => 'Roles'
+
 
 ];
