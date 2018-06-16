@@ -7,9 +7,6 @@
 
 @section('main-content')
     <div class="container-fluid">
-
-
-
 		<nav class="navbar navbar-default">
 		  <div class="container-fluid">
 		    <!-- Brand and toggle get grouped for better mobile display -->
@@ -54,12 +51,8 @@
 		  </div><!-- /.container-fluid -->
 		</nav>
 
-
     	<div class="box box-success">
-{{--             <div class="box-header">
-              <h3 class="box-title">Buscar por:</h3>
-            </div>
- --}}    		<div class="box-body">
+ 			<div class="box-body">
     			<div class="col-md-4">
     				<h3 class="box-title">Buscar por:</h3>	
     			</div>
@@ -87,7 +80,6 @@
 		<!-- Listado de Propiedades -->
 		<div class="box box-success">
 			<div class="box-body">
-
 				<table class="table table-bordered table-hover">
 					<thead>
 						<th>Tipo Propiedad</th>
@@ -105,9 +97,7 @@
 						<td><a href="#">Seleccionar</a></td>
 					</tr>
 				</table>
-				
 			</div>
-			
 		</div>
 		<div class="box box-success">
 			<div class="box-header">
@@ -234,14 +224,11 @@
 
 			</div>
 		</div>	
-
-
-
-	<div class="box-footer">
-		<button type="submit" class="btn btn-success" >
-			<i class="fa fa-save"></i>  Grabar
-		</button
-	</div>
+		<div class="box-footer">
+			<button type="submit" class="btn btn-success" >
+				<i class="fa fa-save"></i>  Grabar
+			</button>
+		</div>
 </div>
 
 @endsection
