@@ -20,7 +20,8 @@ class CreatePaymentsTable extends Migration
             $table->decimal('value',8,2);
             $table->boolean('active');
             $table->integer('period_id')->unsigned();
-
+            $table->integer('transaction_id')->unsigned();
+            $table->integer('transaction_parent_id')->unsigned();
             $table->foreign('property_id')->references('id')->on('properties');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('period_id')->references('id')->on('periods');
@@ -36,5 +37,6 @@ class CreatePaymentsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('payments');
+        
     }
 }

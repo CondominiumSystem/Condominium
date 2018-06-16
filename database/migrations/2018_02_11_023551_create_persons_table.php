@@ -19,7 +19,7 @@ class CreatePersonsTable extends Migration
             $table->string('document_number',13);
             $table->string('phone',10);
             $table->string('cell_phone',10);
-            $table->string('address',40);
+            $table->string('address',80);
             $table->boolean('life_here')->default(0);
             $table->date('start_date');
             $table->integer('user_id');
