@@ -32,9 +32,9 @@ class Property extends Model
         return $this->hasMany('App\Payments');
     }
 
-    public function  scopeSearch($query,$person_id)
+    public function  scopeSearchByLotNumber($query,$lot_number)
     {
-        $query =  $query->Where('id','=',"%%");
+        $query =  $query->Where('lot_number','=',$lot_number);
         return $query;
     }
 

@@ -20,19 +20,39 @@ class PropertiesController extends Controller
     {
         $person_id = $request->id;
 
-        if($person_id == null){
+        //dd($request->lot_number);
+
+        if($person_id == null && $request->lot_number == ""){
             $properties = Property::paginate(10);
 
             $person = null;
         }
         else{
             $person = Person::find($person_id);
-            $properties = Property::SearchByPersonId($request->lot_number)->paginate(10);
-            //$properties = $person->properties()->paginate(10);
+            //dd($request->lot_number);
+            $properties = Property::SearchByLotNumber($request->lot_number)->paginate(10);
+            //$properties = $person->properties()->paginate(10);;
+
+            //dd($properties->count());
         }
 
         //dd($properties);
         return view("Properties.index", compact('properties','person'));
+    }
+
+
+    public function GetPropertiesByLotNumber($lot_number){
+        DB:Table('properties')
+        ->join('property_types','property_types.id','=','properties.property_type_id')
+        ->join('person_property','person_property.property_id','=','properties.id')
+        ->join('persons','person.id','=','person_property.person_id')
+        ->select(
+            'property_types.name as property_type_name',
+            'properties.lot_number',
+            'persons.name as person_name'
+        )
+        ->where('properties.lot_number','=',$lot_number)
+        ->get();
     }
 
 
