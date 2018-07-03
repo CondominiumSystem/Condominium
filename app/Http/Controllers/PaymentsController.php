@@ -17,6 +17,8 @@ class PaymentsController extends Controller
      public function index(Request $request )
      {
 //        dd($request->document_number);
+        $selected_period = $request->period_id;
+
 
         if($request->document_number != null){
              dd($request->document_number);
@@ -27,7 +29,7 @@ class PaymentsController extends Controller
                 //dd($request->lot_number);
                $properties= $this->GetPropertiesByLotNumber($request->lot_number);
                //Obtenemos los pagos
-               $payments=$this->GetPaymentsByPropertyId(10,2018);
+               $payments=$this->GetPaymentsByPropertyId(10,$selected_period);
 //               dd($payments);
             }
             else
@@ -37,8 +39,19 @@ class PaymentsController extends Controller
             }
         }
 
-         $persons = Person::Search($request->name,$request->document_number)->paginate(4);
-        return View("Payments.index",compact('persons','properties','payments'));
+        $periods = $this->GetPeriods();
+        $lot_number = $request->lot_number;
+        $persons = Person::Search($request->name,$request->document_number)->paginate(4);
+        return View(
+            "Payments.index",
+            compact(
+                'persons',
+                'properties',
+                'payments',
+                'periods',
+                'selected_period',
+                'lot_number'
+            ));
     }
 
     /**
@@ -170,6 +183,13 @@ class PaymentsController extends Controller
         }
 
         return $result;
+    }
+
+    /*
+    * Listado de periodos vigentes
+    */
+    function GetPeriods(){
+        return Period::distinct()->pluck('year','year');
     }
 
 }
