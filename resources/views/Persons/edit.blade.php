@@ -4,7 +4,7 @@
 @endsection
 
 @section('contentheader_title')
-    Editar Persona 
+    Editar Persona
 @endsection
 
 @section('contentheader_description')
@@ -18,6 +18,13 @@
     <div class="box box-success">
         {!! Form::Open(['route' => ['Persons.update',$person],'method' => 'PUT']) !!}
             <div class="box-body">
+				<div class="col-md-3">
+					<div class="form-group">
+                        {!! Form::label('person_type_id', 'Tipos') !!}
+                        {!! Form::select('person_type_id',$person_types,$person->person_type_id,['class'=>'select form-control','required', 'placeholder'=>'Seleccione Tipo']) !!}
+                    </div>
+				</div>
+
 
                 <div class="col-md-12">
                     <div class="form-group">

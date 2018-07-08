@@ -56,15 +56,16 @@
 									<th>Tipo Propiedad</th>
 									<th>Lote</th>
 									<th>Propietario</th>
-									<th>Acciones</th>
 								</thead>
 								<tbody>
 			                @foreach ($properties as $property)
 			                  <tr>
 			                      <td>{{ $property->property_type_name}}</td>
-			                      <td>{{ $property->lot_number}}</td>
+			                      <td>
+									  <a href="{{ route('Payments.show', $property->lot_number )}}">
+										  {{ $property->lot_number}}</a>
+								  </td>
 			                      <td>{{ $property->person_name }}</td>
-			                      <td>seleccione</td>
 			                  </tr>
 			                @endforeach
 
@@ -77,14 +78,17 @@
 
 				</div>
 				<!-- right column -->
+				{!! Form::open(['route'=>'Payments.store', 'method' =>'POST']) !!}
 		        <div class="col-md-6">
 					<div class="box box-success">
 
 						<div class="box-header">
 			              	<h3 class="box-title">PAGOS PERIODO: {{ $selected_period }}</h3>
+
 							<button type="submit" class="btn btn-success no-margin pull-right" >
 								<i class="fa fa-money"></i>  Pagar
 							</button>
+
 			            </div>
 
 						<div class="box-body">
@@ -107,28 +111,34 @@
 
 										@foreach($payments as $payment)
 										<tr>
-											<td>{{$payment["month_name"]}}</td>
+											<td>{{$payment->month_name}}</td>
 											<td>
-												{{ $payment["quota"] }}
+												{{ $payment->quota }}
 											</td>
 											<td>
-												@if ( $payment["is_payment"] )
+												@if ( $payment->is_payment )
 												<span>PAGADO</span>
 												@else
 												<span>NO</span>
-												{!! Form::checkbox('active',$payment["is_payment"],false) !!}
+												{!! Form::checkbox('active[]',$payment->period_id,$payment->is_payment) !!}
 												@endif
+												<!-- <input class="checkbox" type="checkbox" name="is_pay[]"
+												id="check-box-{{ $payment->period_id }}"
+												value="{{ $payment->is_payment }}"
+												{{ ($payment->is_payment) ? "checked" : "" }} /> -->
 											</td>
 										</tr>
 										@endforeach
 									@endif
 								</tbody>
+
 								</table>
 							</div>
 						</div>
 					</div>
 
 				</div>
+				{!! Form::close() !!}
 
 		</div>
 

@@ -14,7 +14,9 @@ $factory->define(App\Person::class, function (Faker $faker) {
        // 'start_date'=> $faker->dateTimeBetween('now', '+30 years'),
        'start_date'=> Carbon\Carbon::now(),
         'user_id'=> 1,
+        'person_type_id'=> rand(1,2),
 
-        
+
+
     ];
 });

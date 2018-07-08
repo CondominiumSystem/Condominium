@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Person;
+use App\PersonType;
 class PersonsController extends Controller
 {
     /**
@@ -29,7 +30,9 @@ class PersonsController extends Controller
      */
     public function create()
     {
-        return view("Persons.create");
+        $person_types=PersonType::pluck('name','id');
+
+        return view("Persons.create",compact('person_types'));
     }
 
     /**
@@ -65,9 +68,11 @@ class PersonsController extends Controller
      */
     public function edit($id)
     {
+        $person_types=PersonType::pluck('name','id');
         $persons = Person::find($id);
         $data = [
             'person' => $persons,
+            'person_types'=>$person_types,
         ];
         return view('Persons.edit',$data);
     }

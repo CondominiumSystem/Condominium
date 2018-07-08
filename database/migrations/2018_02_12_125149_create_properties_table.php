@@ -36,7 +36,7 @@ class CreatePropertiesTable extends Migration
             $table->integer('person_id')->unsigned();
             $table->integer('property_id')->unsigned();
             $table->boolean('owner')->default(0);
-            
+
             $table->foreign('person_id')->references('id')->on('persons');
             $table->foreign('property_id')->references('id')->on('properties');
 

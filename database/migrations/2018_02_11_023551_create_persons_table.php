@@ -13,16 +13,24 @@ class CreatePersonsTable extends Migration
      */
     public function up()
     {
+        Schema::create('person_types', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name',30);
+        });
+
+
         Schema::create('persons', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',30);
             $table->string('document_number',13);
             $table->string('phone',10);
             $table->string('cell_phone',10);
-            $table->string('address',80);
+            $table->string('address',80)->nullable();
             $table->boolean('life_here')->default(0);
             $table->date('start_date');
             $table->integer('user_id');
+            $table->integer('person_type_id')->unsigned();
+            $table->foreign('person_type_id')->references('id')->on('person_types');
             $table->timestamps();
         });
     }
@@ -35,5 +43,6 @@ class CreatePersonsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('persons');
+        Schema::dropIfExists('person_types');
     }
 }

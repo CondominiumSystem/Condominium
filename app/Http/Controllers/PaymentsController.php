@@ -16,12 +16,12 @@ class PaymentsController extends Controller
      */
      public function index(Request $request )
      {
-//        dd($request->document_number);
         $selected_period = $request->period_id;
 
 
         if($request->document_number != null){
-             dd($request->document_number);
+             $properties= $this->GetPropertiesByDocumentNumber($request->document_number);
+             $payments = null;
         }
         else
         {
@@ -30,7 +30,6 @@ class PaymentsController extends Controller
                $properties= $this->GetPropertiesByLotNumber($request->lot_number);
                //Obtenemos los pagos
                $payments=$this->GetPaymentsByPropertyId(10,$selected_period);
-//               dd($payments);
             }
             else
             {
@@ -72,7 +71,11 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
+        //$person = new Person($request->all());
+        //$person->user_id = \Auth::user()->id;
+        //$person->save();
+        //return redirect()->route('Persons.index');
     }
 
     /**
@@ -140,6 +143,24 @@ class PaymentsController extends Controller
         return $result_list;
     }
 
+    public function GetPropertiesByDocumentNumber($document_number)
+    {
+        $result = DB::Table('persons')
+        ->join('person_property','person_property.person_id','=','persons.id')
+        ->join('properties','properties.id','=','person_property.property_id')
+        ->join('property_types','property_types.id','=','properties.property_type_id')
+        ->select(
+            'property_types.name as property_type_name',
+            'properties.lot_number',
+            'persons.name as person_name'
+        )
+        ->where('persons.document_number','=',$document_number)
+        ->get();
+
+        return $result;
+    }
+
+
     public function GetPaymentsByPropertyId($property_id,$year){
         //Pagos realizados
         $payments=DB::Table('payments')
@@ -168,7 +189,7 @@ class PaymentsController extends Controller
 
         $result = [];
         foreach ($periods as $period) {
-            array_push($result,[
+            array_push($result,(object)[
                 'period_id' => $period->id,
                 'month_id' => $period->month_id,
                 'month_name' => $period->month_name,
@@ -179,10 +200,9 @@ class PaymentsController extends Controller
 
         //Actualizamos pagos realizados
         foreach ($payments as $payment) {
-            $result[$payment->month_id - 1]["is_payment"] = true;
+            $result[$payment->month_id - 1]->is_payment = true;
         }
-
-        return $result;
+        return (object)$result;
     }
 
     /*

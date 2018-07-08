@@ -47,6 +47,7 @@
 	          <table class="table table-bordered table-hover">
 
               <thead>
+				<th>Tipo</th>
                 <th>Nombre</th>
                 <th>Documento</th>
                 <th>Teléfono</th>
@@ -58,6 +59,7 @@
               <tbody>
                 @foreach ($persons as $person)
                   <tr>
+					  <td>{{ $person->personType->name }}</td>
                       <td>{{ $person->name}}</td>
                       <td>{{ $person->document_number}}</td>
                       <td>{{ $person->phone }}</td>

@@ -14,8 +14,14 @@
 	<div class="box box-success">
 	    {!! Form::Open(['route' => 'Persons.store','method' => 'POST']) !!}
 			<div class="box-body">
+				<div class="col-md-4">
+					<div class="form-group">
+                        {!! Form::label('person_type_id', 'Tipo') !!}
+                        {!! Form::select('person_type_id',$person_types,null,['class'=>'select form-control','required', 'placeholder'=>'Seleccione Tipo']) !!}
+                    </div>
+				</div>
 
-				<div class="col-md-12">
+				<div class="col-md-18">
 				    <div class="form-group">
 				        {!! Form::label('name', 'Nombre') !!}
 				        {!! Form::text('name', null ,['class'=>'form-control','placeholder'=>'Nombre del Cliente', 'requerid' ]) !!}

@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Person extends Model
 {
     protected $table ="persons";
-    protected $fillable = ['name','document_number','phone','cell_phone','address','start_date','user_id'];
+    protected $fillable = ['name','document_number','phone','cell_phone','address','start_date','user_id','person_type_id'];
 
+    public function PersonType()
+    {
+        return $this->belongsTo('App\PersonType');
+    }
 
     public function user()
     {
