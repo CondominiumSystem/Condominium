@@ -40,16 +40,16 @@
 
             <!-- Optionally, you can add icons to the links -->
             <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> <span>{{ trans('adminlte_lang::message.multilevel') }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-link'></i> <span>Reportes</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
+                    <li><a href="ReportsPayments">Pagos</a></li>
                     <li><a href="#">{{ trans('adminlte_lang::message.linklevel2') }}</a></li>
                 </ul>
             </li>
 
             <li class="treeview">
-                <a href="#"><i class='fa fa-link'></i> 
-                    <span>{{ trans('menu.security') }}</span> 
+                <a href="#"><i class='fa fa-link'></i>
+                    <span>{{ trans('menu.security') }}</span>
                     <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li>

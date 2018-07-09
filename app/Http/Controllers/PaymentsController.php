@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Person;
 use App\Period;
+use App\Payment;
 use Illuminate\Support\Facades\DB;
 
 class PaymentsController extends Controller
@@ -18,7 +19,6 @@ class PaymentsController extends Controller
      {
         $selected_period = $request->period_id;
 
-
         if($request->document_number != null){
              $properties= $this->GetPropertiesByDocumentNumber($request->document_number);
              $payments = null;
@@ -28,8 +28,11 @@ class PaymentsController extends Controller
             if($request->lot_number != null){
                 //dd($request->lot_number);
                $properties= $this->GetPropertiesByLotNumber($request->lot_number);
-               //Obtenemos los pagos
-               $payments=$this->GetPaymentsByPropertyId(10,$selected_period);
+
+               if($properties->count() == 1 ){
+                   //Obtenemos los pagos
+                   $payments=$this->GetPaymentsByPropertyId($properties->first()->id,$selected_period);
+               }
             }
             else
             {
@@ -71,11 +74,37 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        //dd($request);
+
+        $result_value=DB::Table('properties')
+        ->join('aliquot_values','aliquot_values.property_type_id','=','properties.property_type_id')
+        ->select('aliquot_values.value')
+        ->where('properties.id','=',$request->property_id)
+        ->first();
+
+        //dd($result_value->value);
+
+        $periods = $request->active;
+
+        foreach ($periods as $period) {
+            $payment = new Payment();
+
+            $payment->property_id = $request->property_id;
+            $payment->user_id = 1;
+            $payment->transaction_id = 1;
+            $payment->transaction_parent_id = 0;
+            $payment->value = $result_value->value;
+            $payment->active = true;
+            $payment->period_id = $period;
+
+            $payment->save();
+        }
+
+
         //$person = new Person($request->all());
         //$person->user_id = \Auth::user()->id;
         //$person->save();
-        //return redirect()->route('Persons.index');
+        return redirect()->route('Payments.index');
     }
 
     /**
@@ -135,6 +164,7 @@ class PaymentsController extends Controller
         ->select(
             'property_types.name as property_type_name',
             'properties.lot_number',
+            'properties.id',
             'persons.name as person_name'
         )
         ->where('properties.lot_number','=',$lot_number)
@@ -185,7 +215,9 @@ class PaymentsController extends Controller
         //dd($result_value->value);
 
         //Todos los periodos
-        $periods= Period::where('year',2018)->orderBy('id')->get();
+        $periods= Period::where('year',$year)->orderBy('id')->get();
+
+        //dd($periods);
 
         $result = [];
         foreach ($periods as $period) {

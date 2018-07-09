@@ -30,13 +30,24 @@ Route::group(['middleware' => 'auth'], function () {
 					'uses' => 'PersonsController@properties',
 					'as' => 'Persons.properties'		]
 	);
+
     Route::get('/Properties/{id}/create', [
                     'uses' => 'PropertiesController@create',
                     'as' => 'Properties.create'
             ]
     );
 
+    Route::get('/ReportsPayments', [
+                    'uses' => 'ReportsController@getPaymentsIndex',
+                    'as' => 'Reports.payments'
+            ]
+    );
 
+    Route::get('/ReportsPaymentsData', [
+                    'uses' => 'ReportsController@paymentsData',
+                    'as' => 'Reports.paymentsData'
+            ]
+    );
 
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
     #adminlte_routes

@@ -79,7 +79,10 @@
 				</div>
 				<!-- right column -->
 				{!! Form::open(['route'=>'Payments.store', 'method' =>'POST']) !!}
-		        <div class="col-md-6">
+				@if($properties != null)
+				{!! Form::hidden('property_id', $properties->first()->id  ) !!}
+				@endif
+				<div class="col-md-6">
 					<div class="box box-success">
 
 						<div class="box-header">

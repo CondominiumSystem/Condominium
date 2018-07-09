@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PropertyTypesTableSeeder::class);
         $this->call(PersonTypesTableSeeder::class);
         $this->call(PersonsTableSeeder::class);
+        $this->call(AliquotValuesTableSeeder::class);
 
     }
 }

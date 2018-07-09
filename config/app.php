@@ -166,6 +166,8 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
         Laravel\Dusk\DuskServiceProvider::class,
 
+        Yajra\DataTables\DataTablesServiceProvider::class,
+
 
     ],
 
@@ -218,6 +220,7 @@ return [
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
     ],
 

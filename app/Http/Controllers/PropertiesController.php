@@ -19,24 +19,25 @@ class PropertiesController extends Controller
     public function index(Request $request)
     {
         $person_id = $request->id;
+        $lot_number=$request->lot_number;
 
-        //dd($request->lot_number);
-
-        if($person_id == null && $request->lot_number == ""){
+        if($person_id == null && $lot_number == null){
             $properties = Property::paginate(10);
-
             $person = null;
         }
-        else{
+        else if($person_id != null && $lot_number == null){
             $person = Person::find($person_id);
-            //dd($request->lot_number);
+            $properties = $person->properties()->paginate(10);
+        }
+        else if ($person_id == null && $lot_number != null) {
             $properties = Property::SearchByLotNumber($request->lot_number)->paginate(10);
-            //$properties = $person->properties()->paginate(10);;
-
-            //dd($properties->count());
+            $person = null;
+        }
+        else if ($person_id != null && $lot_number != null) {
+            $properties = Property::SearchByLotNumber($request->lot_number)->paginate(10);
+            $person = Person::find($person_id);
         }
 
-        //dd($properties);
         return view("Properties.index", compact('properties','person'));
     }
 
@@ -74,9 +75,9 @@ class PropertiesController extends Controller
             try{
                     $property->save();
                     if ($request->personId != 0)
-                    { 
+                    {
                         $personProperty = new PersonProperty();
-                        $personProperty->person_id = $request->personId; 
+                        $personProperty->person_id = $request->personId;
                         $personProperty->property_id = $property->id;
                         $personProperty->owner = false;
                         $personProperty->save();

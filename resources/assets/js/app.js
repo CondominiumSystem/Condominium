@@ -8,11 +8,7 @@
 require('./bootstrap');
 
 
-$('#confirm-delete').on('show.bs.modal', function(e) {
-  $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
 
-  $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
-});
 
 window.Vue = require('vue');
 
@@ -32,8 +28,8 @@ const app = new Vue({
  * Properties index
  * Modal dialog for delete one property
  */
+ $('#confirm-delete').on('show.bs.modal', function(e) {
+   $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
 
-$('#confirm-delete').on('show.bs.modal', function(e) {
-  $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-  $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
-});
+   $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+ });
