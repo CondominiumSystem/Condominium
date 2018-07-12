@@ -60,6 +60,12 @@ desired effect
     @include('adminlte::layouts.partials.scripts')
 @show
 
+@section('customScript')
+
+@show
+
+
+
 <script>
 $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 </script>

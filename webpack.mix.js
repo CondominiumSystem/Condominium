@@ -12,6 +12,10 @@ const { mix } = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
+    .scripts([
+            'node_modules/datatables.net/js/jquery.dataTables.js',
+            'node_modules/datatables.net-bs/js/dataTables.bootstrap.js'
+        ], 'public/js/datatable.js')
    .js('resources/assets/js/app-landing.js', 'public/js/app-landing.js')
    .sourceMaps()
    .combine([

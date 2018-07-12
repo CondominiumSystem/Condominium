@@ -1,3 +1,4 @@
+
 @extends('adminlte::layouts.app')
 
 @section('contentheader_title')
@@ -42,24 +43,38 @@
 
 </div>
 
-<script>
-/*
-$(function() {
-    $('#payments-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '{!! route("Reports.paymentsData") !!}',
-        columns: [
-            { data: 'person_name', name: 'persons.name'},
-            { data: 'person_type_name', name: 'person_types.name' },
-            { data: 'lot_number', name: 'properties.lot_number' },
-            { data: 'value', name: 'payments.value'},
-            { data: 'year', name: 'periods.year'},
-            { data: 'month_name', name:'periods.month_name'},
-        ]
-    });
-});
-*/
-</script>
 
+
+@endsection
+
+@section('customScript')
+
+<!--
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
+
+<script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
+<script src="/vendor/datatables/buttons.server-side.js"></script> -->
+
+
+	<script type="text/javascript">
+
+$(document).ready( function () {
+
+		$('#payments-table').DataTable({
+		     processing: true,
+		     serverSide: true,
+		     ajax: '{!! route("Reports.paymentsData") !!}',
+		     columns: [
+		         { data: 'person_name', name: 'persons.name'},
+		         { data: 'person_type_name', name: 'person_types.name' },
+		         { data: 'lot_number', name: 'properties.lot_number' },
+		         { data: 'value', name: 'payments.value'},
+		         { data: 'year', name: 'periods.year'},
+		         { data: 'month_name', name:'periods.month_name'},
+		     ]
+		 });
+
+} );
+
+	 </script>
 @endsection

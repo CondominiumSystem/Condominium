@@ -18,12 +18,13 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+/*
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 const app = new Vue({
     el: '#app'
 });
-
+*/
 /**
  * Properties index
  * Modal dialog for delete one property
@@ -33,3 +34,19 @@ const app = new Vue({
 
    $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
  });
+
+/*
+$('#payments-table').DataTable({
+     processing: true,
+     serverSide: true,
+     ajax: '{!! route("Reports.paymentsData") !!}',
+     columns: [
+         { data: 'person_name', name: 'persons.name'},
+         { data: 'person_type_name', name: 'person_types.name' },
+         { data: 'lot_number', name: 'properties.lot_number' },
+         { data: 'value', name: 'payments.value'},
+         { data: 'year', name: 'periods.year'},
+         { data: 'month_name', name:'periods.month_name'},
+     ]
+ });
+*/

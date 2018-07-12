@@ -14,24 +14,24 @@ class PeriodsTableSeeder extends Seeder
         //DB::Table('periods')->delete();
 
 
-        $year = 2016;
+        $years = [2017, 2018];
         $months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-        $index = 1;
 
         $periods=[];
-
-        foreach ($months as $month) {
-            array_push(
-                $periods,
-                array(
-                    'year'=> $year,
-                    'month_id' => $index, 'month_name' => $months[$index-1],
-                    'created_at'=>date("Y-m-d H:i:s")
-                )
-            );
-            $index++;
+        foreach ($years as $year) {
+            $index = 1;
+            foreach ($months as $month) {
+                array_push(
+                    $periods,
+                    array(
+                        'year'=> $year,
+                        'month_id' => $index, 'month_name' => $months[$index-1],
+                        'created_at'=>date("Y-m-d H:i:s")
+                    )
+                );
+                $index++;
+            }
         }
-
         DB::Table('periods')->insert($periods);
     }
 }
