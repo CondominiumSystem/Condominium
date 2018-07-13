@@ -23,7 +23,7 @@
             </div>
 
             <label for="person_type_id">Residente:</label>
-			{!! Form::select('person_type_id',$person_types,null,['class'=>'select form-control','required', 'placeholder'=>'Seleccione Tipo']) !!}
+			{!! Form::select('person_type_id',$person_types,null,['class'=>'select form-control', 'placeholder'=>'Seleccione Tipo']) !!}
 
             <button type="submit" class="btn btn-primary">Buscar</button>
         </form>
