@@ -3,7 +3,7 @@
     <h1>
         @yield('contentheader_title', 'Page Header here')
         <small>@yield('contentheader_description')</small>
-        @yield('new_button')
+        <small class="pull-right">@yield('new_button')</small>
     </h1>
 
 <!--

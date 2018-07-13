@@ -1,7 +1,11 @@
 @extends('adminlte::layouts.app')
 @section('htmlheader_title')
 	{{ trans('adminlte_lang::message.home') }}
-	Editar
+	Crear Propiedad
+@endsection
+
+@section('contentheader_title')
+    Crear Propiedad
 @endsection
 
 @section('main-content')
@@ -52,6 +56,17 @@
 				{{ Form::hidden('active', '1') }}
                 {{ Form::hidden('personId', $personId) }}
 
+				<div class="col-md-6 col-md-6">
+	                {!! Form::label('date_from', 'Fecha Desde (Año/mes/día)') !!}
+	                <div class="input-group date">
+	                    <div class="input-group-addon">
+	                        <i class="fa fa-calendar"></i>
+	                    </div>
+	                    {!! Form::text('date_from', \Carbon\Carbon::now()->format('Y/m/d'),['class'=>' form-control pull-righ']) !!}
+	                </div>
+	            </div>
+
+
 			</div>
 			<!-- /.box-body -->
 			<div class="box-footer">
@@ -62,4 +77,15 @@
         {!! Form::Close() !!}
 	</div>
 </div>
+@endsection
+
+@section('customScript')
+	<script>
+        //Date picker
+        $('#date_from').datepicker({
+            format: 'yyyy/mm/dd',
+            autoclose: true
+        });
+	</script>
+
 @endsection

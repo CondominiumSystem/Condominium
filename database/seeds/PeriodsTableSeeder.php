@@ -14,7 +14,7 @@ class PeriodsTableSeeder extends Seeder
         //DB::Table('periods')->delete();
 
 
-        $years = [2017, 2018];
+        $years = [2016,2017, 2018];
         $months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
         $periods=[];

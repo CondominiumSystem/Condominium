@@ -6,7 +6,7 @@
 	 Listado de Propieades
 @endsection
 
-@section('contentheader_description')
+@section('new_button')
 	@if( $person != null)
 	[ {{ $person->name }} ]
 	@endif
@@ -14,22 +14,24 @@
     <!-- Inicio Buscador por Nombre -->
         {!! Form::open(['route'=>'Properties.index', 'method' =>'GET', 'class' => 'navbar-form pull-right']) !!}
         <div class ="input-group" >
-            {!! Form::text('lot_number',null,['class'=> 'form-control','placeholder'=>'Buscar Propiedad..','aria-describedby'=>'search'])!!}
-            <span class="input-group-addon" id="search">
-            <span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+            {!! Form::text('lot_number',null,['class'=> 'form-control','placeholder'=>'Número de Lote','aria-describedby'=>'search'])!!}
+			<button class="btn btn-default" type="submit">
+				<span class="btn-label"><i class="fa fa-search"></i></span>
+			</button>
         </div>
         {!! Form::close() !!}
-    <!-- Fin Buscador --> 
+	<!-- Fin Buscador -->
 
-    <div class ="input-group" >
-      <a href="{{route('Properties.create',($person)?$person->id:0)}}" type="button" class="btn btn-primary">
-          <i class="fa fa-plus" aria-hidden="true"></i> Agregar
-      </a>
-    </div>
-
+	<!-- Boton Agregar -->
+	    <div class ="input-group" >
+	      <a href="{{route('Properties.create',($person)?$person->id:0)}}" type="button" class="btn btn-primary">
+	          <i class="fa fa-plus" aria-hidden="true"></i> Agregar
+	      </a>
+	    </div>
+	<!-- Fin Boton Agregar -->
 @endsection
 
-@section('main-content')   
+@section('main-content')
 	<div class="container-fluid spark-screen">
 		<div class="row">
 

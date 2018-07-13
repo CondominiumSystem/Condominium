@@ -49,6 +49,20 @@ Route::group(['middleware' => 'auth'], function () {
             ]
     );
 
+    Route::get('/PortfolioReceivable', [
+                    'uses' => 'ReportsController@getPortfolioReceivableIndex',
+                    'as' => 'Reports.portfolioReceivable'
+            ]
+    );
+
+    Route::get('/PortfolioReceivableData', [
+                    'uses' => 'ReportsController@portfolioReceivableData',
+                    'as' => 'Reports.portfolioReceivableData'
+            ]
+    );
+
+
+
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
     #adminlte_routes
 });
