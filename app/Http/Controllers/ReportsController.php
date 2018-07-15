@@ -15,7 +15,7 @@ class ReportsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+//Presenta la vista payments de datos con los combos de años y periodos
     public function getPaymentsIndex(Request $request){
         $years = $this->GetPeriods();
         $person_types=PersonType::pluck('name','id');
@@ -27,12 +27,12 @@ class ReportsController extends Controller
         return Period::distinct()->pluck('year','year');
     }
 
-
+//Obtiene los datos para el reporte
     public function paymentsData(Request $request){
         $payments = DB::table('payments')
-            ->join('person_property', 'person_property.id', '=', 'payments.property_id')
+            ->join('person_property', 'person_property.property_id', '=', 'payments.property_id')
             ->join('persons','persons.id','=','person_property.person_id')
-            ->join('properties','properties.id','=','person_property.id')
+            ->join('properties','properties.id','=','person_property.property_id')
             ->join('periods','periods.id','=','payments.period_id')
             ->join('person_types','person_types.id','=','persons.person_type_id')
             ->select(
