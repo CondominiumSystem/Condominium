@@ -35,6 +35,7 @@
     "vue": "^2.5.7"
   },
   "dependencies": {
+    "bootstrap-datepicker": "^1.8.0",
     "datatables": "^1.10.18"
   }
 }

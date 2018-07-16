@@ -79,12 +79,12 @@ class PropertiesController extends Controller
                         $personProperty = new PersonProperty();
                         $personProperty->person_id = $request->personId;
                         $personProperty->property_id = $property->id;
+                        $personProperty->date_from = $request->date_from;
                         $personProperty->owner = false;
                         $personProperty->save();
                         //$person= Person::find($request->personId);
                         //$person->properties()->save($property);
                     }
-
                  //$property->tags()->sync($request->tags);
                  flash('Propiedad Creada.', 'info')->important();
             }
@@ -98,21 +98,27 @@ class PropertiesController extends Controller
          }
 
 
-
-
      /**
       * Show the form for editing the specified resource.
       *
       * @param  int  $id
       * @return \Illuminate\Http\Response
       */
-     public function edit($id)
+     public function edit($propertyId,$personId)
      {
-
-         $property = Property::find($id);
+         $propertyTypes = PropertyType::pluck('name','id');
+         $property = Property::find($propertyId);
+         $personProperty = PersonProperty::where('property_id', $propertyId)
+                            ->where('person_id',$personId)
+                            ->take(1)
+                            ->get();
          $data = [
              'property' => $property,
+             'personId' => $personId,
+             'personProperty' => $personProperty,
+             'propertyTypes' => $propertyTypes,
          ];
+         //dd($data);
          return view('Properties.edit',$data);
      }
      /**
@@ -130,10 +136,5 @@ class PropertiesController extends Controller
          flash("Grabado correctamente")->success();
          return redirect()->route('Properties.index');
      }
-
-
-
-
-
 
 }

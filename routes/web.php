@@ -36,6 +36,11 @@ Route::group(['middleware' => 'auth'], function () {
                     'as' => 'Properties.create'
             ]
     );
+    Route::get('Properties/{Property}/{Person}/edit',[
+        'uses' => 'PropertiesController@edit',
+        'as' => 'Properties.edit'
+    ]
+    );
 
     Route::get('/ReportsPayments', [
                     'uses' => 'ReportsController@getPaymentsIndex',

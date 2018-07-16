@@ -53,7 +53,7 @@
                 <th>Teléfono</th>
                 <th>Celular</th>
                 <th>Dirección</th>
-                <th>Fecha Inicio</th>
+                <!-- <th>Fecha Inicio</th> -->
                 <th>Acción</th>
               </thead>
               <tbody>
@@ -65,23 +65,19 @@
                       <td>{{ $person->phone }}</td>
                       <td>{{ $person->cell_phone }}</td>
                       <td>{{ $person->address}}</td>
-                      <td>{{ $person->start_date}}</td>
+                      <!-- <td>{{ $person->start_date}}</td> -->
                       <td>
-                          <a href="{{ route('Persons.edit', $person->id )}}" type="button" class="btn btn-xs btn-warning">
-                            <i class="fa fa-pencil" aria-hidden="true"></i> Editar
-                          </a>
-												  <a href="{{ route('Properties.index', [ 'id' => $person->id] )}}" type="button" class="btn btn-xs btn-warning">
-                            <i class="fa fa-pencil" aria-hidden="true"></i> Propiedades
-                          </a>
-
-						  						<a href="" alt="Borrar"
-														data-href="{{ route('Persons.destroy', $person->id )}}"
-														type="button"
-														class="btn btn-xs btn-danger"  data-toggle="modal" data-target="#confirm-delete">
-	                        	<i class="fa fa-trash" aria-hidden="true"></i> Borrar
-													</a>
-
-
+							<a href="{{ route('Persons.edit', $person->id )}}" type="button" class="btn btn-xs btn-warning">
+								<i class="fa fa-pencil" aria-hidden="true"></i> Editar
+							</a>
+							<a href="{{ route('Properties.index', [ 'id' => $person->id] )}}" type="button" class="btn btn-xs btn-info ">
+								<i class="fa fa-home" aria-hidden="true"></i> Propiedades
+							</a>
+							<a href="" alt="Borrar" type="button"
+								data-href="{{ route('Persons.destroy', $person->id )}}"
+								class="btn btn-xs btn-danger"  data-toggle="modal" data-target="#confirm-delete">
+								<i class="fa fa-trash" aria-hidden="true"></i> Borrar
+							</a>
                       </td>
                   </tr>
                 @endforeach

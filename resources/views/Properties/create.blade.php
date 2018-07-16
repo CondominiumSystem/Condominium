@@ -14,7 +14,6 @@
 	<div class="box box-success">
         {!! Form::Open(['route' => 'Properties.store','method' => 'POST']) !!}
 			<div class="box-body">
-
 				<div class="col-md-3">
 	                <div class="form-group">
 	                    {!! Form::label('lot_number', 'Lote') !!}
@@ -27,7 +26,6 @@
                         {!! Form::select('property_type_id',$propertyTypes,null,['class'=>'select form-control','required', 'placeholder'=>'Seleccione Tipo']) !!}
                     </div>
 				</div>
-
 
                 <div class="col-md-6">
                     <div class="form-group">
@@ -55,6 +53,7 @@
 
 				{{ Form::hidden('active', '1') }}
                 {{ Form::hidden('personId', $personId) }}
+				@if( $personId != 0)
 
 				<div class="col-md-6 col-md-6">
 	                {!! Form::label('date_from', 'Fecha Desde (Año/mes/día)') !!}
@@ -66,7 +65,7 @@
 	                </div>
 	            </div>
 
-
+				@endif
 			</div>
 			<!-- /.box-body -->
 			<div class="box-footer">
@@ -84,8 +83,8 @@
         //Date picker
         $('#date_from').datepicker({
             format: 'yyyy/mm/dd',
-            autoclose: true
+            autoclose: true,
+			language: 'es'
         });
 	</script>
-
 @endsection

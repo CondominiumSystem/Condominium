@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Person;
 use App\Period;
 use App\Payment;
+use App\PersonProperty;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class PaymentsController extends Controller
@@ -26,12 +28,14 @@ class PaymentsController extends Controller
         else
         {
             if($request->lot_number != null){
-                //dd($request->lot_number);
                $properties= $this->GetPropertiesByLotNumber($request->lot_number);
-
                if($properties->count() == 1 ){
                    //Obtenemos los pagos
-                   $payments=$this->GetPaymentsByPropertyId($properties->first()->id,$selected_period);
+                   $payments=$this->GetPaymentsByPropertyId(
+                       $properties->first()->id,
+                       $selected_period,
+                       $properties->first()->person_id
+                   );
                }
             }
             else
@@ -56,15 +60,6 @@ class PaymentsController extends Controller
             ));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -107,50 +102,6 @@ class PaymentsController extends Controller
         return redirect()->route('Payments.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
     /**
      * @param  $lot_number [Número de Lote]
@@ -165,11 +116,13 @@ class PaymentsController extends Controller
             'property_types.name as property_type_name',
             'properties.lot_number',
             'properties.id',
-            'persons.name as person_name'
+            'persons.name as person_name',
+            'persons.id as person_id',
+            'person_property.date_from',
+            'person_property.date_to'
         )
         ->where('properties.lot_number','=',$lot_number)
         ->get();
-        //dd($Mylist);
         return $result_list;
     }
 
@@ -182,7 +135,11 @@ class PaymentsController extends Controller
         ->select(
             'property_types.name as property_type_name',
             'properties.lot_number',
-            'persons.name as person_name'
+            'properties.id',
+            'persons.name as person_name',
+            'persons.id as person_id',
+            'person_property.date_from',
+            'person_property.date_to'
         )
         ->where('persons.document_number','=',$document_number)
         ->get();
@@ -191,7 +148,7 @@ class PaymentsController extends Controller
     }
 
 
-    public function GetPaymentsByPropertyId($property_id,$year){
+    public function GetPaymentsByPropertyId($property_id,$year,$person_id){
         //Pagos realizados
         $payments=DB::Table('payments')
         ->rightjoin('periods','periods.id','=','payments.period_id')
@@ -214,8 +171,21 @@ class PaymentsController extends Controller
 
         //dd($result_value->value);
 
+        $personProperty = PersonProperty::Where('property_id',$property_id)
+        ->where('person_id',$person_id)
+        ->orderBy('id','desc')
+        ->first();
+
         //Todos los periodos
-        $periods= Period::where('year',$year)->orderBy('id')->get();
+        $periods= Period::Where('year','=',$year);
+        $periods = $periods->Where('year','>=',Carbon::parse($personProperty->date_from)->year);
+
+        if($personProperty->date_from != null){
+            $periods = $periods->Where('year','<=',Carbon::parse($personProperty->date_to)->year);
+            $periods = $periods->Where('month_id','<=',Carbon::parse($personProperty->date_to)->month);
+        }
+
+        $periods = $periods->orderBy('id')->get();
 
         //dd($periods);
 

@@ -13,8 +13,11 @@ const { mix } = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
     .scripts([
+            'node_modules/bootstrap-datepicker/js/bootstrap-datepicker.js',
             'node_modules/datatables.net/js/jquery.dataTables.js',
-            'node_modules/datatables.net-bs/js/dataTables.bootstrap.js'
+            'node_modules/datatables.net-bs/js/dataTables.bootstrap.js',
+            'node_modules/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js'
+
         ], 'public/js/datatable.js')
    .js('resources/assets/js/app-landing.js', 'public/js/app-landing.js')
    .sourceMaps()
@@ -25,6 +28,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'node_modules/admin-lte/dist/css/AdminLTE.min.css',
        'node_modules/admin-lte/dist/css/skins/_all-skins.css',
        'node_modules/icheck/skins/square/blue.css',
+       'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.css',
 
    ], 'public/css/all.css')
    .combine([

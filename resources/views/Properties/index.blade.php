@@ -52,33 +52,34 @@
 				          <table class="table table-bordered table-hover">
                                 <thead>
                                 <th>Lote</th>
-                                <th>Descripcion</th>
-								<th>Activo</th>
 								<th>Tipo</th>
+                                <th>Descripcion</th>
+								<!-- <th>Activo</th> -->
+								<th>Dirección</th>
 								<th>Acciones</th>
                                 </thead>
                                 <tbody>
                                   @foreach ($properties as $property)
                                       <tr>
                                           <td>{{ $property->lot_number}}</td>
+										  <td>{{ $property->property_type->name}}</td>
                                           <td>{{ $property->note}}</td>
-										  <td>
+										  <td>{{ $property->address }}</td>
+										  <!-- <td>
 											  @if ( $property->active )
 											  <span>SI</span>
 											  {!! Form::checkbox('active',$property->active,true) !!}
 											  @else
 											  <span>NO</span>
 											  @endif
-										  </td>
-										  <td>{{ $property->property_type->name}}</td>
-
+										  </td> -->
 
 										  <td>
-											  <a href="{{ route('Properties.edit', $property->id )}}" type="button" class="btn btn-xs btn-warning">
+											  <a href="{{ route('Properties.edit', [$property->id, (($person)?$person->id:0) ])}}" type="button" class="btn btn-xs btn-warning">
 												  <i class="fa fa-pencil" aria-hidden="true"></i> Editar</a>
-											  <a href="{{ route('Properties.destroy', $property->id )}}" type="button" onclick="return confirm('Seguro en Eliminar?')" class="btn btn-xs btn-danger">
+											  <a href="{{ route('Properties.destroy', $property->id )}}" type="button" class="btn btn-xs btn-danger"
+												  onclick="return confirm('Seguro en Eliminar?')">
 												  <i class="fa fa-trash" aria-hidden="true"></i> Borrar</a>
-
 										  </td>
 
                                       </tr>

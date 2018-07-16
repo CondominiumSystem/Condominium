@@ -53,19 +53,23 @@
 						<div class="box-body">
 							<table class="table table-bordered table-hover">
 								<thead>
-									<th>Tipo Propiedad</th>
+									<th>Propiedad</th>
 									<th>Lote</th>
-									<th>Propietario</th>
+									<th>Residente</th>
+									<th>Desde</th>
+									<th>Hasta</th>
 								</thead>
 								<tbody>
 			                @foreach ($properties as $property)
 			                  <tr>
 			                      <td>{{ $property->property_type_name}}</td>
 			                      <td>
-									  <a href="{{ route('Payments.show', $property->lot_number )}}">
+									  <a href="{{ route('Payments.index', $property->person_id )}}">
 										  {{ $property->lot_number}}</a>
 								  </td>
 			                      <td>{{ $property->person_name }}</td>
+								  <td>{{ $property->date_from }}</td>
+								  <td>{{ $property->date_to }}</td>
 			                  </tr>
 			                @endforeach
 
@@ -86,8 +90,8 @@
 					<div class="box box-success">
 
 						<div class="box-header">
-			              	<h3 class="box-title">PAGOS PERIODO: {{ $selected_period }}</h3>
-
+			              	<h3 class="box-title">PAGOS AÑO: {{ $selected_period }}
+							</h3>
 							<button type="submit" class="btn btn-success no-margin pull-right" >
 								<i class="fa fa-money"></i>  Pagar
 							</button>

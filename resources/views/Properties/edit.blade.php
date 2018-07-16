@@ -3,70 +3,102 @@
 	{{ trans('adminlte_lang::message.home') }}
 @endsection
 
+@section('contentheader_title')
+    Editar Propiedad
+@endsection
+
 @section('main-content')
 <div class="main_container">
-    <div class="row">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>Editar </h3>
-              </div>
-            </div>
-    </div>
-
 	<div class="box box-success">
-
-		<table class="table table-bordered table-hover">
-    		<div class="box-body">
-
+		<div class="box-header">
+		</div>
 
         {!! Form::Open(['route' => ['Properties.update',$property],'method' => 'PUT']) !!}
-
+		<div class="box-body">
+			<div class="col-md-3">
                 <div class="form-group">
-					<div class="col-md-4">
-                    	<div class="form-group">
-                    		{!! Form::label('lot_number', 'Lote') !!}
-                    		{!! Form::text('lot_number', $property->lot_number ,['class'=>'form-control','placeholder'=>'Numero de Lote','maxlength' => 3, 'requerid' ]) !!}
-                		</div>
-				   </div>
-			 	</div>
-                <div class="row">
-
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            {!! Form::label('note', 'Descripcion') !!}
-                            <div class="input-group">
-                                <span class="input-group-addon" id="sizing-addon2">
-                                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                                </span>
-                                {!! Form::text('note',$property->note,['class'=>'form-control','placeholder'=>'Descripcion','maxlength' => 60, 'requerid' ]) !!}
-                            </div>
-                        </div>
+                	<div class="form-group">
+                		{!! Form::label('lot_number', 'Lote') !!}
+                		{!! Form::text('lot_number', $property->lot_number ,['class'=>'form-control','placeholder'=>'Numero de Lote','maxlength' => 3, 'requerid' ]) !!}
+            		</div>
+			   </div>
+		 	</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					{!! Form::label('property_type_id', 'Tipo de Propiedad') !!}
+					{!! Form::select('property_type_id',$propertyTypes,$property->property_type_id,['class'=>'select form-control','required', 'placeholder'=>'Seleccione Tipo']) !!}
+				</div>
+			</div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {!! Form::label('note', 'Descripcion') !!}
+                    <div class="input-group">
+                        <span class="input-group-addon" id="sizing-addon2">
+                            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        </span>
+                        {!! Form::text('address',$property->address,['class'=>'form-control','placeholder'=>'Dirección','maxlength' => 60, 'requerid' ]) !!}
                     </div>
                 </div>
+            </div>
+			<div class="col-md-6">
+				<div class="form-group">
+					{!! Form::label('note', 'Nota') !!}
+					<div class="input-group">
+						<span class="input-group-addon" id="sizing-addon2">
+							<i class="fa fa-envelope-o" aria-hidden="true"></i>
+						</span>
+						{!! Form::text('note',$property->note,['class'=>'form-control','placeholder'=>'Nota','maxlength' => 60, 'requerid' ]) !!}
+					</div>
+				</div>
+			</div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            {!! Form::label('active', 'Estado') !!}
-                            <div class="input-group">
-                                <span class="input-group-addon" id="sizing-addon2">
-                                    <i class="fa fa-phone"></i>
-                                </span>
-                                {!! Form::text('active',$property->active,['class'=>'form-control','placeholder'=>'Estado', 'requerid' ]) !!}
-                            </div>
-                        </div>
+			@if( $personId != 0)
+			<div class="col-md-6 col-md-6">
+                {!! Form::label('date_from', 'Fecha Desde (Año/mes/día)') !!}
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
                     </div>
-
-                <div class="form-group">
-                    {!! Form::submit('Editar',['class'=>'btn btn-primary']) !!}
+                    {!! Form::text('date_from', $personProperty[0]->date_from,['class'=>' form-control pull-righ']) !!}
                 </div>
+            </div>
+			<div class="col-md-6 col-md-6">
+                {!! Form::label('date_to', 'Fecha Hasta (Año/mes/día)') !!}
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    {!! Form::text('date_to', $personProperty[0]->date_to,['class'=>' form-control pull-righ']) !!}
+                </div>
+            </div>
+			@endif
+		</div>
 
-                {!! Form::Close() !!}
+		<div class="box-footer">
+			<div class="form-group">
+                {!! Form::submit('Editar',['class'=>'btn btn-primary']) !!}
+            </div>
+		</div>
 
-    </div>
-
+		{!! Form::Close() !!}
+	</div>
 </div>
-</table>
-</div>
+@endsection
 
+@section('customScript')
+	<script>
+        //Date picker
+        $('#date_from').datepicker({
+            format: 'yyyy/mm/dd',
+            autoclose: true,
+			language: 'es'
+        });
+
+		$('#date_to').datepicker({
+            format: 'yyyy/mm/dd',
+            autoclose: true,
+			language: 'es'
+        });
+
+	</script>
 @endsection

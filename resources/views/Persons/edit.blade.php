@@ -18,21 +18,19 @@
     <div class="box box-success">
         {!! Form::Open(['route' => ['Persons.update',$person],'method' => 'PUT']) !!}
             <div class="box-body">
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<div class="form-group">
                         {!! Form::label('person_type_id', 'Tipos') !!}
                         {!! Form::select('person_type_id',$person_types,$person->person_type_id,['class'=>'select form-control','required', 'placeholder'=>'Seleccione Tipo']) !!}
                     </div>
 				</div>
-
-
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <div class="form-group">
                         {!! Form::label('name', 'Nombre') !!}
                         {!! Form::text('name', $person->name ,['class'=>'form-control','placeholder'=>'Nombre del Cliente','maxlength' => 30, 'requerid' ]) !!}
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <div class="form-group">
                         {!! Form::label('document_number', 'Documento') !!}
                         <div class="input-group">
@@ -66,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-8">
                     <div class="form-group">
                         {!! Form::label('address', 'Dirección') !!}
                         <div class="input-group">

@@ -12,6 +12,8 @@ class PersonProperty extends Pivot
     protected $fillable = [
         'person_id',
         'property_id',
+        'data_from',
+        'date_to',
         'owner',
     ];
 }
