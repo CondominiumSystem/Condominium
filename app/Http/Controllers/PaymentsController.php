@@ -179,18 +179,18 @@ class PaymentsController extends Controller
         //Todos los periodos
         $periods= Period::Where('year','=',$year);
         $periods = $periods->Where('year','>=',Carbon::parse($personProperty->date_from)->year);
-
-        if($personProperty->date_from != null){
-            $periods = $periods->Where('year','<=',Carbon::parse($personProperty->date_to)->year);
-            $periods = $periods->Where('month_id','<=',Carbon::parse($personProperty->date_to)->month);
-        }
-
         $periods = $periods->orderBy('id')->get();
-
-        //dd($periods);
 
         $result = [];
         foreach ($periods as $period) {
+/*
+            $tempDate = Carbon::parse($period->year . "/" . $period->month_id . "/1")->addMonths(1)->subDay();
+
+            if($personProperty->date_to != null && $personProperty->date_to <= $tempDate )
+            {
+                break;
+            }
+*/
             array_push($result,(object)[
                 'period_id' => $period->id,
                 'month_id' => $period->month_id,
@@ -202,7 +202,9 @@ class PaymentsController extends Controller
 
         //Actualizamos pagos realizados
         foreach ($payments as $payment) {
-            $result[$payment->month_id - 1]->is_payment = true;
+            if($payment->month_id <= count($result) ){
+                $result[$payment->month_id - 1]->is_payment = true;
+            }
         }
         return (object)$result;
     }
