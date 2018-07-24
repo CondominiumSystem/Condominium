@@ -53,6 +53,7 @@
 			</div>
 
 			@if( $personId != 0)
+			{{ Form::hidden('personPropertyId', $personProperty->first()->id) }}
 			<div class="col-md-6 col-md-6">
                 {!! Form::label('date_from', 'Fecha Desde (Año/mes/día)') !!}
                 <div class="input-group date">

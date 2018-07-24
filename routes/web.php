@@ -41,6 +41,11 @@ Route::group(['middleware' => 'auth'], function () {
         'as' => 'Properties.edit'
     ]
     );
+    Route::get('/Properties/{id}/destroy', [
+					'uses' => 'PropertiesController@destroy',
+					'as' => 'Properties.destroy'
+			]
+	);
 
     Route::get('/ReportsPayments', [
                     'uses' => 'ReportsController@getPaymentsIndex',
@@ -53,6 +58,11 @@ Route::group(['middleware' => 'auth'], function () {
                     'as' => 'Reports.paymentsData'
             ]
     );
+    Route::get('/Persons/{id}/destroy', [
+					'uses' => 'PersonsController@destroy',
+					'as' => 'Persons.destroy'
+			]
+	);
 
     Route::get('/PortfolioReceivable', [
                     'uses' => 'ReportsController@getPortfolioReceivableIndex',

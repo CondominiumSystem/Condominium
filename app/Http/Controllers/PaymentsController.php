@@ -69,21 +69,15 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
-
         $result_value=DB::Table('properties')
         ->join('aliquot_values','aliquot_values.property_type_id','=','properties.property_type_id')
         ->select('aliquot_values.value')
         ->where('properties.id','=',$request->property_id)
         ->first();
 
-        //dd($result_value->value);
-
         $periods = $request->active;
-
         foreach ($periods as $period) {
             $payment = new Payment();
-
             $payment->property_id = $request->property_id;
             $payment->user_id = 1;
             $payment->transaction_id = 1;
@@ -91,11 +85,8 @@ class PaymentsController extends Controller
             $payment->value = $result_value->value;
             $payment->active = true;
             $payment->period_id = $period;
-
             $payment->save();
         }
-
-
         //$person = new Person($request->all());
         //$person->user_id = \Auth::user()->id;
         //$person->save();
@@ -179,33 +170,35 @@ class PaymentsController extends Controller
         //Todos los periodos
         $periods= Period::Where('year','=',$year);
         $periods = $periods->Where('year','>=',Carbon::parse($personProperty->date_from)->year);
+        $periods = $periods->Where('month_id','>=',Carbon::parse($personProperty->date_from)->month);
+
         $periods = $periods->orderBy('id')->get();
 
         $result = [];
         foreach ($periods as $period) {
-/*
             $tempDate = Carbon::parse($period->year . "/" . $period->month_id . "/1")->addMonths(1)->subDay();
 
-            if($personProperty->date_to != null && $personProperty->date_to <= $tempDate )
-            {
-                break;
+            $isPayment = false;
+            //Actualizamos pagos realizados
+            foreach ($payments as $payment) {
+                if($payment->month_id == $period->month_id){
+                    $isPayment = true;
+                }
             }
-*/
+
             array_push($result,(object)[
                 'period_id' => $period->id,
                 'month_id' => $period->month_id,
                 'month_name' => $period->month_name,
                 'quota' => $result_value->value,
-                'is_payment' => false,
+                'is_payment' => $isPayment,
             ]);
-        }
-
-        //Actualizamos pagos realizados
-        foreach ($payments as $payment) {
-            if($payment->month_id <= count($result) ){
-                $result[$payment->month_id - 1]->is_payment = true;
+            if($personProperty->date_to != null && $personProperty->date_to <= $tempDate )
+            {
+                break;
             }
         }
+
         return (object)$result;
     }
 

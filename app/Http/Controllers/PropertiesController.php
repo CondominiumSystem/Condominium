@@ -7,6 +7,7 @@ use App\Property;
 use App\Person;
 use App\PropertyType;
 use App\PersonProperty;
+use App\Payment;
 use Illuminate\Support\Facades\DB;
 class PropertiesController extends Controller
 
@@ -108,10 +109,15 @@ class PropertiesController extends Controller
      {
          $propertyTypes = PropertyType::pluck('name','id');
          $property = Property::find($propertyId);
-         $personProperty = PersonProperty::where('property_id', $propertyId)
-                            ->where('person_id',$personId)
-                            ->take(1)
-                            ->get();
+         if( $personId != 0 ){
+             $personProperty = PersonProperty::where('property_id', $propertyId)
+                                ->where('person_id',$personId)
+                                ->take(1)
+                                ->get();
+         }else{
+             $personProperty = null;
+         }
+
          $data = [
              'property' => $property,
              'personId' => $personId,
@@ -132,9 +138,38 @@ class PropertiesController extends Controller
      {
          $properties = Property::find($id);
          $properties->fill($request->all());
+
          $properties->save();
+         if($request->personPropertyId != null){
+             $personProperty = PersonProperty::find($request->personPropertyId);
+             $personProperty->date_from = $request->date_from;
+             $personProperty->date_to = $request->date_to;
+             $personProperty->save();
+         }
+
+
+
          flash("Grabado correctamente")->success();
          return redirect()->route('Properties.index');
      }
+
+     public function destroy($id)
+     {
+         $property = Property::find($id);//orderBy('id','desc');
+         if ($property->payments()->count() > 0){
+             flash('La propiedad tiene pagos asociados. No puede ser eliminada', 'danger')->important();
+         }
+         else{
+             $personProperties = PersonProperty::Where('property_id','=',$id)->get();//orderBy('id','desc');
+             //dd($personProperties);
+             foreach ($personProperties as $personProperty) {
+                 $personProperty->delete();
+             }
+             $property->delete();
+             flash('Se ha eliminado correctamente.', 'danger')->important();
+         }
+         return redirect()->route('Properties.index');
+     }
+
 
 }

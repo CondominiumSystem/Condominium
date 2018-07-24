@@ -19,7 +19,7 @@
 
             {!! Form::label('year', 'Año:') !!}
             <div class="input-group date">
-                {!! Form::select('year',$years,null,['class'=>'select form-control','required']) !!}
+                {!! Form::select('year',$years,null,['class'=>'select form-control','placeholder'=>'Año']) !!}
             </div>
 
             <label for="person_type_id">Residente:</label>
@@ -49,21 +49,21 @@
 
 @section('customScript')
 
-<!--
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
-
-<script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
-<script src="/vendor/datatables/buttons.server-side.js"></script> -->
-
-
 	<script type="text/javascript">
 
-$(document).ready( function () {
-
-		$('#payments-table').DataTable({
+		var oTable = $('#payments-table').DataTable({
+			dom: "<'row'<'col-xs-12'<'col-xs-6'l><'col-xs-6'p>>r>"+
+	            "<'row'<'col-xs-12't>>"+
+	            "<'row'<'col-xs-12'<'col-xs-6'i><'col-xs-6'p>>>",
 		     processing: true,
 		     serverSide: true,
-		     ajax: '{!! route("Reports.paymentsData") !!}',
+			 ajax: {
+	             url: '{{ route("Reports.paymentsData") }}',
+	             data: function (d) {
+	                 d.year = $('select[name=year]').val();
+	                 d.person_type_id = $('select[name=person_type_id]').val();
+	             }
+	         },
 		     columns: [
 		         { data: 'person_name', name: 'persons.name'},
 		         { data: 'person_type_name', name: 'person_types.name' },
@@ -74,7 +74,11 @@ $(document).ready( function () {
 		     ]
 		 });
 
-} );
+
+	     $('#search-form').on('submit', function(e) {
+	         oTable.draw();
+	         e.preventDefault();
+	     });
 
 	 </script>
 @endsection

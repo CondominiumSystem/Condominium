@@ -29,7 +29,7 @@ class Property extends Model
 
     public function payments()
     {
-        return $this->hasMany('App\Payments');
+        return $this->hasMany('App\Payment');
     }
 
     public function  scopeSearchByLotNumber($query,$lot_number)

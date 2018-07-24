@@ -42,17 +42,65 @@ class ReportsController extends Controller
                 'payments.value',
                 'periods.year',
                 'periods.month_name');
+            //    ->orderColumn('periods.year', 'properties.lot_number $1');
             //->where('periods.year', '=',$year)
             //->where('person_types', '=',$person_types_id );
-            return Datatables::of($payments)->make(true);
+            //return Datatables::of($payments)->make(true);
+
+
+            return Datatables::of($payments)
+            ->filter(function ($query) use ($request) {
+                if ($request->has('year')) {
+                    if($request->get('year') != ""){
+                        $query->where('periods.year', '=', "{$request->get('year')}");
+                    }
+                }
+
+                if ($request->has('person_type_id')) {
+                    if($request->get('person_type_id') != ""){
+                        $query->where('person_types.id', '=', "{$request->get('person_type_id')}");
+                    }
+                }
+            })
+            ->make(true);
     }
 
 
     public function getPortfolioReceivableIndex(Request $request){
         $years = $this->GetPeriods();
         $person_types=PersonType::pluck('name','id');
-        return view("Reports.
-        ",compact('years','person_types'));
+        return view("Reports.portfolioReceivable",compact('years','person_types'));
+    }
+
+    public function portfolioReceivableData(Request $request){
+        $payments = DB::select('select
+                person_name,
+                person_type_name,
+                lot_number,
+                value,
+                payment_value,
+                year,
+                month_name, month_id from paymentsview');
+            //    ->orderColumn('periods.year', 'properties.lot_number $1');
+            //->where('periods.year', '=',$year)
+            //->where('person_types', '=',$person_types_id );
+            //return Datatables::of($payments)->make(true);
+
+            return Datatables::of($payments)
+            ->filter(function ($query) use ($request) {
+                if ($request->has('year')) {
+                    if($request->get('year') != ""){
+                            $query->where('paymentsview.year', '=', "{$request->get('year')}");
+                    }
+                }
+
+                if ($request->has('person_type_id')) {
+                    if($request->get('person_type_id') != ""){
+                        $query->where('person_type_id', '=', "{$request->get('person_type_id')}");
+                    }
+                }
+            })
+            ->make(true);
     }
 
 

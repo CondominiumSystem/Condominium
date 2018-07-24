@@ -17,7 +17,7 @@
 
             {!! Form::label('year', 'Año:') !!}
             <div class="input-group date">
-                {!! Form::select('year',$years,null,['class'=>'select form-control','required']) !!}
+                {!! Form::select('year',$years,null,['class'=>'select form-control','placeholder'=>'Año']) !!}
             </div>
 
             <label for="person_type_id">Residente:</label>
@@ -29,12 +29,13 @@
     <table class="table table-bordered" id="payments-table">
         <thead>
         <tr>
+			<th>Año</th>
+            <th>Mes</th>
+			<th>Lote</th>
             <th>Nombre</th>
             <th>Tipo</th>
-            <th>Lote</th>
-            <th>Valor</th>
-            <th>Año</th>
-            <th>Mes</th>
+            <th>Valor Cartera</th>
+			<th>Valor Cobrado</th>
         </tr>
         </thead>
     </table>
@@ -47,32 +48,38 @@
 
 @section('customScript')
 
-<!--
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
-
-<script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
-<script src="/vendor/datatables/buttons.server-side.js"></script> -->
-
-
 	<script type="text/javascript">
 
-$(document).ready( function () {
-
-		$('#payments-table').DataTable({
+		var oTable = $('#payments-table').DataTable({
+			// dom: "<'row'<'col-xs-12'<'col-xs-6'l><'col-xs-6'p>>r>"+
+	        //     "<'row'<'col-xs-12't>>"+
+	        //     "<'row'<'col-xs-12'<'col-xs-6'i><'col-xs-6'p>>>",
 		     processing: true,
 		     serverSide: true,
-		     ajax: '{!! route("Reports.paymentsData") !!}',
+			 ajax: {
+	             url: '{{ route("Reports.portfolioReceivableData") }}',
+	             data: function (d) {
+	                 d.year = $('select[name=year]').val();
+	                 d.person_type_id = $('select[name=person_type_id]').val();
+	             }
+	         },
+			 "bFilter": false,
 		     columns: [
-		         { data: 'person_name', name: 'persons.name'},
-		         { data: 'person_type_name', name: 'person_types.name' },
-		         { data: 'lot_number', name: 'properties.lot_number' },
-		         { data: 'value', name: 'payments.value'},
-		         { data: 'year', name: 'periods.year'},
-		         { data: 'month_name', name:'periods.month_name'},
+				 { data: 'year', name: 'year'},
+				 { data: 'month_name', name:'month_name'},
+				 { data: 'lot_number', name: 'lot_number' },
+		         { data: 'person_name', name: 'person_name'},
+		         { data: 'person_type_name', name: 'person_type_name' },
+		         { data: 'value', name: 'value'},
+				 { data: 'payment_value', name: 'payment_value'},
 		     ]
 		 });
 
-} );
+
+	     $('#search-form').on('submit', function(e) {
+	         oTable.draw();
+	         e.preventDefault();
+	     });
 
 	 </script>
 @endsection

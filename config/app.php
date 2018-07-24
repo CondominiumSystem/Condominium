@@ -167,6 +167,7 @@ return [
         Laravel\Dusk\DuskServiceProvider::class,
 
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Yajra\DataTables\ButtonsServiceProvider::class
 
 
     ],
