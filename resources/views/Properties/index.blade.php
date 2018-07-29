@@ -37,70 +37,80 @@
 @endsection
 
 @section('main-content')
-	<div class="container-fluid spark-screen">
-		<div class="row">
+<div class="container-fluid spark-screen">
+	<div class="row">
+		<!-- Default box -->
+		<div class="box">
+			<div class="box box-success">
+		      	<div class="box-body">
+					<table class="table table-bordered table-hover">
+					    <thead>
+					    <th>Lote</th>
+						<th>Tipo</th>
+					    <th>Descripcion</th>
+						<th>Dirección</th>
+						<th>Acciones</th>
+					    </thead>
+					    <tbody>
+					      @foreach ($properties as $property)
+					          <tr>
+					              <td>{{ $property->lot_number}}</td>
+								  <td>{{ $property->property_type->name}}</td>
+					              <td>{{ $property->note}}</td>
+								  <td>{{ $property->address }}</td>
+								  <td>
+									  <a href="{{ route('Properties.edit', [$property->id, (($person)?$person->id:0) ])}}" type="button" class="btn btn-xs btn-warning">
+										  <i class="fa fa-pencil" aria-hidden="true"></i> Editar</a>
+									  <a href="" alt="Borrar" data-href="{{ route('Properties.destroy', $property->id )}}"
+										  type="button" class="btn btn-xs btn-danger"
+										  data-toggle="modal" data-target="#confirm-delete">
+										  <i class="fa fa-trash" aria-hidden="true"></i> Borrar</a>
+								  </td>
 
-				<!-- Default box -->
-				<div class="box">
-					<!-- <div class="box-header with-border">
-						<h3 class="box-title">Home</h3>
-
-						<div class="box-tools pull-right">
-							<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-								<i class="fa fa-minus"></i></button>
-							<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-								<i class="fa fa-times"></i></button>
-						</div>
-					</div> -->
-					<div class="box box-success">
-				      <div class="box-body">
-				          <table class="table table-bordered table-hover">
-                                <thead>
-                                <th>Lote</th>
-								<th>Tipo</th>
-                                <th>Descripcion</th>
-								<!-- <th>Activo</th> -->
-								<th>Dirección</th>
-								<th>Acciones</th>
-                                </thead>
-                                <tbody>
-                                  @foreach ($properties as $property)
-                                      <tr>
-                                          <td>{{ $property->lot_number}}</td>
-										  <td>{{ $property->property_type->name}}</td>
-                                          <td>{{ $property->note}}</td>
-										  <td>{{ $property->address }}</td>
-										  <!-- <td>
-											  @if ( $property->active )
-											  <span>SI</span>
-											  {!! Form::checkbox('active',$property->active,true) !!}
-											  @else
-											  <span>NO</span>
-											  @endif
-										  </td> -->
-
-										  <td>
-											  <a href="{{ route('Properties.edit', [$property->id, (($person)?$person->id:0) ])}}" type="button" class="btn btn-xs btn-warning">
-												  <i class="fa fa-pencil" aria-hidden="true"></i> Editar</a>
-											  <a href="{{ route('Properties.destroy', $property->id )}}" type="button" class="btn btn-xs btn-danger"
-												  onclick="return confirm('Seguro en Eliminar?')">
-												  <i class="fa fa-trash" aria-hidden="true"></i> Borrar</a>
-										  </td>
-
-                                      </tr>
-                                  @endforeach
-                            	</tbody>
-
-                            </table>
-                             <!-- Paginado -->
-                              {{ $properties->links() }}
-                             <!-- Fin Paginado -->
-                        </div>
-					<!-- /.box-body -->
-				</div>
-				<!-- /.box -->
-
-			</div>
-
+					          </tr>
+					      @endforeach
+						</tbody>
+					</table>
+					<!-- Paginado -->
+					{{ $properties->links() }}
+					<!-- Fin Paginado -->
+            	</div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
 	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Confirmar Borrado</h4>
+      </div>
+
+      <div class="modal-body">
+        <p>Estás a punto de eliminar un inmueble, este procedimiento es irreversible.</p>
+        <p>¿Quieres proceder?</p>
+        <p class="debug-url"></p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <a class="btn btn-danger btn-ok">Borrar</a>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection
+
+@section('customScript')
+  <script>
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+      $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+      $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+    });
+  </script>
 @endsection

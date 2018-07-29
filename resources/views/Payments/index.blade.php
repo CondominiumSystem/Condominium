@@ -88,16 +88,13 @@
 				@endif
 				<div class="col-md-6">
 					<div class="box box-success">
-
 						<div class="box-header">
 			              	<h3 class="box-title">PAGOS AÑO: {{ $selected_period }}
 							</h3>
 							<button type="submit" class="btn btn-success no-margin pull-right" >
 								<i class="fa fa-money"></i>  Pagar
 							</button>
-
 			            </div>
-
 						<div class="box-body">
 							<div class="bs-callout bs-callout-warning">
 								<table class="table table-bordered table-hover">
@@ -107,7 +104,6 @@
 										<th>Pago</th>
 									</thead>
 									<tbody>
-
 									@if( $payments == null)
 										<tr>
 											<td colspan="3">
@@ -115,13 +111,10 @@
 											</td>
 										</tr>
 									@else
-
 										@foreach($payments as $payment)
 										<tr>
 											<td>{{$payment->month_name}}</td>
-											<td>
-												{{ $payment->quota }}
-											</td>
+											<td>{{ $payment->quota }}</td>
 											<td>
 												@if ( $payment->is_payment )
 												<span>PAGADO</span>
@@ -129,30 +122,50 @@
 												<span>NO</span>
 												{!! Form::checkbox('active[]',$payment->period_id,$payment->is_payment) !!}
 												@endif
-												<!-- <input class="checkbox" type="checkbox" name="is_pay[]"
-												id="check-box-{{ $payment->period_id }}"
-												value="{{ $payment->is_payment }}"
-												{{ ($payment->is_payment) ? "checked" : "" }} /> -->
 											</td>
 										</tr>
 										@endforeach
 									@endif
 								</tbody>
-
 								</table>
 							</div>
 						</div>
 					</div>
-
 				</div>
 				{!! Form::close() !!}
-
 		</div>
-
-
-
-
-
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Confirmar Borrado</h4>
+      </div>
+
+      <div class="modal-body">
+        <p>Estás a punto de eliminar un inmueble, este procedimiento es irreversible.</p>
+        <p>¿Quieres proceder?</p>
+        <p class="debug-url"></p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <a class="btn btn-danger btn-ok">Borrar</a>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection
+
+@section('customScript')
+  <script>
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+      $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+      $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+    });
+  </script>
 @endsection

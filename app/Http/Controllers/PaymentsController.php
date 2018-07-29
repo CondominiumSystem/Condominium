@@ -186,16 +186,21 @@ class PaymentsController extends Controller
                 }
             }
 
-            array_push($result,(object)[
-                'period_id' => $period->id,
-                'month_id' => $period->month_id,
-                'month_name' => $period->month_name,
-                'quota' => $result_value->value,
-                'is_payment' => $isPayment,
-            ]);
-            if($personProperty->date_to != null && $personProperty->date_to <= $tempDate )
+
+
+            if($personProperty->date_to != null && Carbon::parse($personProperty->date_to) < $tempDate )
             {
+                //dd([Carbon::parse($personProperty->date_to), $tempDate]);
                 break;
+            }
+            else {
+                array_push($result,(object)[
+                    'period_id' => $period->id,
+                    'month_id' => $period->month_id,
+                    'month_name' => $period->month_name,
+                    'quota' => $result_value->value,
+                    'is_payment' => $isPayment,
+                ]);
             }
         }
 

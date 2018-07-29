@@ -72,9 +72,12 @@
 		         { data: 'person_type_name', name: 'person_type_name' },
 		         { data: 'value', name: 'value'},
 				 { data: 'payment_value', name: 'payment_value'},
-		     ]
+		     ],
+			 "columnDefs": [
+		      { className: "dt-right", "targets": [0,2,5,6] },
+		      { className: "dt-nowrap", "targets": [1,3,4] }
+		    ]
 		 });
-
 
 	     $('#search-form').on('submit', function(e) {
 	         oTable.draw();
