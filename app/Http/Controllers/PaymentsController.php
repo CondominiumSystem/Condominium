@@ -74,22 +74,21 @@ class PaymentsController extends Controller
         ->select('aliquot_values.value')
         ->where('properties.id','=',$request->property_id)
         ->first();
+        $transaction_id = time();
 
         $periods = $request->active;
         foreach ($periods as $period) {
             $payment = new Payment();
             $payment->property_id = $request->property_id;
-            $payment->user_id = 1;
-            $payment->transaction_id = 1;
+            $payment->user_id = \Auth::user()->id;
+            $payment->transaction_id = $transaction_id;
             $payment->transaction_parent_id = 0;
             $payment->value = $result_value->value;
             $payment->active = true;
             $payment->period_id = $period;
             $payment->save();
         }
-        //$person = new Person($request->all());
-        //$person->user_id = \Auth::user()->id;
-        //$person->save();
+        flash("Pago Grabado correctamente. Transacción: ".$transaction_id)->success();
         return redirect()->route('Payments.index');
     }
 
