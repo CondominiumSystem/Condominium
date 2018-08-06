@@ -64,6 +64,9 @@
 	             }
 	         },
 			 "bFilter": false,
+			 'language' : {
+                 "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            },
 		     columns: [
 				 { data: 'year', name: 'year'},
 				 { data: 'month_name', name:'month_name'},

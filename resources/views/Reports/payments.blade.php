@@ -64,6 +64,9 @@
 	                 d.person_type_id = $('select[name=person_type_id]').val();
 	             }
 	         },
+			 'language' : {
+                 "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            },
 		     columns: [
 		         { data: 'person_name', name: 'persons.name'},
 		         { data: 'person_type_name', name: 'person_types.name' },
