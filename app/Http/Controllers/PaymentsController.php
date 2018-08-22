@@ -29,13 +29,18 @@ class PaymentsController extends Controller
         {
             if($request->lot_number != null){
                $properties= $this->GetPropertiesByLotNumber($request->lot_number);
-               if($properties->count() == 1 ){
+               if($properties->count() >= 1 ){
                    //Obtenemos los pagos
                    $payments=$this->GetPaymentsByPropertyId(
                        $properties->first()->id,
                        $selected_period,
                        $properties->first()->person_id
                    );
+               }
+               else{
+                   flash("No se encotraron registros")->success();
+                   $properties=null;
+                   $payments = null;
                }
             }
             else

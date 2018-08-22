@@ -67,13 +67,12 @@
         if (url.indexOf('?') > -1) {
             return url + '&' + $.param(params);
         }
-        
+
         return url + '?' + $.param(params);
     };
 
     DataTable.ext.buttons.excel = {
         className: 'buttons-excel',
-
         text: function (dt) {
             return '<i class="fa fa-file-excel-o"></i> ' + dt.i18n('buttons.excel', 'Excel');
         },

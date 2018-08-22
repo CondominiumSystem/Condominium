@@ -167,7 +167,12 @@ return [
         Laravel\Dusk\DuskServiceProvider::class,
 
         Yajra\DataTables\DataTablesServiceProvider::class,
-        Yajra\DataTables\ButtonsServiceProvider::class
+        Yajra\DataTables\ButtonsServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+        Yajra\DataTables\ButtonsServiceProvider::class,
+
+        Barryvdh\Snappy\ServiceProvider::class,
+
 
 
     ],
@@ -222,6 +227,10 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        //'PDF' => Barryvdh\DomPDF\Facade::class,
+
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 
     ],
 

@@ -17,7 +17,6 @@
 							{!! Form::open(['route'=>'Payments.index', 'method' =>'GET']) !!}
 
 								<div class="col-md-5">
-
 									<div class="input-group">
 									  {!! Form::text('document_number',null,['class'=> 'form-control','placeholder'=>'Cédula / RUC..','aria-describedby'=>'search'])!!}
 									  <span class="input-group-btn">
@@ -26,7 +25,6 @@
   										</button>
   									</span>
 									</div>
-
 								</div>
 
 								<div class="col-md-3">
@@ -34,7 +32,7 @@
 								</div>
 								<div class="col-md-4">
 								<div class="input-group">
-									{!! Form::text('lot_number',$lot_number,['class'=> 'form-control','placeholder'=>'Lote','aria-describedby'=>'search'])!!}
+									{!! Form::text('lot_number',$lot_number,['class'=> 'form-control','placeholder'=>'Lote','maxlength' => 3,'aria-describedby'=>'search'])!!}
 									<span class="input-group-btn">
 										<button class="btn btn-default" type="submit">
 											<span class="btn-label"><i class="fa fa-search"></i></span>
@@ -51,7 +49,7 @@
 
 					<div class="box box-success">
 						<div class="box-body">
-							<table class="table table-bordered table-hover">
+							<table class="table table-bordered table-hover" id="tblProperties">
 								<thead>
 									<th>Propiedad</th>
 									<th>Lote</th>
@@ -82,7 +80,8 @@
 
 				</div>
 				<!-- right column -->
-				{!! Form::open(['route'=>'Payments.store', 'method' =>'POST']) !!}
+				{!! Form::open(['route'=>'Payments.store', 'id' => 'formPayment','method' =>'POST']) !!}
+					<input type="hidden" name="_token" value="{{csrf_token()}}">
 				@if($properties != null)
 				{!! Form::hidden('property_id', $properties->first()->id  ) !!}
 				@endif
@@ -91,13 +90,14 @@
 						<div class="box-header">
 			              	<h3 class="box-title">PAGOS AÑO: {{ $selected_period }}
 							</h3>
-							<button type="submit" class="btn btn-success no-margin pull-right" data-toggle="modal" data-target="#modal-confirm" >
+							<button type="button" id="btnPayment"
+								class="btn btn-success no-margin pull-right">
 								<i class="fa fa-money"></i>  Pagar
 							</button>
 			            </div>
 						<div class="box-body">
 							<div class="bs-callout bs-callout-warning">
-								<table class="table table-bordered table-hover">
+								<table class="table table-bordered table-hover" id="tblPayments">
 									<thead>
 										<th>Mes</th>
 										<th>Valor</th>
@@ -132,54 +132,53 @@
 						</div>
 					</div>
 				</div>
-				{!! Form::close() !!}
+				<!-- {!! Form::close() !!} -->
+			</form>
 		</div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmPayment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Confirmar Borrado</h4>
+        <h4 class="modal-title" id="myModalLabel"><b>Confirmar Pago</b></h4>
       </div>
-
       <div class="modal-body">
-        <p>Estás a punto de eliminar un inmueble, este procedimiento es irreversible.</p>
-        <p>¿Quieres proceder?</p>
-        <p class="debug-url"></p>
+        <p class="detalle"></p>
       </div>
-
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        <a class="btn btn-danger btn-ok">Borrar</a>
+        <a class="btn btn-success btn-ok" id="btnAceptPayment">Aceptar</a>
       </div>
     </div>
   </div>
 </div>
 
 <!-- begin modal -->
-<div class="modal modal-info fade" id="modal-confirm">
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
-	<div class="modal-content">
-	  <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		  <span aria-hidden="true">&times;</span></button>
-		<h4 class="modal-title">Info Modal</h4>
-	  </div>
-	  <div class="modal-body">
-		<p>One fine body&hellip;</p>
-	  </div>
-	  <div class="modal-footer">
-		<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-		<button type="button" class="btn btn-outline">Save changes</button>
-	  </div>
-	</div>
-	<!-- /.modal-content -->
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Información</h4>
+      </div>
+      <div class="modal-body">
+        <p>No se encontro registros pedientes</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
   </div>
-  <!-- /.modal-dialog -->
 </div>
+
+
 <!-- /.modal -->
 
 
@@ -187,10 +186,52 @@
 
 @section('customScript')
   <script>
+
     $('#confirm-delete').on('show.bs.modal', function(e) {
       $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
 
       $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
     });
+
+
+	var tblProperties = $("#tblProperties");
+	var tblPayments = $("#tblPayments");
+
+
+	$("#btnAceptPayment").on('click',function(event){
+		$("#formPayment").submit();
+	});
+
+	$("#btnPayment").on('click',function(event){
+		event.preventDefault();
+	    if( tblProperties[0] != undefined && tblPayments.find('input[type=checkbox]:checked').length > 0 ){
+
+			var items = tblPayments.find('input[type=checkbox]:checked');//.find('td');
+			var tableConfirmation = $("<table class='table table-bordered table-hover'><thead><th>Mes</th><th>Valor</th></thead><tbody></tbody></table>");
+//debugger;
+			//console.log(items);
+			var total = 0.0;
+			for (var i = 0; i < items.length; i++){
+				var rows = $(items[i]).parent().parent().find('td');
+				total = total + parseFloat(rows[1].innerText);
+				tableConfirmation.append('<tr><td>' + rows[0].innerText + '</td><td>' + rows[1].innerText + '</td></tr>'  );
+			}
+			//if( total >= 0){
+				debugger;
+				tableConfirmation.append('<tfoot><tr><td><b>TOTAL</b></td><td><b>' + total.toFixed(2) + '</b></td></tr></tfoot>'  );
+			//}
+
+			$("#confirmPayment").find(".detalle").html('');
+			$("#confirmPayment").find(".detalle").append(tableConfirmation);
+
+	        $("#confirmPayment").modal();
+	    }
+	    else {
+	        $("#myModal").modal();
+	    }
+	    return false;
+
+	})
+
   </script>
 @endsection

@@ -48,14 +48,28 @@
 @endsection
 
 @section('customScript')
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js" ></script>
+<script ser="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script ser="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script ser="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script ser="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script ser="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="/vendor/datatables/buttons.server-side.js"></script>
 
 	<script type="text/javascript">
 
 		var oTable = $('#payments-table').DataTable({
-			dom: "<'row'<'col-xs-12'<'col-xs-6'l><'col-xs-6'p>>r>"+
-	            "<'row'<'col-xs-12't>>"+
-	            "<'row'<'col-xs-12'<'col-xs-6'i><'col-xs-6'p>>>",
-		     processing: true,
+			// dom: "<'row'<'col-xs-12'<'col-xs-6'l><'col-xs-6'p>>r>"+
+	        //     "<'row'<'col-xs-12't>>"+
+	        //     "<'row'<'col-xs-12'<'col-xs-6'i><'col-xs-6'p>>>",
+				 dom: 'Bfrtip',
+				buttons: [
+            { extend:'copy', attr: { id: 'allan' } }, 'csv', 'excel', 'pdf', 'print'
+        ],
+
+             processing: true,
 		     serverSide: true,
 			 ajax: {
 	             url: '{{ route("Reports.paymentsData") }}',

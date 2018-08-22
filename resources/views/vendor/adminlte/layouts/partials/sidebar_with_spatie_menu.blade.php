@@ -30,7 +30,16 @@
         <!-- /.search form -->
 
         <!-- Sidebar Menu -->
-        {{ Menu::sidebar() }}
+
+        @if ( Auth::user()->hasRole('admin') || Auth::user()->hasRole('manager'))
+            {{ Menu::sidebarAdmin() }}
+        @endif
+
+        @if ( Auth::user()->hasRole('accountant'))
+            {{ Menu::sidebar() }}
+        @endif
+
+
         <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

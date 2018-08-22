@@ -76,6 +76,18 @@ Route::group(['middleware' => 'auth'], function () {
             ]
     );
 
+    Route::get('/Cecilias', [
+					'uses' => 'CeciController@getIndex',
+					'as' => 'CeciController.getIndex'
+			]
+	);
+    Route::get('/Cecilia', [
+                    'uses' => 'CeciController@getTutorial',
+                    'as' => 'CeciController.getTutorial'
+            ]
+    );
+
+
 
 
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.

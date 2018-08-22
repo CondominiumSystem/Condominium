@@ -34,8 +34,7 @@ desired effect
     <div class="wrapper">
 
     @include('adminlte::layouts.partials.mainheader')
-
-    @include('adminlte::layouts.partials.sidebar')
+    @include('adminlte::layouts.partials.sidebar_with_spatie_menu')
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">

@@ -23,12 +23,12 @@ class PropertiesController extends Controller
         $lot_number=$request->lot_number;
 
         if($person_id == null && $lot_number == null){
-            $properties = Property::paginate(10);
+            $properties = Property::orderBy('lot_number', 'asc')->paginate(10);
             $person = null;
         }
         else if($person_id != null && $lot_number == null){
             $person = Person::find($person_id);
-            $properties = $person->properties()->paginate(10);
+            $properties = $person->properties()->orderBy('lot_number', 'asc')->paginate(10);
         }
         else if ($person_id == null && $lot_number != null) {
             $properties = Property::SearchByLotNumber($request->lot_number)->paginate(10);
