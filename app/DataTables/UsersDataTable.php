@@ -4,6 +4,13 @@ namespace App\DataTables;
 
 use App\User;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Yajra\Datatables\Datatables;
+use App\Period;
+use App\PersonType;
+
+
 
 class UsersDataTable extends DataTable
 {
@@ -41,8 +48,9 @@ class UsersDataTable extends DataTable
                 'payments.value',
                 'periods.year',
                 'periods.month_name');
+                return $this->applyScopes($payments);
 
-       return $this->applyScopes($payments);
+       //return $this->applyScopes($users);
         //return $model->newQuery()->select('id', 'add-your-columns-here', 'created_at', 'updated_at');
     }
 
@@ -67,6 +75,9 @@ class UsersDataTable extends DataTable
      */
     protected function getColumns()
     {
+//return ['id','name','email'];
+
+
         return [
             'person_name',
             'person_type_name',
