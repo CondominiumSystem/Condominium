@@ -28,7 +28,7 @@ class ReportsController extends Controller
      */
     public function getIndex(UsersDataTable $dataTable)
     {
-        return $dataTable->render('Ceci.getIndex');
+        return $dataTable->render('Reports.getIndex');
     }
 
 
