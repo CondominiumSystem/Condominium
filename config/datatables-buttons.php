@@ -57,14 +57,17 @@ return [
      * Default html builder parameters.
      */
     'parameters' => [
-        'dom'     => 'Bfrtip',
+        'dom'     => 'Blfrtip',
         'order'   => [[0, 'desc']],
         'buttons' => [
-            'create',
+//            'create',
             'export',
             'print',
             'reset',
             'reload',
+        ],
+        'language' => [
+                'url' => '//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json'
         ],
     ],
 ];

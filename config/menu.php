@@ -48,6 +48,7 @@ Menu::macro('sidebarAdmin', function () {
         ->add(Menu::new()->prepend('<a href="#"><i class="fa fa-book"></i><span>Reportes</span> <i class="fa fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->action('ReportsController@getPaymentsIndex', '<i class="fa fa-money"></i><span>Pagos</span>')
+            ->action('ReportsController@getIndex', '<i class="fa fa-money"></i><span>Nuevo Pagos</span>')
             ->action('ReportsController@getPortfolioReceivableIndex', '<i class="fa fa-money"></i><span>Cartera</span>')
             ->addClass('treeview-menu')
         )

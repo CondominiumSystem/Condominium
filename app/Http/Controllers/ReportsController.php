@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
@@ -21,6 +22,15 @@ class ReportsController extends Controller
         $person_types=PersonType::pluck('name','id');
         return view("Reports.payments",compact('years','person_types'));
     }
+
+    /**
+     * getIndex
+     */
+    public function getIndex(UsersDataTable $dataTable)
+    {
+        return $dataTable->render('Ceci.getIndex');
+    }
+
 
 
     function GetPeriods(){
@@ -102,7 +112,6 @@ class ReportsController extends Controller
             }
             $payments = DB::select($strConsulta);
         }
-
 
         //$payments = DB::select($strConsulta,[$request->get('year')]);
 

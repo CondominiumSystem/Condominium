@@ -76,9 +76,9 @@ Route::group(['middleware' => 'auth'], function () {
             ]
     );
 
-    Route::get('/CeciliaTable', [
-					'uses' => 'CeciController@getIndex',
-					'as' => 'CeciController.getIndex'
+    Route::get('/NewReportPayments', [
+					'uses' => 'ReportsController@getIndex',
+					'as' => 'ReportsController.getIndex'
 			]
 	);
     Route::get('/Cecilia', [

@@ -1,8 +1,16 @@
 @extends('adminlte::layouts.app')
 
-@section('main-content')
+@section('contentheader_title')
+	 Reporte de Pagos
+@endsection
 
-    {!! $dataTable->table(['class' => 'table table-bordered table-condensed']) !!}
+@section('main-content')
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+    <div class="box">
+        <div class="box-body">
+            {!! $dataTable->table(['class' => 'table table-bordered table-condensed']) !!}
+        </div>
+    </div>
 @endsection
 
 @section('customScript')
