@@ -28,12 +28,14 @@ class ReportsController extends Controller
      */
     public function getIndex(UsersDataTable $dataTable)
     {
-        return $dataTable->render('Reports.getIndex');
+        $years = $this->GetPeriods();
+        $person_types=PersonType::pluck('name','id');
+        //return view("Reports.portfolioReceivable",compact('years','person_types'));
+        return $dataTable->render('Reports.getIndex',compact('years','person_types'));
     }
 
-
-
     function GetPeriods(){
+
         return Period::distinct()->pluck('year','year');
     }
 

@@ -7,6 +7,18 @@
 @section('main-content')
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
     <div class="box">
+		<div class="box-header ">
+			<div class="row">
+				<div class="col-md-6">
+					{!! Form::label('year', 'Año:') !!}
+		            {!! Form::select('year',$years,null,['class'=>'select form-control','placeholder'=>'Año', 'onchange'=>'$(\'#dataTableBuilder\').DataTable().draw()']) !!}
+				</div>
+				<div class="col-md-6">
+					{!! Form::label('person_type_id', 'Residente:') !!}
+					{!! Form::select('person_type_id',$person_types,null,['class'=>'select form-control', 'placeholder'=>'Seleccione Tipo']) !!}
+				</div>
+			</div>
+		</div>
         <div class="box-body">
             {!! $dataTable->table(['class' => 'table table-bordered table-condensed']) !!}
         </div>
