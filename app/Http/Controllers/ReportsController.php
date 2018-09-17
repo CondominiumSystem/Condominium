@@ -112,6 +112,9 @@ class ReportsController extends Controller
                 $strConsulta = $strConsulta . ' year = ' . $year;
                 $strConsulta = $strConsulta . ' and person_type_id = ' . $personType;
             }
+
+            $strConsulta = $strConsulta . ' order by year, lot_number, month_id';
+
             $payments = DB::select($strConsulta);
         }
 

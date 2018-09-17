@@ -10,8 +10,6 @@ use Yajra\Datatables\Datatables;
 use App\Period;
 use App\PersonType;
 
-
-
 class UsersDataTable extends DataTable
 {
     /**
@@ -34,8 +32,10 @@ class UsersDataTable extends DataTable
      */
     public function query(User $model)
     {
-        //$users = User::select();
-        $payments = DB::table('payments')
+        $year = $this->request()->get('year');
+        $personTypeId = $this->request()->get('person_type_id');
+
+        $query = DB::table('payments')
             ->join('person_property', 'person_property.property_id', '=', 'payments.property_id')
             ->join('persons','persons.id','=','person_property.person_id')
             ->join('properties','properties.id','=','person_property.property_id')
@@ -43,14 +43,26 @@ class UsersDataTable extends DataTable
             ->join('person_types','person_types.id','=','persons.person_type_id')
             ->select(
                 'persons.name as person_name',
+                'persons.person_type_id',
                 'person_types.name as person_type_name',
                 'properties.lot_number',
                 'payments.value',
                 'periods.year',
                 'periods.month_name');
-                return $this->applyScopes($payments);
+        //        ->where('periods.year', '>', 0);
 
-       //return $this->applyScopes($users);
+        if ($year) {
+            $query = $query->where('periods.year', '=', $year);
+        }
+
+        if ($personTypeId) {
+            $query = $query->where('persons.person_type_id', '=', $personTypeId);
+        }
+
+        //$payments = $query->get();
+
+        return $this->applyScopes($query);
+        //return $this->applyScopes($users);
         //return $model->newQuery()->select('id', 'add-your-columns-here', 'created_at', 'updated_at');
     }
 
