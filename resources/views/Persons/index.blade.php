@@ -8,50 +8,58 @@
     Personas
 @endsection
 
-
 @section('contentheader_description')
+ Listado
 @endsection
 
-
+@section('new_button')
+	@permission('create-auth-persons')
+		<div class="pull-right">
+			<a href="{{url('Persons/create')}}" type="button" class="btn btn-primary">
+				<i class="fa fa-plus" aria-hidden="true"></i> Agregar
+			</a>
+		</div>
+	@endpermission
+@endsection
 
 @section('main-content')
 		<!-- Default box -->
 		<div class="box box-success">
 
 			<div class="box-header with-border">
-		        <div class="pull-left">
+		        <div class="">
 
-					<!-- Inicio Buscador por Nombre -->
-						{!! Form::open(['route'=>'Persons.index', 'method' =>'GET', 'class' => 'navbar-form pull-right']) !!}
-						<div class ="input-group" >
-							{!! Form::text('name',null,['class'=> 'form-control input-sm','placeholder'=>'Buscar Contacto..','aria-describedby'=>'search'])!!}
-							<span class="input-group-addon" id="search">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
-						</div>
-						{!! Form::close() !!}
-					<!-- Fin Buscador -->
+							<div class="row">
+								<div class="col-sm-2">
+								{!! Form::select('person_type_id',$person_types,null,['class'=>'input-filter input-sm form-control', 'placeholder'=>'Seleccione Tipo']) !!}
+								</div>
+								<div class="col-sm-2">
+									<!-- Inicio Buscador por Nombre -->
+										{!! Form::open(['route'=>'Persons.index', 'method' =>'GET', 'class' => '']) !!}
+										<div class ="input-group" >
+											{!! Form::text('name',null,['class'=> 'form-control input-sm','placeholder'=>'Buscar Contacto..','aria-describedby'=>'search'])!!}
+											<span class="input-group-addon" id="search">
+											<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+										</span>
+										</div>
+										{!! Form::close() !!}
+									</div>
+									<!-- Fin Buscador -->
+									<div class="col-sm-4">
+									<!-- Inicio Buscador por Documento -->
+									{!! Form::open(['route'=>'Persons.index', 'method' =>'GET', 'class' => '']) !!}
+										<div class ="input-group" >
+										{!! Form::text('document_number',null,['class'=> 'form-control input-sm','placeholder'=>'Nro. Documento..','aria-describedby'=>'searchByNumber'])!!}
+										<span class="input-group-addon" id="searchByNumber">
+										<span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+										</div>
+									{!! Form::close() !!}
+									</div>
+									<!-- Fin Buscador -->
+						        </div>
 
-					<!-- Inicio Buscador por Documento -->
-					{!! Form::open(['route'=>'Persons.index', 'method' =>'GET', 'class' => 'navbar-form pull-right']) !!}
-						<div class ="input-group" >
-						{!! Form::text('document_number',null,['class'=> 'form-control input-sm','placeholder'=>'Nro. Documento..','aria-describedby'=>'searchByNumber'])!!}
-						<span class="input-group-addon" id="searchByNumber">
-						<span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
-						</div>
-					{!! Form::close() !!}
-					<!-- Fin Buscador -->
+							</div>
 
-
-		        </div>
-		        <div class="pull-right">
-					@permission('create-auth-persons')
-					<div class ="input-group" >
-					  <a href="{{url('Persons/create')}}" type="button" class="btn btn-primary">
-						  <i class="fa fa-plus" aria-hidden="true"></i> Agregar
-					  </a>
-					</div>
-					@endpermission
-		        </div>
 		    </div>
 		    <!-- /.box-header -->
 
@@ -60,7 +68,7 @@
 	          <table class="table table-bordered table-hover">
 
               <thead>
-				<th>Tipo</th>
+								<th>Tipo</th>
                 <th>Nombre</th>
                 <th>Documento</th>
                 <th>Teléfono</th>
