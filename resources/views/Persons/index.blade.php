@@ -93,9 +93,12 @@
 								<i class="fa fa-pencil" aria-hidden="true"></i> Editar
 							</a>
 							@endpermission
+
+							@if( $person->properties->count() > 0)
 							<a href="{{ route('Properties.index', [ 'id' => $person->id] )}}" type="button" class="btn btn-xs btn-info ">
 								<i class="fa fa-home" aria-hidden="true"></i> Propiedades
 							</a>
+							@endif
 
 							@permission('delete-auth-persons')
 							<a href="" alt="Borrar" type="button"

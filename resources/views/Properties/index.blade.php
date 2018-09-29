@@ -6,24 +6,27 @@
 	 Listado de Propieades
 @endsection
 
-@section('new_button')
+@section('contentheader_description')
 	@if( $person != null)
 	[ {{ $person->name }} ]
 	@endif
+@endsection
 
-    <!-- Inicio Buscador por Nombre -->
+@section('new_button')
+	@if( $person == null)
+	<!-- Inicio Buscador por Número de Lote -->
 	<div class="col-md-8">
-        {!! Form::open(['route'=>'Properties.index', 'method' =>'GET', 'class' => 'navbar-form pull-right']) !!}
-		<div class ="input-group" >
-            {!! Form::text('lot_number',null,['class'=> 'form-control','placeholder'=>'Número de Lote','aria-describedby'=>'search'])!!}
-			<button class="btn btn-default" type="submit">
-				<span class="btn-label"><i class="fa fa-search"></i></span>
-			</button>
-        </div>
-
-        {!! Form::close() !!}
-</div>
+			{!! Form::open(['route'=>'Properties.index', 'method' =>'GET', 'class' => 'navbar-form pull-right']) !!}
+			<div class ="input-group" >
+							{!! Form::text('lot_number',null,['class'=> 'form-control','placeholder'=>'Número de Lote','aria-describedby'=>'search'])!!}
+				<button class="btn btn-default" type="submit">
+					<span class="btn-label"><i class="fa fa-search"></i></span>
+				</button>
+			</div>
+			{!! Form::close() !!}
+	</div>
 	<!-- Fin Buscador -->
+	@endif
 
 	<!-- Boton Agregar -->
 	<div class="col-md-4">
