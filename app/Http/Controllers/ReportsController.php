@@ -85,15 +85,29 @@ class ReportsController extends Controller
     }
 
     public function portfolioReceivableData(Request $request){
+
         $strConsulta='select
-                person_name,
-                person_type_name,
-                lot_number,
-                value,
-                payment_value,
-                year,
-                month_name, month_id from paymentsview';
-                $payments = DB::select($strConsulta);
+            lot_number,
+            year,
+            person_name,
+            max(person_type_name) as person_type_name,
+            max(date_from) as date_from,
+            max(date_to) as date_to,
+            sum(IF(month_id = 1, payment_value, 0)) AS ENE,
+            sum(IF(month_id = 2, payment_value, 0)) AS FEB,
+            sum(IF(month_id = 3, payment_value, 0)) AS MAR,
+            sum(IF(month_id = 4, payment_value, 0)) AS ABR,
+            sum(IF(month_id = 5, payment_value, 0)) AS MAY,
+            sum(IF(month_id = 6, payment_value, 0)) AS JUN,
+            sum(IF(month_id = 7, payment_value, 0)) AS JUL,
+            sum(IF(month_id = 8, payment_value, 0)) AS AGO,
+            sum(IF(month_id = 9, payment_value, 0)) AS SEP,
+            sum(IF(month_id = 10, payment_value, 0)) AS OCT,
+            sum(IF(month_id = 11, payment_value, 0)) AS NOV,
+            sum(IF(month_id = 12, payment_value, 0)) AS DIC,
+            SUM(payment_value) AS TOTAL,
+            SUM(value) AS DEUDA
+            from paymentsview';
 
         $validYear = ($request->has('year') && $request->get('year') != "" );
         $validPersonType = ($request->has('person_type_id') && $request->get('person_type_id') != "" );
@@ -112,16 +126,13 @@ class ReportsController extends Controller
                 $strConsulta = $strConsulta . ' year = ' . $year;
                 $strConsulta = $strConsulta . ' and person_type_id = ' . $personType;
             }
-
-            $strConsulta = $strConsulta . ' order by year, lot_number, month_id';
-
-            $payments = DB::select($strConsulta);
         }
 
-        //$payments = DB::select($strConsulta,[$request->get('year')]);
+        $strConsulta = $strConsulta . ' group by lot_number,person_name, year';
+        $strConsulta = $strConsulta . ' order by lot_number,person_name, year';
+
+        $payments = DB::select($strConsulta);
 
         return Datatables::of($payments)->make(true);
     }
-
-
 }

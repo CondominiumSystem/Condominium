@@ -29,13 +29,26 @@
     <table class="table table-bordered" id="payments-table">
         <thead>
         <tr>
-			<th>Año</th>
-            <th>Mes</th>
 			<th>Lote</th>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Valor Cartera</th>
-			<th>Valor Cobrado</th>
+			<th>Año</th>
+			<th>Nombre</th>
+			<th>Tipo</th>
+            <th>Desde</th>
+			<th>Hasta</th>
+			<th>ENE</th>
+			<th>FEB</th>
+			<th>MAR</th>
+			<th>ABR</th>
+			<th>MAY</th>
+			<th>JUN</th>
+			<th>JUL</th>
+			<th>AGO</th>
+			<th>SEP</th>
+			<th>OCT</th>
+			<th>NOV</th>
+			<th>DIC</th>
+            <th>Valor</th>
+			<th>Deuda</th>
         </tr>
         </thead>
     </table>
@@ -47,13 +60,26 @@
 @endsection
 
 @section('customScript')
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.38/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.38/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+
+<script src="/vendor/datatables/buttons.server-side.js"></script>
 
 	<script type="text/javascript">
+	 $(document).ready(function() {
 
 		var oTable = $('#payments-table').DataTable({
 			// dom: "<'row'<'col-xs-12'<'col-xs-6'l><'col-xs-6'p>>r>"+
 	        //     "<'row'<'col-xs-12't>>"+
 	        //     "<'row'<'col-xs-12'<'col-xs-6'i><'col-xs-6'p>>>",
+					dom: 'Bfrtip',
+		   			buttons: [ 'csv', 'excel', 'pdf', 'print' ],
 		     processing: true,
 		     serverSide: true,
 			 ajax: {
@@ -63,19 +89,34 @@
 	                 d.person_type_id = $('select[name=person_type_id]').val();
 	             }
 	         },
-			 "bFilter": false,
+			// "bFilter": false,
 			 'language' : {
                  "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
              },
-			 "order": [[ 0, "asc" ],[ 2, "asc" ]],
+			// "order": [[ 0, "asc" ],[ 2, "asc" ]],
 		     columns: [
-				 { data: 'year', name: 'year'},
-				 { data: 'month_name', name:'month_name'},
 				 { data: 'lot_number', name: 'lot_number' },
-		         { data: 'person_name', name: 'person_name'},
-		         { data: 'person_type_name', name: 'person_type_name' },
-		         { data: 'value', name: 'value'},
-				 { data: 'payment_value', name: 'payment_value'},
+				 { data: 'year', name: 'year'},
+				 { data: 'person_name', name: 'person_name'},
+				 { data: 'person_type_name', name: 'person_type_name' },
+				 { data: 'date_from', name: 'date_from'},
+				 { data: 'date_to', name: 'date_to'},
+
+				 { data: 'ENE', name:'ENE'},
+				 { data: 'FEB', name:'FEB'},
+				 { data: 'MAR', name:'MAR'},
+				 { data: 'ABR', name:'ABR'},
+				 { data: 'MAY', name:'MAY'},
+				 { data: 'JUN', name:'JUN'},
+				 { data: 'JUL', name:'JUL'},
+				 { data: 'AGO', name:'AGO'},
+				 { data: 'SEP', name:'SEP'},
+				 { data: 'OCT', name:'OCT'},
+				 { data: 'NOV', name:'NOV'},
+				 { data: 'DIC', name:'DIC'},
+
+		         { data: 'TOTAL', name: 'TOTAL'},
+				 { data: 'DEUDA', name: 'DEUDA'},
 		     ],
 			 "columnDefs": [
 		      { className: "dt-right", "targets": [0,2,5,6] },
@@ -87,6 +128,7 @@
 	         oTable.draw();
 	         e.preventDefault();
 	     });
+	});
 
 	 </script>
 @endsection
