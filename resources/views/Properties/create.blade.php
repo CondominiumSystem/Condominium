@@ -9,6 +9,16 @@
 @endsection
 
 @section('main-content')
+ @if(count($errors) > 0)
+	<div class="alert alert-danger" role="alert">
+		 <ul>
+		 @foreach($errors->all() as $error)
+			<li>{{$error}}</li>
+		 @endforeach
+		 </ul>
+	</div>
+
+ @endif
 
 <div class="main_container">
 	<div class="box box-success">
@@ -61,6 +71,7 @@
 	                    <div class="input-group-addon">
 	                        <i class="fa fa-calendar"></i>
 	                    </div>
+
 	                    {!! Form::text('date_from', \Carbon\Carbon::now()->format('Y/m/d'),['class'=>' form-control pull-righ']) !!}
 	                </div>
 	            </div>

@@ -27,7 +27,7 @@ class CreatePersonsTable extends Migration
             $table->string('cell_phone',10);
             $table->string('address',80)->nullable();
             $table->boolean('life_here')->default(0);
-            $table->date('start_date');
+            $table->date('start_date')->nullable();
             $table->integer('user_id');
             $table->integer('person_type_id')->unsigned();
             $table->foreign('person_type_id')->references('id')->on('person_types');

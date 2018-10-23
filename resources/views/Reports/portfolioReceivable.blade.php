@@ -101,7 +101,6 @@
 				 { data: 'person_type_name', name: 'person_type_name' },
 				 { data: 'date_from', name: 'date_from'},
 				 { data: 'date_to', name: 'date_to'},
-
 				 { data: 'ENE', name:'ENE'},
 				 { data: 'FEB', name:'FEB'},
 				 { data: 'MAR', name:'MAR'},
@@ -114,7 +113,6 @@
 				 { data: 'OCT', name:'OCT'},
 				 { data: 'NOV', name:'NOV'},
 				 { data: 'DIC', name:'DIC'},
-
 		         { data: 'TOTAL', name: 'TOTAL'},
 				 { data: 'DEUDA', name: 'DEUDA'},
 		     ],

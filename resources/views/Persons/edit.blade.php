@@ -12,6 +12,16 @@
 @endsection
 
 @section('main-content')
+ @if(count($errors) > 0)
+	<div class="alert alert-danger" role="alert">
+		 <ul>
+		 @foreach($errors->all() as $error)
+			<li>{{$error}}</li>
+		 @endforeach
+		 </ul>
+	</div>
+
+ @endif
 <div class="main_container">
 
 
@@ -32,12 +42,12 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        {!! Form::label('document_number', 'Documento') !!}
+                        {!! Form::label('document_number', 'Cédula/Ruc') !!}
                         <div class="input-group">
                             <span class="input-group-addon" id="sizing-addon2">
                                 <i class="fa fa-envelope-o" aria-hidden="true"></i>
                             </span>
-                            {!! Form::text('email',$person->document_number,['class'=>'form-control','placeholder'=>'Documento','maxlength' => 13, 'requerid' ]) !!}
+                            {!! Form::text('email',$person->document_number,['class'=>'form-control','placeholder'=>'Cédula/Ruc','maxlength' => 13, 'requerid' ]) !!}
                         </div>
                     </div>
                 </div>
@@ -71,7 +81,7 @@
                             <span class="input-group-addon" id="sizing-addon2">
                                 <i class="fal fa-address-card"></i>
                             </span>
-                            {!! Form::text('address',$person->address,['class'=>'form-control','placeholder'=>'Dirección','maxlength' => 30,'requerid' ]) !!}
+                            {!! Form::text('address',$person->address,['class'=>'form-control','placeholder'=>'Dirección','maxlength' => 80,'requerid' ]) !!}
                         </div>
                     </div>
                 </div>

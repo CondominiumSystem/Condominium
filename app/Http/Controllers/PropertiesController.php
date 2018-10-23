@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PropertyRequest;
 use App\Property;
 use App\Person;
 use App\PropertyType;
@@ -69,7 +70,7 @@ class PropertiesController extends Controller
          return view("Properties.create",compact('propertyTypes','personId'));
      }
 
-     public function store(Request $request){
+     public function store(PropertyRequest $request){
          //dd($request);
             $property = new Property($request->all());
             DB::beginTransaction();
@@ -134,7 +135,7 @@ class PropertiesController extends Controller
       * @param  int  $id
       * @return \Illuminate\Http\Response
       */
-     public function update(Request $request, $id)
+     public function update(PropertyRequest $request, $id)
      {
          $properties = Property::find($id);
          $properties->fill($request->all());

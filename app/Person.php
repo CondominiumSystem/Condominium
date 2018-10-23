@@ -23,14 +23,20 @@ class Person extends Model
         return $this->belongsToMany('App\Property')->using('App\PersonProperty');
     }
 
-    public function  scopeSearch($query,$name,$document_number)
+    public function  scopeSearch($query,$name,$document_number,$person_type_id)
     {
-        if ( $name != ""){
+        //dd($person_type_id);
+        if ( $name != null && $person_type_id ==null && $document_number==null){
            $query =  $query->Where('name','LIKE',"%$name%");
         }
-        else{
+
+        if ( $name == null && $person_type_id !=null && $document_number==null){
+            $query =  $query->Where('person_type_id','=',$person_type_id);
+        }
+
+        if ( $name == null && $person_type_id ==null && $document_number!=null){
            $query = $query->Where('document_number','LIKE',"$document_number%");
         }
-        return $query;
+        
     }
 }

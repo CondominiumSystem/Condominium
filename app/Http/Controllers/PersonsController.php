@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\PersonRequest;
 
 use Illuminate\Http\Request;
 use App\Person;
@@ -14,7 +15,8 @@ class PersonsController extends Controller
      */
     public function index(Request $request )
     {
-        $persons = Person::Search($request->name,$request->document_number)->paginate(10);
+        //dd($request);
+        $persons = Person::Search($request->name,$request->document_number,$request->person_type_id)->paginate(10);
         $person_types=PersonType::pluck('name','id');
 
         return view("Persons.index", compact('persons','person_types'));
@@ -38,7 +40,7 @@ class PersonsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PersonRequest $request)
     {
         $person = new Person($request->all());
         $person->user_id = \Auth::user()->id;
@@ -81,7 +83,7 @@ class PersonsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PersonRequest $request, $id)
     {
         $person = Person::find($id);
         //$customer->name = $request->name;

@@ -76,18 +76,17 @@ Route::group(['middleware' => 'auth'], function () {
             ]
     );
 
-    Route::get('/NewReportPayments', [
-					'uses' => 'ReportsController@getIndex',
-					'as' => 'ReportsController.getIndex'
+    Route::get('/TotalPayments', [
+					'uses' => 'ReportsController@totalPayments',
+					'as' => 'ReportsController.totalPayments'
 			]
 	);
-    Route::get('/Cecilia', [
-                    'uses' => 'CeciController@getTutorial',
-                    'as' => 'CeciController.getTutorial'
-            ]
-    );
 
-
+    Route::get('/TotalPortfolio', [
+					'uses' => 'ReportsController@totalPorfolioReceivable',
+					'as' => 'ReportsController.totalPorfolioReceivable'
+			]
+	);
 
 
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.

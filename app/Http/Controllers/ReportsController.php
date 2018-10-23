@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\UsersDataTable;
+use App\DataTables\PortfolioReceivableDataTable;
+use App\DataTables\PaymentsDataTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
@@ -26,13 +28,24 @@ class ReportsController extends Controller
     /**
      * getIndex
      */
-    public function getIndex(UsersDataTable $dataTable)
+    public function totalPayments(PaymentsDataTable $dataTable)
     {
         $years = $this->GetPeriods();
         $person_types=PersonType::pluck('name','id');
-        //return view("Reports.portfolioReceivable",compact('years','person_types'));
-        return $dataTable->render('Reports.getIndex',compact('years','person_types'));
+        return $dataTable->render('Reports.totalPayments',compact('years','person_types'));
     }
+
+    /**
+     * getIndex
+     */
+    public function totalPorfolioReceivable(PortfolioReceivableDataTable $dataTable)
+    {
+        $years = $this->GetPeriods();
+        $person_types=PersonType::pluck('name','id');
+        return $dataTable->render('Reports.totalPorfolioReceivable',compact('years','person_types'));
+    }
+
+
 
     function GetPeriods(){
 

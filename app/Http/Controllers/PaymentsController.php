@@ -52,7 +52,7 @@ class PaymentsController extends Controller
 
         $periods = $this->GetPeriods();
         $lot_number = $request->lot_number;
-        $persons = Person::Search($request->name,$request->document_number)->paginate(4);
+        $persons = Person::Search($request->name,$request->document_number,0)->paginate(4);
         return View(
             "Payments.index",
             compact(
