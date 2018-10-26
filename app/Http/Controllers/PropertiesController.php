@@ -40,7 +40,7 @@ class PropertiesController extends Controller
             $person = Person::find($person_id);
         }
 
-        return view("Properties.index", compact('properties','person'));
+        return view("Properties.index", compact('properties','person','person_id','lot_number'));
     }
 
 

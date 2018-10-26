@@ -29,7 +29,7 @@
 			{!! Form::open(['route'=>'Persons.index', 'method' =>'GET', 'class' => '','id' => 'frm_person_type']) !!}
 				<div class="row">
 					<div class="col-sm-2">
-						{!! Form::select('person_type_id',$person_types,null,
+						{!! Form::select('person_type_id',$person_types,$person_type_id,
 							[
 								'class'=>'input-filter input-md form-control',
 								'placeholder'=>'Seleccione Tipo',
@@ -41,7 +41,7 @@
 					<div class="col-sm-4">
 					<!-- Inicio Buscador por Nombre -->
 						<div class ="input-group" >
-							{!! Form::text('name',null,['class'=> 'form-control input-md','placeholder'=>'Buscar Contacto..','aria-describedby'=>'search'])!!}
+							{!! Form::text('name',$person_name,['class'=> 'form-control input-md','placeholder'=>'Buscar Contacto..','aria-describedby'=>'search'])!!}
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="submit">
 									<span class="btn-label"><i class="fa fa-search"></i></span>
@@ -53,7 +53,7 @@
 					<div class="col-sm-2">
 					<!-- Inicio Buscador por Documento -->
 						<div class ="input-group" >
-							{!! Form::text('document_number',null,['class'=> 'form-control input-md','placeholder'=>'Nro. Documento..','aria-describedby'=>'searchByNumber'])!!}
+							{!! Form::text('document_number',$document_number,['class'=> 'form-control input-md','placeholder'=>'Nro. Documento..','aria-describedby'=>'searchByNumber'])!!}
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="submit">
 									<i class="fa fa-search"></i>
@@ -90,18 +90,18 @@
                       <td class="hidden-xs">{{ $person->address}}</td>
                       <td>
 						   @permission('edit-auth-persons')
-							<a href="{{ route('Persons.edit', $person->id )}}" type="button" class="btn btn-xs btn-warning">
-								<i class="fa fa-pencil" aria-hidden="true"></i> Editar
+							<a alt="Editar" href="{{ route('Persons.edit', $person->id )}}" type="button" class="btn btn-xs btn-warning">
+								<i class="fa fa-pencil" aria-hidden="true"></i>
 							</a>
 							@endpermission
-							<a href="{{ route('Properties.index', [ 'id' => $person->id] )}}" type="button" class="btn btn-xs btn-info ">
-								<i class="fa fa-home" aria-hidden="true"></i> Propiedades
+							<a alt="Propiedades" href="{{ route('Properties.index', [ 'id' => $person->id] )}}" type="button" class="btn btn-xs btn-info ">
+								<i class="fa fa-home" aria-hidden="true"></i>
 							</a>
 							@permission('delete-auth-persons')
 							<a href="" alt="Borrar" type="button"
 								data-href="{{ route('Persons.destroy', $person->id )}}"
 								class="btn btn-xs btn-danger"  data-toggle="modal" data-target="#confirm-delete">
-								<i class="fa fa-trash" aria-hidden="true"></i> Borrar
+								<i class="fa fa-trash" aria-hidden="true"></i>
 							</a>
 							@endpermission
                       </td>
@@ -141,9 +141,6 @@
         </div>
       </div>
     </div>
-
-
-
 @endsection
 @section('customScript')
 <script type="text/javascript">

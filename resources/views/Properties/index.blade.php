@@ -13,21 +13,6 @@
 @endsection
 
 @section('new_button')
-	@if( $person == null)
-	<!-- Inicio Buscador por Número de Lote -->
-	<div class="col-md-8">
-			{!! Form::open(['route'=>'Properties.index', 'method' =>'GET', 'class' => 'navbar-form pull-right']) !!}
-			<div class ="input-group" >
-							{!! Form::text('lot_number',null,['class'=> 'form-control','placeholder'=>'Número de Lote','aria-describedby'=>'search'])!!}
-				<button class="btn btn-default" type="submit">
-					<span class="btn-label"><i class="fa fa-search"></i></span>
-				</button>
-			</div>
-			{!! Form::close() !!}
-	</div>
-	<!-- Fin Buscador -->
-	@endif
-
 	<!-- Boton Agregar -->
 	<div class="col-md-4">
 		<div class ="input-group" >
@@ -40,49 +25,64 @@
 @endsection
 
 @section('main-content')
-<div class="container-fluid spark-screen">
-	<div class="row">
 		<!-- Default box -->
-		<div class="box">
-			<div class="box box-success">
-		      	<div class="box-body">
-					<table class="table table-bordered table-hover">
-					    <thead>
-					    <th>Lote</th>
-						<th>Tipo</th>
-					    <th>Descripcion</th>
-						<th>Dirección</th>
-						<th>Acciones</th>
-					    </thead>
-					    <tbody>
-					      @foreach ($properties as $property)
-					          <tr>
-					              <td>{{ $property->lot_number}}</td>
-								  <td>{{ $property->property_type->name}}</td>
-					              <td>{{ $property->note}}</td>
-								  <td>{{ $property->address }}</td>
-								  <td>
-									  <a href="{{ route('Properties.edit', [$property->id, (($person)?$person->id:0) ])}}" type="button" class="btn btn-xs btn-warning">
-										  <i class="fa fa-pencil" aria-hidden="true"></i> Editar</a>
-									  <a href="" alt="Borrar" data-href="{{ route('Properties.destroy', $property->id )}}"
-										  type="button" class="btn btn-xs btn-danger"
-										  data-toggle="modal" data-target="#confirm-delete">
-										  <i class="fa fa-trash" aria-hidden="true"></i> Borrar</a>
-								  </td>
+		<div class="box box-success">
+			<div class="box-header with-border">
+				<div class="row">
+					<div class="col-sm-3">
+						@if( $person == null)
+						<!-- Inicio Buscador por Número de Lote -->
+							{!! Form::open(['route'=>'Properties.index', 'method' =>'GET']) !!}
+							<div class ="input-group" >
+								{!! Form::text('lot_number',$lot_number,['class'=> 'form-control','placeholder'=>'Número de Lote','aria-describedby'=>'search'])!!}
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="submit">
+										<i class="fa fa-search"></i>
+									</button>
+								</span>
+							</div>
+							{!! Form::close() !!}
+						<!-- Fin Buscador -->
+						@endif
+					</div>
+				</div>
+			</div>
+	      	<div class="box-body">
+				<table class="table table-bordered table-hover">
+				    <thead>
+				    <th>Lote</th>
+					<th>Tipo</th>
+				    <th>Descripcion</th>
+					<th>Dirección</th>
+					<th>Acciones</th>
+				    </thead>
+				    <tbody>
+				      @foreach ($properties as $property)
+				          <tr>
+				              <td>{{ $property->lot_number}}</td>
+							  <td>{{ $property->property_type->name}}</td>
+				              <td>{{ $property->note}}</td>
+							  <td>{{ $property->address }}</td>
+							  <td>
+								  <a href="{{ route('Properties.edit', [$property->id, (($person)?$person->id:0) ])}}" type="button" class="btn btn-xs btn-warning">
+									  <i class="fa fa-pencil" aria-hidden="true"></i> Editar</a>
+								  <a href="" alt="Borrar" data-href="{{ route('Properties.destroy', $property->id )}}"
+									  type="button" class="btn btn-xs btn-danger"
+									  data-toggle="modal" data-target="#confirm-delete">
+									  <i class="fa fa-trash" aria-hidden="true"></i> Borrar</a>
+							  </td>
 
-					          </tr>
-					      @endforeach
-						</tbody>
-					</table>
-					<!-- Paginado -->
-					{{ $properties->links() }}
-					<!-- Fin Paginado -->
-            	</div>
-			<!-- /.box-body -->
+				          </tr>
+				      @endforeach
+					</tbody>
+				</table>
+				<!-- Paginado -->
+				{{ $properties->links() }}
+				<!-- Fin Paginado -->
+        	</div>
+		<!-- /.box-body -->
 		</div>
 		<!-- /.box -->
-	</div>
-</div>
 
 <!-- Modal -->
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

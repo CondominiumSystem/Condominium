@@ -16,10 +16,14 @@ class PersonsController extends Controller
     public function index(Request $request )
     {
         //dd($request);
-        $persons = Person::Search($request->name,$request->document_number,$request->person_type_id)->paginate(10);
+        $person_name=$request->name;
+        $document_number = $request->document_number;
+        $person_type_id = $request->person_type_id;
+
+        $persons = Person::Search($person_name,$document_number,$person_type_id)->paginate(10);
         $person_types=PersonType::pluck('name','id');
 
-        return view("Persons.index", compact('persons','person_types'));
+        return view("Persons.index", compact('persons','person_types','person_name','document_number','person_type_id'));
     }
 
     /**
