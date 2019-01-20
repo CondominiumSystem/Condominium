@@ -1,52 +1,42 @@
-
 @extends('adminlte::layouts.app')
 @section('htmlheader_title')
 	{{ trans('adminlte_lang::message.home') }}
 @endsection
 
 @section('contentheader_title')
-    Nueva Persona
+    Datos Empresa
 @endsection
-
-
 @section('main-content')
-  @if($errors->any())
-      <div class="alert alert-danger" role="alert">
-	       <ul>
-           @foreach($errors->all() as $error)
-	          <li>{{$error}}</li>
-	       @endforeach
-           </ul>
-      </div>
-
-  @endif
-
 <div class="main_container">
 	<div class="box box-success">
-	    {!! Form::Open(['route' => 'Persons.store','method' => 'POST']) !!}
+	    {!! Form::Open(['route' => 'Companies.store','method' => 'POST']) !!}
 			<div class="box-body">
-				<div class="col-md-4">
-					<div class="form-group">
-                        {!! Form::label('person_type_id', 'Tipo') !!}
-                        {!! Form::select('person_type_id',$person_types,null,['class'=>'select form-control','required', 'placeholder'=>'Seleccione Tipo']) !!}
-                    </div>
-				</div>
-
-				<div class="col-md-12 {{ $errors->has('name')? 'has-error' :'' }}" >
+				<div class="col-md-12">
 				    <div class="form-group">
-				        {!! Form::label('name', 'Nombre') !!}
-				        {!! Form::text('name', null ,['class'=>'form-control','placeholder'=>'Nombre del Cliente','maxlength' => 50, 'requerid' ]) !!}
+				        {!! Form::label('name', 'Nombre de la Empresa') !!}
+				        {!! Form::text('name', null ,['class'=>'form-control','placeholder'=>'Nombre de la Empresa','maxlength' => 50, 'requerid' ]) !!}
 				    </div>
 				</div>
 
 		        <div class="col-md-4">
 		            <div class="form-group">
-		                {!! Form::label('document_number', 'Cédula/Ruc') !!}
+		                {!! Form::label('ruc', 'Ruc') !!}
 		                <div class="input-group">
 		                    <span class="input-group-addon" id="sizing-addon2">
 		                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
 		                    </span>
-		                    {!! Form::text('document_number',null,['class'=>'form-control','placeholder'=>'Cédula ó Ruc','maxlength' => 13, 'requerid' ]) !!}
+		                    {!! Form::text('ruc',null,['class'=>'form-control','placeholder'=>'Ruc','maxlength' => 13, 'requerid' ]) !!}
+		                </div>
+		            </div>
+		        </div>
+				<div class="col-md-4">
+		            <div class="form-group">
+		                {!! Form::label('email', 'Email') !!}
+		                <div class="input-group">
+		                    <span class="input-group-addon" id="sizing-addon2">
+		                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+		                    </span>
+		                    {!! Form::text('email',null,['class'=>'form-control','placeholder'=>'Email','maxlength' => 120, 'requerid' ]) !!}
 		                </div>
 		            </div>
 		        </div>
@@ -62,18 +52,6 @@
 		                </div>
 		            </div>
 				</div>
-
-		        <div class="col-md-4">
-		            <div class="form-group">
-		                {!! Form::label('cell_phone', 'Celular') !!}
-		                <div class="input-group">
-		                    <span class="input-group-addon" id="sizing-addon2">
-		                        <i class="fa fa-mobile"></i>
-		                    </span>
-		                    {!! Form::text('cell_phone',null,['class'=>'form-control','placeholder'=>'Celular','maxlength' => 10,'requerid' ]) !!}
-		                </div>
-		            </div>
-		        </div>
 
 		        <div class="col-md-8">
 		            <div class="form-group">

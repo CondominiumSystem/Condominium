@@ -18,8 +18,8 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('Persons','PersonsController');
     Route::resource('Properties','PropertiesController');
-    Route::resource('Payments','PaymentsController');
-    Route::resource('Reports','ReportsController');
+    Route::resource('Payments','PaymentsController')->only(['index','store']);
+    Route::resource('Companies','CompaniesController')->only(['create']);
 
 	Route::get('/Persons/{id}/destroy', [
 					'uses' => 'PersonsController@destroy',

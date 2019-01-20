@@ -5,8 +5,6 @@
 @endsection
 
 @section('main-content')
-
-    <div class="container-fluid">
 		<div class="row">
 		        <!-- left column -->
 		        <div class="col-md-6">
@@ -82,7 +80,7 @@
 				<!-- right column -->
 				{!! Form::open(['route'=>'Payments.store', 'id' => 'formPayment','method' =>'POST']) !!}
 					<input type="hidden" name="_token" value="{{csrf_token()}}">
-				@if($properties != null)
+				@if($properties != null && $properties->count() > 0 )
 				{!! Form::hidden('property_id', $properties->first()->id  ) !!}
 				@endif
 				<div class="col-md-6">
@@ -135,8 +133,6 @@
 				<!-- {!! Form::close() !!} -->
 			</form>
 		</div>
-</div>
-
 <!-- Modal -->
 <div class="modal fade" id="confirmPayment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">

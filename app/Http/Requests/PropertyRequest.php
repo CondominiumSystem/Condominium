@@ -24,9 +24,9 @@ class PropertyRequest extends FormRequest
     public function rules()
     {
         return [
-            'nota' => 'min:4|max:30',
-            'address'=> 'min:4|max:13|required',
-            
+            'lot_number' => 'required',
+            'note' => 'min:4|max:60',
+            'address'=> 'min:10|max:60|required',
         ];
     }
 }

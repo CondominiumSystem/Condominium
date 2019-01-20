@@ -34,7 +34,6 @@ class PersonsController extends Controller
     public function create()
     {
         $person_types=PersonType::pluck('name','id');
-
         return view("Persons.create",compact('person_types'));
     }
 

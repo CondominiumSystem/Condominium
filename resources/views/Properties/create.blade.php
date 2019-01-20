@@ -27,7 +27,7 @@
 				<div class="col-md-3">
 	                <div class="form-group">
 	                    {!! Form::label('lot_number', 'Lote') !!}
-	                    {!! Form::text('lot_number', null ,['class'=>'form-control','placeholder'=>'Número de lote','maxlength' => 3, 'requerid' ]) !!}
+	                    {!! Form::text('lot_number', null ,['class'=>'form-control','placeholder'=>'Número de lote','maxlength' => 3, 'requerid','placeholder'=>'0' ]) !!}
 	                </div>
 				</div>
 				<div class="col-md-3">

@@ -45,10 +45,7 @@ class ReportsController extends Controller
         return $dataTable->render('Reports.totalPorfolioReceivable',compact('years','person_types'));
     }
 
-
-
-    function GetPeriods(){
-
+    public function GetPeriods(){
         return Period::distinct()->pluck('year','year');
     }
 

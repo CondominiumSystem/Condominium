@@ -33,6 +33,7 @@ Menu::macro('sidebar', function () {
             ->addParentClass('treeview')
             ->action('ReportsController@getPaymentsIndex', '<i class="fa fa-money"></i><span>Pagos</span>')
             ->action('ReportsController@getPortfolioReceivableIndex', '<i class="fa fa-money"></i><span>Cartera</span>')
+            ->action('    ', '<i class="fa fa-money"></i><span>Datos Empresa</span>')
             ->addClass('treeview-menu')
         )
         ->setActiveFromRequest();

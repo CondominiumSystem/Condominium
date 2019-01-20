@@ -26,6 +26,8 @@ class PersonRequest extends FormRequest
         return [
             'name' => 'min:4|max:30|required',
             'document_number'=> 'min:4|max:13',
+            'phone' => 'required',
+            'cell_phone' => 'required',
         ];
     }
 }

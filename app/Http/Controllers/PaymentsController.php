@@ -24,6 +24,9 @@ class PaymentsController extends Controller
         if($request->document_number != null){
              $properties= $this->GetPropertiesByDocumentNumber($request->document_number);
              $payments = null;
+             if($properties == null || $properties->count() == 0){
+                 flash("No se encontraron registros ")->warning();
+             }
         }
         else
         {
@@ -50,6 +53,8 @@ class PaymentsController extends Controller
             }
         }
 
+
+
         $periods = $this->GetPeriods();
         $lot_number = $request->lot_number;
         $persons = Person::Search($request->name,$request->document_number,0)->paginate(4);
@@ -63,7 +68,7 @@ class PaymentsController extends Controller
                 'selected_period',
                 'lot_number'
             ));
-    }
+     }
 
 
     /**
@@ -118,6 +123,7 @@ class PaymentsController extends Controller
         )
         ->where('properties.lot_number','=',$lot_number)
         ->get();
+
         return $result_list;
     }
 
@@ -138,7 +144,6 @@ class PaymentsController extends Controller
         )
         ->where('persons.document_number','=',$document_number)
         ->get();
-
         return $result;
     }
 

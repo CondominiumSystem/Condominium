@@ -37,6 +37,6 @@ class Person extends Model
         if ( $name == null && $person_type_id ==null && $document_number!=null){
            $query = $query->Where('document_number','LIKE',"$document_number%");
         }
-        
+
     }
 }
