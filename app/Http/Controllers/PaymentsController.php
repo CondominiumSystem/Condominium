@@ -19,13 +19,25 @@ class PaymentsController extends Controller
      */
      public function index(Request $request )
      {
-        $selected_period = $request->period_id;
+        // $selected_period = $request->period_id;
+        // dd($selected_period);
 
         if($request->document_number != null){
              $properties= $this->GetPropertiesByDocumentNumber($request->document_number);
+             //dd($properties);
              $payments = null;
              if($properties == null || $properties->count() == 0){
                  flash("No se encontraron registros ")->warning();
+             }else {
+               foreach ($properties as $property) {
+                 if($property->date_to == null){
+                   $payments=$this->GetPaymentsByPropertyId(
+                       $property->id,
+                       $property->person_id
+                   );
+                 }
+               }
+               flash("Hay varias propiedades ")->warning();
              }
         }
         else
@@ -34,9 +46,11 @@ class PaymentsController extends Controller
                $properties= $this->GetPropertiesByLotNumber($request->lot_number);
                if($properties->count() >= 1 ){
                    //Obtenemos los pagos
+                   //enviar la propiedad viegente
+
                    $payments=$this->GetPaymentsByPropertyId(
                        $properties->first()->id,
-                       $selected_period,
+                    //   $selected_period,
                        $properties->first()->person_id
                    );
                }
@@ -147,8 +161,34 @@ class PaymentsController extends Controller
         return $result;
     }
 
+    public function GetPaymentsByPropertyId($property_id,$person_id){
 
-    public function GetPaymentsByPropertyId($property_id,$year,$person_id){
+      $strConsulta='select
+          lot_number, month_name, month_id,value,payment_value,
+          year, period_id
+          from paymentsview';
+
+      if( $person_id > 0 && $property_id > 0 ){
+          $strConsulta .= ' where';
+
+          if ($person_id > 0) {
+              $strConsulta = $strConsulta . ' person_id = ' . $person_id;
+          }
+          if ($property_id > 0) {
+              $strConsulta = $strConsulta . ' and property_id = ' . $property_id;
+          }
+      }
+
+      // $strConsulta = $strConsulta . ' group by lot_number,person_name, year';
+      // $strConsulta = $strConsulta . ' order by lot_number,person_name, year';
+
+      $payments = DB::select($strConsulta);
+
+      return $payments;
+    }
+
+/*
+    public function GetPaymentsByPropertyId($property_id,$person_id){
         //Pagos realizados
         $payments=DB::Table('payments')
         ->rightjoin('periods','periods.id','=','payments.period_id')
@@ -157,7 +197,7 @@ class PaymentsController extends Controller
             'periods.month_name',
             'payments.value'
         )
-        ->where('periods.year','=',$year)
+        //->where('periods.year','=',$year)
         ->where('payments.property_id','=',$property_id)
         ->get();
 
@@ -195,11 +235,8 @@ class PaymentsController extends Controller
                 }
             }
 
-
-
             if($personProperty->date_to != null && Carbon::parse($personProperty->date_to) < $tempDate )
             {
-                //dd([Carbon::parse($personProperty->date_to), $tempDate]);
                 break;
             }
             else {
@@ -215,6 +252,7 @@ class PaymentsController extends Controller
 
         return (object)$result;
     }
+*/
 
     /*
     * Listado de periodos vigentes

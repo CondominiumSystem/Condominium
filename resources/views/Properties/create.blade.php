@@ -80,9 +80,16 @@
 			</div>
 			<!-- /.box-body -->
 			<div class="box-footer">
-                <div class="form-group">
-                    {!! Form::submit('GRABAR',['class'=>'btn btn-primary']) !!}
-                </div>
+            <div class="form-group">
+                {!! Form::submit('GRABAR',['class'=>'btn btn-primary']) !!}
+
+								<a class="btn btn-labeled btn-default" href="#" onclick="window.history.back();">
+						      <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
+						      {{ trans('entrust-gui::button.cancel') }}
+						    </a>
+
+            </div>
+
 			</div>
         {!! Form::Close() !!}
 	</div>

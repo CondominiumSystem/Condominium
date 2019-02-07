@@ -26,8 +26,8 @@
 
 @section('main-content')
 		<!-- Default box -->
-		<div class="box box-success">
-			<div class="box-header with-border">
+<div class="box box-success">
+		<div class="box-header with-border">
 				<div class="row">
 					<div class="col-sm-3">
 						@if( $person == null)
@@ -47,41 +47,47 @@
 					</div>
 				</div>
 			</div>
-	      	<div class="box-body">
-				<table class="table table-bordered table-hover">
-				    <thead>
-				    <th>Lote</th>
-					<th>Tipo</th>
-				    <th>Descripcion</th>
-					<th>Dirección</th>
-					<th>Acciones</th>
-				    </thead>
-				    <tbody>
-				      @foreach ($properties as $property)
-				          <tr>
-				              <td>{{ $property->lot_number}}</td>
-							  <td>{{ $property->property_type->name}}</td>
-				              <td>{{ $property->note}}</td>
-							  <td>{{ $property->address }}</td>
-							  <td>
-								  <a href="{{ route('Properties.edit', [$property->id, (($person)?$person->id:0) ])}}" type="button" class="btn btn-xs btn-warning">
-									  <i class="fa fa-pencil" aria-hidden="true"></i> Editar</a>
-								  <a href="" alt="Borrar" data-href="{{ route('Properties.destroy', $property->id )}}"
-									  type="button" class="btn btn-xs btn-danger"
-									  data-toggle="modal" data-target="#confirm-delete">
-									  <i class="fa fa-trash" aria-hidden="true"></i> Borrar</a>
-							  </td>
+      	<div class="box-body">
 
-				          </tr>
-				      @endforeach
-					</tbody>
-				</table>
-				<!-- Paginado -->
-				{{ $properties->links() }}
-				<!-- Fin Paginado -->
-        	</div>
+					@if( $properties->count() > 0)
+					<table class="table table-bordered table-hover">
+					    <thead>
+					    <th>Lote</th>
+						<th>Tipo</th>
+					    <th>Descripcion</th>
+						<th>Dirección</th>
+						<th>Acciones</th>
+					    </thead>
+					    <tbody>
+					      @foreach ($properties as $property)
+					          <tr>
+					              <td>{{ $property->lot_number}}</td>
+								  <td>{{ $property->property_type->name}}</td>
+					              <td>{{ $property->note}}</td>
+								  <td>{{ $property->address }}</td>
+								  <td>
+									  <a href="{{ route('Properties.edit', [$property->id, (($person)?$person->id:0) ])}}" type="button" class="btn btn-xs btn-warning">
+										  <i class="fa fa-pencil" aria-hidden="true"></i> Editar</a>
+									  <a href="" alt="Borrar" data-href="{{ route('Properties.destroy', $property->id )}}"
+										  type="button" class="btn btn-xs btn-danger"
+										  data-toggle="modal" data-target="#confirm-delete">
+										  <i class="fa fa-trash" aria-hidden="true"></i> Borrar</a>
+								  </td>
+
+					          </tr>
+					      @endforeach
+						</tbody>
+					</table>
+					<!-- Paginado -->
+					{{ $properties->links() }}
+					<!-- Fin Paginado -->
+
+					@endif
+
+
+    	</div>
 		<!-- /.box-body -->
-		</div>
+</div>
 		<!-- /.box -->
 
 <!-- Modal -->

@@ -23,6 +23,7 @@ class PersonsController extends Controller
         $persons = Person::Search($person_name,$document_number,$person_type_id)->paginate(10);
         $person_types=PersonType::pluck('name','id');
 
+
         return view("Persons.index", compact('persons','person_types','person_name','document_number','person_type_id'));
     }
 
