@@ -109,7 +109,7 @@
 									@else
 										@foreach($payments as $payment)
 										<tr>
-											<td>{{$payment->year}}<td>
+											<td>{{$payment->year}}</td>
 											<td>{{$payment->month_name}}</td>
 											<td>{{ $payment->value }}</td>
 											<td>
