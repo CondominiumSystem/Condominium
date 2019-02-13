@@ -90,6 +90,16 @@
 </div>
 		<!-- /.box -->
 
+@if( $person != null)
+<h1>Listado de Propiedades</h1>
+<div class="box box-success">
+	<div class="box-header with-border">
+		<h2>Prueba</h2>
+	</div>
+</div>
+@endif
+
+
 <!-- Modal -->
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
