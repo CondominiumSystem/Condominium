@@ -40,6 +40,10 @@ class PropertiesController extends Controller
             $person = Person::find($person_id);
         }
 
+        if($properties->count() == 0){
+          flash('No hay registros.', 'info')->important();
+        }
+
         return view("Properties.index", compact('properties','person','person_id','lot_number'));
     }
 

@@ -14,7 +14,7 @@
 							{{-- <label class="" for="lot_number">Número de Lote</label> --}}
 							{!! Form::open(['route'=>'Payments.index', 'method' =>'GET']) !!}
 
-								<div class="col-md-5">
+								<div class="col-md-6">
 									<div class="input-group">
 									  {!! Form::text('document_number',null,['class'=> 'form-control','placeholder'=>'Cédula / RUC..','aria-describedby'=>'search'])!!}
 									  <span class="input-group-btn">
@@ -25,10 +25,7 @@
 									</div>
 								</div>
 
-								<div class="col-md-3">
-									{!! Form::select('period_id',$periods,$selected_period,['class'=>'select form-control','required']) !!}
-								</div>
-								<div class="col-md-4">
+								<div class="col-md-6">
 								<div class="input-group">
 									{!! Form::text('lot_number',$lot_number,['class'=> 'form-control','placeholder'=>'Lote','maxlength' => 3,'aria-describedby'=>'search'])!!}
 									<span class="input-group-btn">
@@ -86,7 +83,7 @@
 				<div class="col-md-6">
 					<div class="box box-success">
 						<div class="box-header">
-			              	<h3 class="box-title">PAGOS AÑO: {{ $selected_period }}
+			              	<h3 class="box-title">PAGOS AÑO:
 							</h3>
 							<button type="button" id="btnPayment"
 								class="btn btn-success no-margin pull-right">
@@ -97,6 +94,7 @@
 							<div class="bs-callout bs-callout-warning">
 								<table class="table table-bordered table-hover" id="tblPayments">
 									<thead>
+										<th>Año</th>
 										<th>Mes</th>
 										<th>Valor</th>
 										<th>Pago</th>
@@ -111,14 +109,15 @@
 									@else
 										@foreach($payments as $payment)
 										<tr>
+											<td>{{$payment->year}}<td>
 											<td>{{$payment->month_name}}</td>
-											<td>{{ $payment->quota }}</td>
+											<td>{{ $payment->value }}</td>
 											<td>
-												@if ( $payment->is_payment )
+												@if ( $payment->payment_value > 0 )
 												<span>PAGADO</span>
 												@else
 												<span>NO</span>
-												{!! Form::checkbox('active[]',$payment->period_id,$payment->is_payment) !!}
+												{!! Form::checkbox('active[]',$payment->period_id, 0) !!}
 												@endif
 											</td>
 										</tr>
