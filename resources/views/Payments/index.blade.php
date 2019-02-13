@@ -109,7 +109,7 @@
 									@else
 										@foreach($payments as $payment)
 										<tr>
-											<td>{{$payment->year}}<td>
+											<td>{{$payment->year}}</td>
 											<td>{{$payment->month_name}}</td>
 											<td>{{ $payment->value }}</td>
 											<td>
@@ -208,8 +208,8 @@
 			var total = 0.0;
 			for (var i = 0; i < items.length; i++){
 				var rows = $(items[i]).parent().parent().find('td');
-				total = total + parseFloat(rows[1].innerText);
-				tableConfirmation.append('<tr><td>' + rows[0].innerText + '</td><td>' + rows[1].innerText + '</td></tr>'  );
+				total = total + parseFloat(rows[2].innerText);
+				tableConfirmation.append('<tr><td>' + rows[1].innerText + '</td><td>' + rows[2].innerText + '</td></tr>'  );
 			}
 			//if( total >= 0){
 				debugger;
