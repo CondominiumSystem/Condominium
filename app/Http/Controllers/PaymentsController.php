@@ -79,7 +79,6 @@ class PaymentsController extends Controller
                 'properties',
                 'payments',
                 'periods',
-                'selected_period',
                 'lot_number'
             ));
      }
