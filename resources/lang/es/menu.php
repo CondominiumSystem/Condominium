@@ -16,7 +16,8 @@ return [
     'persons'                 => 'Personas',
     'payments'                => 'Pagos',
     'properties'              => 'Propiedades',
-
+    'periods'                 => 'Periodos',
+    'companies'               => 'Datos Urbanización',
     'security'                => 'Seguridad',
     'users'                   => 'Usuarios',
     'roles'                   => 'Roles',

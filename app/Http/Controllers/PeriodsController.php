@@ -1,12 +1,23 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Periods;
 use Illuminate\Http\Request;
-use App\Company;
+use Illuminate\Support\Facades\DB;
 
-class CompaniesController extends Controller
+class PeriodsController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +25,8 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-      $companies =  Company::all();
-      return view("Companies.index",compact('companies'));
+        $periods = DB::table('periods')->select('year')->distinct()->orderBy('year','asc')->get();
+        return View("Periods.index",compact('periods'));
     }
 
     /**
@@ -25,7 +36,7 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        //return view("Companies.create");
+        //
     }
 
     /**
@@ -58,8 +69,7 @@ class CompaniesController extends Controller
      */
     public function edit($id)
     {
-        $company = Company::find($id);
-        return view('Companies.edit',compact('company'));
+        //
     }
 
     /**
@@ -71,12 +81,7 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
-      //$customer->name = $request->name;
-      $company = Company::find($id);
-      $company->fill($request->all());
-      $company->save();
-      flash("Grabado correctamente")->success();
-      return redirect()->route('Companies.index');
+        //
     }
 
     /**

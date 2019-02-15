@@ -16,7 +16,9 @@ return [
     'persons' => 'Persons',
     'payments' => 'Payments',
     'properties' => 'Properties',
-
+    'periods' => 'Periods',
+    'companies' => 'Companies',
+    'properties' => 'Properties',
     'security'                => 'Security',
     'users'                   => 'Users',
     'roles'                   => 'Roles',

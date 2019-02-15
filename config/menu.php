@@ -56,6 +56,8 @@ Menu::macro('sidebarAdmin', function () {
             ->addParentClass('treeview')
             ->add(Link::to('/admin/users', 'Usuarios'))
             ->add(Link::to('/admin/roles', 'Roles'))
+            ->action('PeriodsController@index', trans('menu.periods') )
+            ->action('CompaniesController@index',trans('menu.companies'))
             ->addClass('treeview-menu')
         )
         ->setActiveFromRequest();
