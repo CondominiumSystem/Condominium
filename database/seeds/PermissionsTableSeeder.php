@@ -31,6 +31,12 @@ class PermissionsTableSeeder extends Seeder
               'description'=>'Edit Auth Persons',
               'created_at'=>date("Y-m-d H:i:s")
           ),
+          array(
+              'name' => 'create-auth-periods',
+              'display_name'=>'Create Auth Periods',
+              'description'=>'Create Auth Periods',
+              'created_at'=>date("Y-m-d H:i:s")
+          ),
 
       ];
       DB::Table('permissions')->insert($permissions);

@@ -24,7 +24,7 @@ class CreatePropertiesTable extends Migration
             $table->increments('id');
             $table->integer('lot_number');
             $table->string('note',80)->nullable();
-            $table->string('address',80);
+            $table->string('address',80)->nullable();
             $table->boolean('active')->default(true);
             $table->integer('property_type_id')->unsigned();
             $table->foreign('property_type_id')->references('id')->on('property_types');

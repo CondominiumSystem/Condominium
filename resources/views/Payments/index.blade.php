@@ -17,7 +17,7 @@
 								<div class="col-md-6">
 									<div class="input-group">
 									  {!! Form::text('document_number',null,['class'=> 'form-control','placeholder'=>'Cédula / RUC..','aria-describedby'=>'search'])!!}
-									  <span class="input-group-btn">
+									  <span class="input-group-btn input-group-sm">
   										<button class="btn btn-default" type="submit">
   											<span class="btn-label"><i class="fa fa-search"></i></span>
   										</button>

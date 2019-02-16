@@ -77,6 +77,10 @@ class PropertiesController extends Controller
      public function store(PropertyRequest $request){
          //dd($request);
             $property = new Property($request->all());
+
+            if ($property->address ==null){
+              $property->address="";
+            }
             DB::beginTransaction();
             try{
                     $property->save();

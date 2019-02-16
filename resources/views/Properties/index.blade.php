@@ -15,11 +15,10 @@
 @section('new_button')
 	<!-- Boton Agregar -->
 	<div class="col-md-4">
-		<div class ="input-group" >
-	      <a href="{{route('Properties.create',($person)?$person->id:0)}}" type="button" class="btn btn-primary">
+
+	      <a href="{{route('Properties.create',($person)?$person->id:0)}}" type="button" class="btn btn-primary btn-xs">
 	          <i class="fa fa-plus" aria-hidden="true"></i> Agregar
 	      </a>
-	    </div>
 	</div>
 	<!-- Fin Boton Agregar -->
 @endsection

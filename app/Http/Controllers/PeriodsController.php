@@ -25,7 +25,9 @@ class PeriodsController extends Controller
      */
     public function index()
     {
+
         $periods = DB::table('periods')->select('year')->distinct()->orderBy('year','asc')->get();
+        //dd($periods);
         return View("Periods.index",compact('periods'));
     }
 
@@ -47,7 +49,37 @@ class PeriodsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+$year = DB::table('periods')->max('year');
+$year=$year+1;
+
+//dd($year);
+
+      $months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+  $periodsNew=[];
+          $index = 0;
+          foreach ($months as $month) {
+              array_push(
+                  $periodsNew,
+                  array(
+                      'year'=> $year,
+                      'month_id' => $index, 'month_name' => $months[$index],
+                      'created_at'=>date("Y-m-d H:i:s")
+                  )
+              );
+              $index++;
+          }
+
+      DB::Table('periods')->insert($periodsNew);
+
+
+
+      $periods = DB::table('periods')->select('year')->distinct()->orderBy('year','asc')->get();
+
+      flash("Se agrego un periodo correctamente")->success();
+      //dd($periods);
+      return View("Periods.index",compact('periods'));
     }
 
     /**

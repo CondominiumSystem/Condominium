@@ -25,8 +25,8 @@ class PropertyRequest extends FormRequest
     {
         return [
             'lot_number' => 'required',
-            'note' => 'min:4|max:60',
-            'address'=> 'min:10|max:60|required',
+          //  'note' => 'min:4|max:60',
+          //  'address'=> 'min:10|max:60|required',
         ];
     }
 }
