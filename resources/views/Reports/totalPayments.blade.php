@@ -27,7 +27,7 @@
 
 @section('customScript')
 
-<link rel="stylesheet" href="/vendor/datatables//buttons.dataTables.min.css">
+<!-- <link rel="stylesheet" href="/vendor/datatables//buttons.dataTables.min.css"> -->
 
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css"> -->
 <!--

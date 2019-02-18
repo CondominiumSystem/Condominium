@@ -31,7 +31,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'node_modules/admin-lte/dist/css/skins/_all-skins.css',
        'node_modules/icheck/skins/square/blue.css',
        'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.css',
-       'node_modules/bootstrap-datepicker/dist/css/buttons.flash.min'
+       'resources/assets/css/buttons.dataTables.min.css',
    ], 'public/css/all.css')
    .combine([
        'resources/assets/css/bootstrap.min.css',
