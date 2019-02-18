@@ -16,8 +16,10 @@ mix.js('resources/assets/js/app.js', 'public/js')
             'node_modules/bootstrap-datepicker/js/bootstrap-datepicker.js',
             'node_modules/datatables.net/js/jquery.dataTables.js',
             'node_modules/datatables.net-bs/js/dataTables.bootstrap.js',
-            'node_modules/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js'
-
+            'node_modules/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js',
+            'node_modules/datatables.net-buttons/js/dataTables.buttons.js',
+            'node_modules/datatables.net-buttons/js/buttons.flash.js',
+            'resources/assets/js/buttons.server-side.js'
         ], 'public/js/datatable.js')
    .js('resources/assets/js/app-landing.js', 'public/js/app-landing.js')
    .sourceMaps()
@@ -29,7 +31,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'node_modules/admin-lte/dist/css/skins/_all-skins.css',
        'node_modules/icheck/skins/square/blue.css',
        'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.css',
-
+       'node_modules/bootstrap-datepicker/dist/css/buttons.flash.min'
    ], 'public/css/all.css')
    .combine([
        'resources/assets/css/bootstrap.min.css',

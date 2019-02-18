@@ -5,8 +5,10 @@
 @endsection
 
 @section('main-content')
-<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
-<script src="/vendor/datatables/buttons.server-side.js"></script>
+<!-- <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+<script src="/vendor/datatables/buttons.server-side.js"></script> -->
+
+
 <div class="box">
 	<div class="box-header ">
 		<div class="row">
@@ -28,10 +30,14 @@
 
 @section('customScript')
 
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js" ></script>
-<script src="/vendor/datatables/buttons.server-side.js"></script>
+
+<link rel="stylesheet" href="/vendor/datatables//buttons.dataTables.min.css">
+
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+ <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js" ></script>  -->
+
+<!-- <script src="/vendor/datatables/buttons.server-side.js"></script> -->
 
 {!! $dataTable->scripts() !!}
 
