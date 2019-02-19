@@ -22,19 +22,14 @@ class PropertiesController extends Controller
     {
         $person_id = $request->id;
         $lot_number=$request->lot_number;
-        $lot_number_search = $request->lot_number_search;
-        $properties = null;
-        $propertiesPerson = null;
 
-//dd($request);
-
-        if($person_id == null && $lot_number == null ){
+        if($person_id == null && $lot_number == null){
             $properties = Property::orderBy('lot_number', 'asc')->paginate(10);
             $person = null;
         }
         else if($person_id != null && $lot_number == null){
             $person = Person::find($person_id);
-            $propertiesPerson = $person->properties()->orderBy('lot_number', 'asc')->paginate(10);
+            $properties = $person->properties()->orderBy('lot_number', 'asc')->paginate(10);
         }
         else if ($person_id == null && $lot_number != null) {
             $properties = Property::SearchByLotNumber($request->lot_number)->paginate(10);
@@ -45,15 +40,11 @@ class PropertiesController extends Controller
             $person = Person::find($person_id);
         }
 
-//dd($propertiesPerson);
-
-        if($properties == null){
-          flash('No hay Propiedades Registradas.', 'info');
+        if($properties->count() == 0){
+          flash('No hay registros.', 'info')->important();
         }
 
-        dd($person_id);
-
-        return view("Properties.index", compact('properties','propertiesPerson','person','person_id','lot_number'));
+        return view("Properties.index", compact('properties','person','person_id','lot_number'));
     }
 
 
@@ -188,23 +179,6 @@ class PropertiesController extends Controller
          }
          return redirect()->route('Properties.index');
      }
-
-
-     // public function select($propertyId, $personId){
-     //
-     //   $property = Property::find($propertyId);
-     //   //$property->fill($request->all());
-     //   //$properties->save();
-     //   if($propertyId != null){
-     //       $personProperty = PersonProperty::find($personId);
-     //       $personProperty->date_from = $request->date_from;
-     //       $personProperty->date_to = $request->date_to;
-     //       $personProperty->save();
-     //   }
-     //
-     //
-     //   return redirect()->route('Properties.index');
-     // }
 
 
 }
