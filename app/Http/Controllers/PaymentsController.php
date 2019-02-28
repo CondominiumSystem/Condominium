@@ -30,12 +30,13 @@ class PaymentsController extends Controller
                  flash("No se encontraron registros ")->warning();
              }else {
                foreach ($properties as $property) {
-                 if($property->date_to == null){
+                // dd($property);
+                 //if($property->date_to == null){
                    $payments=$this->GetPaymentsByPropertyId(
                        $property->id,
                        $property->person_id
                    );
-                 }
+                // }
                }
                flash("Hay varias propiedades ")->warning();
              }
