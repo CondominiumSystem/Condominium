@@ -5,8 +5,8 @@
 @endsection
 
 @section('content')
-<body class="hold-transition login-page">
-    <div id="app" v-cloak>
+<body class="hold-transition login-page" style="background-image: url('/img/quito_historico.jpg')">
+    <div id="app"  v-cloak>
         <div class="login-box">
             <div class="login-logo">
                 <a href="{{ url('/home') }}">
