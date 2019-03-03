@@ -59,7 +59,7 @@ class PaymentsDataTable extends DataTable
                 [
 
                     ['data' => 'lot_number', 'name' => 'lot_number', 'title' => 'Lote'],
-                    ['data' => 'year', 'name' => 'year', 'title' => 'A�o'],
+                    ['data' => 'year', 'name' => 'year', 'title' => 'Año'],
                     ['data' => 'person_name', 'name' => 'person_name', 'title' => 'Nombre Persona'],
                     ['data' => 'date_from', 'name' => 'date_from', 'title' => 'Desde'],
                     ['data' => 'date_to', 'name' => 'date_to', 'title' => 'Hasta'],

@@ -92,6 +92,10 @@ Route::group(['middleware' => 'auth'], function () {
 	);
 
 
+Route::get('/PortofolioExcel',[
+    'uses'=> 'ReportsController@exportPayments',
+    'as' => 'Reports.exportPayments'
+]);
 
 
 

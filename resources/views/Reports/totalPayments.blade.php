@@ -8,13 +8,23 @@
 <div class="box">
 	<div class="box-header ">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-4">
 				{!! Form::label('year', 'Año:') !!}
 	            {!! Form::select('year',$years,null,['class'=>'input-filter input-sm form-control','placeholder'=>'Año']) !!}
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-4">
 				{!! Form::label('person_type_id', 'Residente:') !!}
 				{!! Form::select('person_type_id',$person_types,null,['class'=>'input-filter input-sm form-control', 'placeholder'=>'Seleccione Tipo']) !!}
+			</div>
+			<div class="col-md-4">
+				<a href="{{ route('Reports.exportPayments')}}" class="btn btn-success">
+					Export to Excel
+				</a>
+				<button type="button" class="align-bottom dt-button buttons-excel" name="button">
+					<span class="align-text-bottom">
+						<i class="fa fa-file-excel-o"></i> Excel
+					</span>
+				</button>
 			</div>
 		</div>
 	</div>

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use App\Period;
 use App\PersonType;
+use Excel;
 
 class ReportsController extends Controller
 {
@@ -92,6 +93,21 @@ class ReportsController extends Controller
         $years = $this->GetPeriods();
         $person_types=PersonType::pluck('name','id');
         return view("Reports.portfolioReceivable",compact('years','person_types'));
+    }
+
+    public function exportPayments(){
+        $customer_array[] = array('Customer','Telefono','Direccion');
+        $customer_array[] = array('Customer' => 'Orlando Cofre',
+      'Telefono' => '1723230538',
+      'Direccion' => 'Prados');
+
+      Excel::create('Customer Date', function($excel) use ($customer_array){
+          $excel->setTitle('Customer Data');
+          $excel->Sheet('Customer Data',function($sheet) use ($customer_array){
+            $sheet->fromArray($customer_array,null,'A1',false,false);
+          });
+      })->download('xlsx');
+
     }
 
     public function portfolioReceivableData(Request $request){

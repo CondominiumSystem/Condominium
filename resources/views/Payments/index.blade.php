@@ -1,3 +1,4 @@
+
 @extends('adminlte::layouts.app')
 
 @section('contentheader_title')
@@ -16,7 +17,7 @@
 
 								<div class="col-md-6">
 									<div class="input-group">
-									  {!! Form::text('document_number',null,['class'=> 'form-control','placeholder'=>'Cédula / RUC..','aria-describedby'=>'search'])!!}
+									  {!! Form::text('document_number',null,['class'=> 'form-control','placeholder'=>'Cédula / RUC..','maxlength' => 13,'aria-describedby'=>'search'])!!}
 									  <span class="input-group-btn input-group-sm">
   										<button class="btn btn-default" type="submit">
   											<span class="btn-label"><i class="fa fa-search"></i></span>
@@ -180,7 +181,20 @@
 @endsection
 
 @section('customScript')
-  <script>
+  <script type="text/javascript">
+
+	// Restricts input for each element in the set of matched elements to the given inputFilter.
+
+	$(document).ready(function(){
+
+		$("#lot_number").inputFilter(function(value) {
+		  return /^\d*$/.test(value);
+		});
+
+	});
+
+
+
 
     $('#confirm-delete').on('show.bs.modal', function(e) {
       $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
