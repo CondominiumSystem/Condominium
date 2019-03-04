@@ -7,6 +7,8 @@
 @section('main-content')
 <div class="box">
 	<div class="box-header ">
+
+{!! Form::Open(['route' => ['Reports.exportPayments'],'method' => 'GET']) !!}
 		<div class="row">
 			<div class="col-md-4">
 				{!! Form::label('year', 'Año:') !!}
@@ -17,16 +19,16 @@
 				{!! Form::select('person_type_id',$person_types,null,['class'=>'input-filter input-sm form-control', 'placeholder'=>'Seleccione Tipo']) !!}
 			</div>
 			<div class="col-md-4">
-				<a href="{{ route('Reports.exportPayments')}}" class="btn btn-success">
-					Export to Excel
-				</a>
-				<button type="button" class="align-bottom dt-button buttons-excel" name="button">
+				<button type="submit" class="btn btn-success buttons-excel" name="button">
 					<span class="align-text-bottom">
 						<i class="fa fa-file-excel-o"></i> Excel
 					</span>
 				</button>
 			</div>
 		</div>
+
+{!! Form::Close() !!}
+
 	</div>
     <div class="box-body">
         {!! $dataTable->table(['class' => 'table table-bordered table-condensed']) !!}
@@ -48,21 +50,24 @@
 {!! $dataTable->scripts() !!}
 
 
-<script>
+<script type="text/javascript">
+
   $(document).ready(function () {
 
-	$('#year').on('change', function(e) {
-	  $('#dataTableBuilder').DataTable().draw();
-	});
+		$('#year').on('change', function(e) {
+		  $('#dataTableBuilder').DataTable().draw();
+		});
 
-	$('#person_type_id').on('change', function(e) {
-	  $('#dataTableBuilder').DataTable().draw();
-	});
+		$('#person_type_id').on('change', function(e) {
+		  $('#dataTableBuilder').DataTable().draw();
+		});
 
-	$('#dataTableBuilder').DataTable().on('preXhr.dt', function ( e, settings, data ) {
-	  data.year = $('#year').val();
-	  data.person_type_id = $('#person_type_id').val();
-	});
+		$('#dataTableBuilder').DataTable().on('preXhr.dt', function ( e, settings, data ) {
+		  data.year = $('#year').val();
+		  data.person_type_id = $('#person_type_id').val();
+		});
+
+
   });
 </script>
 

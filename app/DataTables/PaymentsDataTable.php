@@ -55,31 +55,9 @@ class PaymentsDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->columns( //$this->getColumns()
-                [
-
-                    ['data' => 'lot_number', 'name' => 'lot_number', 'title' => 'Lote'],
-                    ['data' => 'year', 'name' => 'year', 'title' => 'Año'],
-                    ['data' => 'person_name', 'name' => 'person_name', 'title' => 'Nombre Persona'],
-                    ['data' => 'date_from', 'name' => 'date_from', 'title' => 'Desde'],
-                    ['data' => 'date_to', 'name' => 'date_to', 'title' => 'Hasta'],
-                    ['data' => 'ENE', 'name' => 'ENE', 'title' => 'ENE'],
-                    ['data' => 'FEB', 'name' => 'FEB', 'title' => 'FEB'],
-                    ['data' => 'MAR', 'name' => 'MAR', 'title' => 'MAR'],
-                    ['data' => 'ABR', 'name' => 'ABR', 'title' => 'ABR'],
-                    ['data' => 'MAY', 'name' => 'MAY', 'title' => 'MAY'],
-                    ['data' => 'JUN', 'name' => 'JUN', 'title' => 'JUN'],
-                    ['data' => 'JUL', 'name' => 'JUL', 'title' => 'JUL'],
-                    ['data' => 'AGO', 'name' => 'AGO', 'title' => 'AGO'],
-                    ['data' => 'SEP', 'name' => 'SEP', 'title' => 'SEP'],
-                    ['data' => 'OCT', 'name' => 'OCT', 'title' => 'OCT'],
-                    ['data' => 'NOV', 'name' => 'NOV', 'title' => 'NOV'],
-                    ['data' => 'DIC', 'name' => 'DIC', 'title' => 'DIC'],
-                    ['data' => 'TOTAL', 'name' => 'TOTAL', 'title' => 'TOTAL'],
-                ]
-            )
-                    ->minifiedAjax()
-                    ->parameters($this->getBuilderParameters());
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->parameters($this->getBuilderParameters());
     }
 
     /**
@@ -90,15 +68,24 @@ class PaymentsDataTable extends DataTable
     protected function getColumns()
     {
         return [
-
-
-            'lot_number',
-            'year',
-            'person_name',
-            'date_from',
-            'date_to',
-            'ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC',
-            'TOTAL',
+            ['data' => 'lot_number', 'name' => 'lot_number', 'title' => 'Lote'],
+            ['data' => 'year', 'name' => 'year', 'title' => 'Año'],
+            ['data' => 'person_name', 'name' => 'person_name', 'title' => 'Nombre Persona'],
+            ['data' => 'date_from', 'name' => 'date_from', 'title' => 'Desde'],
+            ['data' => 'date_to', 'name' => 'date_to', 'title' => 'Hasta'],
+            ['data' => 'ENE', 'name' => 'ENE', 'title' => 'ENE'],
+            ['data' => 'FEB', 'name' => 'FEB', 'title' => 'FEB'],
+            ['data' => 'MAR', 'name' => 'MAR', 'title' => 'MAR'],
+            ['data' => 'ABR', 'name' => 'ABR', 'title' => 'ABR'],
+            ['data' => 'MAY', 'name' => 'MAY', 'title' => 'MAY'],
+            ['data' => 'JUN', 'name' => 'JUN', 'title' => 'JUN'],
+            ['data' => 'JUL', 'name' => 'JUL', 'title' => 'JUL'],
+            ['data' => 'AGO', 'name' => 'AGO', 'title' => 'AGO'],
+            ['data' => 'SEP', 'name' => 'SEP', 'title' => 'SEP'],
+            ['data' => 'OCT', 'name' => 'OCT', 'title' => 'OCT'],
+            ['data' => 'NOV', 'name' => 'NOV', 'title' => 'NOV'],
+            ['data' => 'DIC', 'name' => 'DIC', 'title' => 'DIC'],
+            ['data' => 'TOTAL', 'name' => 'TOTAL', 'title' => 'TOTAL'],
         ];
     }
 

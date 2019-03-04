@@ -95,70 +95,190 @@ class ReportsController extends Controller
         return view("Reports.portfolioReceivable",compact('years','person_types'));
     }
 
-    public function exportPayments(){
-        $customer_array[] = array('Customer','Telefono','Direccion');
-        $customer_array[] = array('Customer' => 'Orlando Cofre',
-      'Telefono' => '1723230538',
-      'Direccion' => 'Prados');
+    public function exportPayments(Request $request){
 
-      Excel::create('Customer Date', function($excel) use ($customer_array){
-          $excel->setTitle('Customer Data');
-          $excel->Sheet('Customer Data',function($sheet) use ($customer_array){
-            $sheet->fromArray($customer_array,null,'A1',false,false);
+      $strConsulta='select
+        lot_number,year,person_name,person_type_name,date_from,date_to,
+        ENE,FEB,MAR,ABR,MAY,JUN,JUL,AGO,SEP,OCT,NOV,DIC,TOTAL
+        from payment_view';
+
+      $validYear = ($request->has('year') && $request->get('year') != "" );
+      $validPersonType = ($request->has('person_type_id') && $request->get('person_type_id') != "" );
+      $year = $request->get('year');
+      $personType = $request->get('person_type_id');
+
+      if( $validYear || $validPersonType ){
+          $strConsulta .= ' where';
+          if ($validYear && !$validPersonType) {
+              $strConsulta = $strConsulta . ' year = ' . $year;
+          }
+          if (!$validYear && $validPersonType) {
+              $strConsulta = $strConsulta . ' person_type_id = ' . $personType;
+          }
+          if ($validYear && $validPersonType) {
+              $strConsulta = $strConsulta . ' year = ' . $year;
+              $strConsulta = $strConsulta . ' and person_type_id = ' . $personType;
+          }
+      }
+
+      $payments = DB::select($strConsulta);
+
+      $payments_array[] = array('Lote','Año','Nombre Persona',
+          'Desde','Hasta','Enero','Febrero','Marzo','Abril',
+          'Mayo','Junio','Julio','Agosto','Septiembre','Octubre',
+          'Noviembre','Diciembre','Total'
+          );
+
+          foreach ($payments as $payment) {
+            $payments_array[] = array(
+              'Lote'=> $payment->lot_number,
+              'Año'=> $payment->year,
+              'Nombre Persona'=> $payment->person_name,
+              'Desde'=> $payment->date_from,
+              'Hasta'=> $payment->date_to,
+              'Enero'=> $payment->ENE,
+              'Febrero'=> $payment->FEB,
+              'Marzo'=> $payment->MAR,
+              'Abril'=> $payment->ABR,
+              'Mayo'=> $payment->MAY,
+              'Junio'=> $payment->JUN,
+              'Julio'=> $payment->JUL,
+              'Agosto'=> $payment->AGO,
+              'Septiembre'=> $payment->SEP,
+              'Octubre'=> $payment->OCT,
+              'Noviembre'=> $payment->NOV,
+              'Diciembre'=> $payment->DIC,
+              'Total'=> $payment->TOTAL
+            );
+          }
+
+      Excel::create('Reporte de Pagos'. date('YmdHis'), function($excel) use ($payments_array){
+          $excel->setTitle('Pagos');
+          $excel->Sheet('Pagos',function($sheet) use ($payments_array){
+            $sheet->fromArray($payments_array,null,'A1',false,false);
+          });
+      })->download('xlsx');
+
+    }
+    public function exportPorfolioReceivable(Request $request){
+
+      $strConsulta='select
+        lot_number,year,person_name,person_type_name,date_from,date_to,
+        ENE,FEB,MAR,ABR,MAY,JUN,JUL,AGO,SEP,OCT,NOV,DIC,TOTAL
+        from portfolio_receivable_view';
+
+      $validYear = ($request->has('year') && $request->get('year') != "" );
+      $validPersonType = ($request->has('person_type_id') && $request->get('person_type_id') != "" );
+      $year = $request->get('year');
+      $personType = $request->get('person_type_id');
+
+      if( $validYear || $validPersonType ){
+          $strConsulta .= ' where';
+          if ($validYear && !$validPersonType) {
+              $strConsulta = $strConsulta . ' year = ' . $year;
+          }
+          if (!$validYear && $validPersonType) {
+              $strConsulta = $strConsulta . ' person_type_id = ' . $personType;
+          }
+          if ($validYear && $validPersonType) {
+              $strConsulta = $strConsulta . ' year = ' . $year;
+              $strConsulta = $strConsulta . ' and person_type_id = ' . $personType;
+          }
+      }
+
+      $porfolios = DB::select($strConsulta);
+
+      $porfolios_array[] = array('Lote','Año','Nombre Persona',
+          'Desde','Hasta','Enero','Febrero','Marzo','Abril',
+          'Mayo','Junio','Julio','Agosto','Septiembre','Octubre',
+          'Noviembre','Diciembre','Total'
+          );
+
+          foreach ($porfolios as $porfolio) {
+            $porfolios_array[] = array(
+              'Lote'=> $porfolio->lot_number,
+              'Año'=> $porfolio->year,
+              'Nombre Persona'=> $porfolio->person_name,
+              'Desde'=> $porfolio->date_from,
+              'Hasta'=> $porfolio->date_to,
+              'Enero'=> $porfolio->ENE,
+              'Febrero'=> $porfolio->FEB,
+              'Marzo'=> $porfolio->MAR,
+              'Abril'=> $porfolio->ABR,
+              'Mayo'=> $porfolio->MAY,
+              'Junio'=> $porfolio->JUN,
+              'Julio'=> $porfolio->JUL,
+              'Agosto'=> $porfolio->AGO,
+              'Septiembre'=> $porfolio->SEP,
+              'Octubre'=> $porfolio->OCT,
+              'Noviembre'=> $porfolio->NOV,
+              'Diciembre'=> $porfolio->DIC,
+              'Total'=> $porfolio->TOTAL
+            );
+          }
+
+      Excel::create('Reporte Cartera por Pagar'. date('YmdHis'), function($excel) use ($porfolios_array){
+          $excel->setTitle('Pagos');
+          $excel->Sheet('Pagos',function($sheet) use ($porfolios_array){
+            $sheet->fromArray($porfolios_array,null,'A1',false,false);
           });
       })->download('xlsx');
 
     }
 
+
     public function portfolioReceivableData(Request $request){
-
-        $strConsulta='select
-            lot_number,
-            year,
-            person_name,
-            max(person_type_name) as person_type_name,
-            max(date_from) as date_from,
-            max(date_to) as date_to,
-            sum(IF(month_id = 1, payment_value, 0)) AS ENE,
-            sum(IF(month_id = 2, payment_value, 0)) AS FEB,
-            sum(IF(month_id = 3, payment_value, 0)) AS MAR,
-            sum(IF(month_id = 4, payment_value, 0)) AS ABR,
-            sum(IF(month_id = 5, payment_value, 0)) AS MAY,
-            sum(IF(month_id = 6, payment_value, 0)) AS JUN,
-            sum(IF(month_id = 7, payment_value, 0)) AS JUL,
-            sum(IF(month_id = 8, payment_value, 0)) AS AGO,
-            sum(IF(month_id = 9, payment_value, 0)) AS SEP,
-            sum(IF(month_id = 10, payment_value, 0)) AS OCT,
-            sum(IF(month_id = 11, payment_value, 0)) AS NOV,
-            sum(IF(month_id = 12, payment_value, 0)) AS DIC,
-            SUM(payment_value) AS TOTAL,
-            SUM(value) AS DEUDA
-            from paymentsview';
-
-        $validYear = ($request->has('year') && $request->get('year') != "" );
-        $validPersonType = ($request->has('person_type_id') && $request->get('person_type_id') != "" );
-        $year = $request->get('year');
-        $personType = $request->get('person_type_id');
-
-        if( $validYear || $validPersonType ){
-            $strConsulta .= ' where';
-            if ($validYear && !$validPersonType) {
-                $strConsulta = $strConsulta . ' year = ' . $year;
-            }
-            if (!$validYear && $validPersonType) {
-                $strConsulta = $strConsulta . ' person_type_id = ' . $personType;
-            }
-            if ($validYear && $validPersonType) {
-                $strConsulta = $strConsulta . ' year = ' . $year;
-                $strConsulta = $strConsulta . ' and person_type_id = ' . $personType;
-            }
-        }
-
-        $strConsulta = $strConsulta . ' group by lot_number,person_name, year';
-        $strConsulta = $strConsulta . ' order by lot_number,person_name, year';
-
-        $payments = DB::select($strConsulta);
-
+        $payments = $this->getPorforlioReceivable($request);
         return Datatables::of($payments)->make(true);
     }
+
+    public function getPorforlioReceivable(Request $request){
+      $strConsulta='select
+          lot_number,
+          year,
+          person_name,
+          max(person_type_name) as person_type_name,
+          max(date_from) as date_from,
+          max(date_to) as date_to,
+          sum(IF(month_id = 1, payment_value, 0)) AS ENE,
+          sum(IF(month_id = 2, payment_value, 0)) AS FEB,
+          sum(IF(month_id = 3, payment_value, 0)) AS MAR,
+          sum(IF(month_id = 4, payment_value, 0)) AS ABR,
+          sum(IF(month_id = 5, payment_value, 0)) AS MAY,
+          sum(IF(month_id = 6, payment_value, 0)) AS JUN,
+          sum(IF(month_id = 7, payment_value, 0)) AS JUL,
+          sum(IF(month_id = 8, payment_value, 0)) AS AGO,
+          sum(IF(month_id = 9, payment_value, 0)) AS SEP,
+          sum(IF(month_id = 10, payment_value, 0)) AS OCT,
+          sum(IF(month_id = 11, payment_value, 0)) AS NOV,
+          sum(IF(month_id = 12, payment_value, 0)) AS DIC,
+          SUM(payment_value) AS TOTAL,
+          SUM(value) AS DEUDA
+          from paymentsview';
+
+      $validYear = ($request->has('year') && $request->get('year') != "" );
+      $validPersonType = ($request->has('person_type_id') && $request->get('person_type_id') != "" );
+      $year = $request->get('year');
+      $personType = $request->get('person_type_id');
+
+      if( $validYear || $validPersonType ){
+          $strConsulta .= ' where';
+          if ($validYear && !$validPersonType) {
+              $strConsulta = $strConsulta . ' year = ' . $year;
+          }
+          if (!$validYear && $validPersonType) {
+              $strConsulta = $strConsulta . ' person_type_id = ' . $personType;
+          }
+          if ($validYear && $validPersonType) {
+              $strConsulta = $strConsulta . ' year = ' . $year;
+              $strConsulta = $strConsulta . ' and person_type_id = ' . $personType;
+          }
+      }
+
+      $strConsulta = $strConsulta . ' group by lot_number,person_name, year';
+      $strConsulta = $strConsulta . ' order by lot_number,person_name, year';
+
+      return DB::select($strConsulta);
+    }
+
 }

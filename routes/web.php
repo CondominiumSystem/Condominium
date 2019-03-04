@@ -50,34 +50,34 @@ Route::group(['middleware' => 'auth'], function () {
 			]
 	);
 
-    Route::get('/ReportsPayments', [
-                    'uses' => 'ReportsController@getPaymentsIndex',
-                    'as' => 'Reports.payments'
-            ]
-    );
-
-    Route::get('/ReportsPaymentsData', [
-                    'uses' => 'ReportsController@paymentsData',
-                    'as' => 'Reports.paymentsData'
-            ]
-    );
+    // Route::get('/ReportsPayments', [
+    //                 'uses' => 'ReportsController@getPaymentsIndex',
+    //                 'as' => 'Reports.payments'
+    //         ]
+    // );
+    //
+    // Route::get('/ReportsPaymentsData', [
+    //                 'uses' => 'ReportsController@paymentsData',
+    //                 'as' => 'Reports.paymentsData'
+    //         ]
+    // );
     Route::get('/Persons/{id}/destroy', [
 					'uses' => 'PersonsController@destroy',
 					'as' => 'Persons.destroy'
 			]
 	);
 
-    Route::get('/PortfolioReceivable', [
-                    'uses' => 'ReportsController@getPortfolioReceivableIndex',
-                    'as' => 'Reports.portfolioReceivable'
-            ]
-    );
-
-    Route::get('/PortfolioReceivableData', [
-                    'uses' => 'ReportsController@portfolioReceivableData',
-                    'as' => 'Reports.portfolioReceivableData'
-            ]
-    );
+    // Route::get('/PortfolioReceivable', [
+    //                 'uses' => 'ReportsController@getPortfolioReceivableIndex',
+    //                 'as' => 'Reports.portfolioReceivable'
+    //         ]
+    // );
+    //
+    // Route::get('/PortfolioReceivableData', [
+    //                 'uses' => 'ReportsController@portfolioReceivableData',
+    //                 'as' => 'Reports.portfolioReceivableData'
+    //         ]
+    // );
 
     Route::get('/TotalPayments', [
 					'uses' => 'ReportsController@totalPayments',
@@ -92,9 +92,14 @@ Route::group(['middleware' => 'auth'], function () {
 	);
 
 
-Route::get('/PortofolioExcel',[
+Route::get('/PaymentsExcel',[
     'uses'=> 'ReportsController@exportPayments',
     'as' => 'Reports.exportPayments'
+]);
+
+Route::get('/PortofolioExcel',[
+    'uses'=> 'ReportsController@exportPorfolioReceivable',
+    'as' => 'Reports.exportPorfolioReceivable'
 ]);
 
 
