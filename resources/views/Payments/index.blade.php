@@ -14,28 +14,41 @@
 			 			<div class="box-body">
 							{{-- <label class="" for="lot_number">Número de Lote</label> --}}
 							{!! Form::open(['route'=>'Payments.index', 'method' =>'GET']) !!}
+							<div class="row">
+									<div class="col-md-12">
+										<div class="input-group">
+										  {!! Form::text('person_name',null,['class'=> 'form-control','placeholder'=>'Nombre','maxlength' => 30,'aria-describedby'=>'search'])!!}
+										  <span class="input-group-btn input-group-sm">
+	  										<button class="btn btn-default" type="submit">
+	  											<span class="btn-label"><i class="fa fa-search"></i></span>
+	  										</button>
+	  									</span>
+										</div>
+									</div>
+							</div>
 
-								<div class="col-md-6">
-									<div class="input-group">
-									  {!! Form::text('document_number',null,['class'=> 'form-control','placeholder'=>'Cédula / RUC..','maxlength' => 13,'aria-describedby'=>'search'])!!}
-									  <span class="input-group-btn input-group-sm">
-  										<button class="btn btn-default" type="submit">
-  											<span class="btn-label"><i class="fa fa-search"></i></span>
-  										</button>
-  									</span>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="input-group">
+										  {!! Form::text('document_number',null,['class'=> 'form-control','placeholder'=>'Cédula / RUC..','maxlength' => 13,'aria-describedby'=>'search'])!!}
+										  <span class="input-group-btn input-group-sm">
+	  										<button class="btn btn-default" type="submit">
+	  											<span class="btn-label"><i class="fa fa-search"></i></span>
+	  										</button>
+	  									</span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="input-group">
+											{!! Form::text('lot_number',$lot_number,['class'=> 'form-control','placeholder'=>'Lote','maxlength' => 3,'aria-describedby'=>'search'])!!}
+											<span class="input-group-btn">
+												<button class="btn btn-default" type="submit">
+													<span class="btn-label"><i class="fa fa-search"></i></span>
+												</button>
+											</span>
+										</div>
 									</div>
 								</div>
-
-								<div class="col-md-6">
-								<div class="input-group">
-									{!! Form::text('lot_number',$lot_number,['class'=> 'form-control','placeholder'=>'Lote','maxlength' => 3,'aria-describedby'=>'search'])!!}
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="submit">
-											<span class="btn-label"><i class="fa fa-search"></i></span>
-										</button>
-									</span>
-								</div>
-					    		</div>
 							{!! Form::close() !!}
 				    	</div>
 			    	</div>

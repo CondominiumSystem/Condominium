@@ -20,40 +20,52 @@ class PaymentsController extends Controller
      public function index(Request $request )
      {
         // $selected_period = $request->period_id;
-        // dd($selected_period);
+        if($request->document_number != null || $request->person_name != null ){
+            $persons = Person::Search($request->person_name,$request->document_number,null)->get();
+            if($persons->count()> 0){
+              //dd("Hay Datos");
 
-        if($request->document_number != null){
-             $properties= $this->GetPropertiesByDocumentNumber($request->document_number);
-             //dd($properties);
-             $payments = null;
-             if($properties == null || $properties->count() == 0){
-                 flash("No se encontraron registros ")->warning();
-             }else {
-               foreach ($properties as $property) {
-                // dd($property);
-                 //if($property->date_to == null){
-                   $payments=$this->GetPaymentsByPropertyId(
-                       $property->id,
-                       $property->person_id
-                   );
-                // }
-               }
-               flash("Hay varias propiedades ")->warning();
-             }
+              dd($persons);
+              $properties= $this->GetPropertiesByDocumentNumber($request->document_number);
+              //dd($properties);
+              $payments = null;
+              if($properties == null || $properties->count() == 0){
+                  flash("No se encontraron registros ")->warning();
+              }else {
+                foreach ($properties as $property) {
+                 // dd($property);
+                  //if($property->date_to == null){
+                    $payments=$this->GetPaymentsByPropertyId(
+                        $property->id,
+                        $property->person_id
+                    );
+                 // }
+                }
+                flash("Hay varias propiedades ")->warning();
+              }
+            }
+            else{
+              flash("No hay personas con nombre: ".$request->person_name)->warning();
+            }
         }
         else
         {
             if($request->lot_number != null){
+
                $properties= $this->GetPropertiesByLotNumber($request->lot_number);
+               //dd($properties);
                if($properties->count() >= 1 ){
                    //Obtenemos los pagos
                    //enviar la propiedad viegente
 
+                  //dd($properties->first()->id);
                    $payments=$this->GetPaymentsByPropertyId(
                        $properties->first()->id,
                     //   $selected_period,
                        $properties->first()->person_id
                    );
+
+                   //dd($payments);
                }
                else{
                    flash("No se encotraron registros")->success();
@@ -110,6 +122,7 @@ class PaymentsController extends Controller
             $payment->value = $result_value->value;
             $payment->active = true;
             $payment->period_id = $period;
+            //dd($payment);
             $payment->save();
         }
         flash("Pago Grabado correctamente. Transacción: ".$transaction_id)->success();
@@ -181,6 +194,8 @@ class PaymentsController extends Controller
 
       // $strConsulta = $strConsulta . ' group by lot_number,person_name, year';
       // $strConsulta = $strConsulta . ' order by lot_number,person_name, year';
+
+      //dd($strConsulta);
 
       $payments = DB::select($strConsulta);
 
