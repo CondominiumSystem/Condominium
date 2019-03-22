@@ -49,22 +49,19 @@ class PeriodsController extends Controller
      */
     public function store(Request $request)
     {
-
-$year = DB::table('periods')->max('year');
-$year=$year+1;
-
-//dd($year);
+      $year = DB::table('periods')->max('year');
+      $year=$year+1;
 
       $months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
-  $periodsNew=[];
+      $periodsNew=[];
           $index = 0;
           foreach ($months as $month) {
               array_push(
                   $periodsNew,
                   array(
                       'year'=> $year,
-                      'month_id' => $index, 'month_name' => $months[$index],
+                      'month_id' => $index + 1, 'month_name' => $months[$index],
                       'created_at'=>date("Y-m-d H:i:s")
                   )
               );
@@ -72,8 +69,6 @@ $year=$year+1;
           }
 
       DB::Table('periods')->insert($periodsNew);
-
-
 
       $periods = DB::table('periods')->select('year')->distinct()->orderBy('year','asc')->get();
 

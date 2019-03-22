@@ -116,7 +116,7 @@
 									<tbody>
 									@if( $payments == null)
 										<tr>
-											<td colspan="3">
+											<td colspan="4">
 												No hay datos
 											</td>
 										</tr>
@@ -125,13 +125,19 @@
 										<tr>
 											<td>{{$payment->year}}</td>
 											<td>{{$payment->month_name}}</td>
-											<td>{{ $payment->value }}</td>
 											<td>
 												@if ( $payment->payment_value > 0 )
-												<span>PAGADO</span>
+													{{ $payment->payment_value }}
+												@else
+													{{ $payment->value }}
+												@endif
+											</td>
+											<td>
+												@if ( $payment->payment_value > 0 )
+												<span class="bg-green-active color-palette">PAGADO</span>
 												@else
 												<span>NO</span>
-												{!! Form::checkbox('active[]',$payment->period_id, 0) !!}
+												{!! Form::checkbox('active[]',$payment->period_id."-".$payment->value, 0) !!}
 												@endif
 											</td>
 										</tr>
@@ -206,53 +212,43 @@
 
 	});
 
-
-
-
     $('#confirm-delete').on('show.bs.modal', function(e) {
       $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
 
       $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
     });
 
+		var tblProperties = $("#tblProperties");
+		var tblPayments = $("#tblPayments");
 
-	var tblProperties = $("#tblProperties");
-	var tblPayments = $("#tblPayments");
-
-
-	$("#btnAceptPayment").on('click',function(event){
-		$("#formPayment").submit();
-	});
+		$("#btnAceptPayment").on('click',function(event){
+			$("#formPayment").submit();
+		});
 
 	$("#btnPayment").on('click',function(event){
 		event.preventDefault();
 	    if( tblProperties[0] != undefined && tblPayments.find('input[type=checkbox]:checked').length > 0 ){
 
-			var items = tblPayments.find('input[type=checkbox]:checked');//.find('td');
-			var tableConfirmation = $("<table class='table table-bordered table-hover'><thead><th>Mes</th><th>Valor</th></thead><tbody></tbody></table>");
-//debugger;
-			//console.log(items);
-			var total = 0.0;
-			for (var i = 0; i < items.length; i++){
-				var rows = $(items[i]).parent().parent().find('td');
-				total = total + parseFloat(rows[2].innerText);
-				tableConfirmation.append('<tr><td>' + rows[1].innerText + '</td><td>' + rows[2].innerText + '</td></tr>'  );
-			}
-			//if( total >= 0){
-				debugger;
-				tableConfirmation.append('<tfoot><tr><td><b>TOTAL</b></td><td><b>' + total.toFixed(2) + '</b></td></tr></tfoot>'  );
-			//}
+				var items = tblPayments.find('input[type=checkbox]:checked');//.find('td');
+				var tableConfirmation = $("<table class='table table-bordered table-hover'><thead><th>Año</th><th>Mes</th><th>Valor</th></thead><tbody></tbody></table>");
+				var total = 0.0;
 
-			$("#confirmPayment").find(".detalle").html('');
-			$("#confirmPayment").find(".detalle").append(tableConfirmation);
+				for (var i = 0; i < items.length; i++){
+					var rows = $(items[i]).parent().parent().find('td');
+					total = total + parseFloat(rows[2].innerText);
+					tableConfirmation.append('<tr><td>' + rows[0].innerText + '</td><td>'+ rows[1].innerText + '</td><td>' + rows[2].innerText + '</td></tr>'  );
+				}
 
-	        $("#confirmPayment").modal();
+				tableConfirmation.append('<tfoot><tr><td><b>TOTAL</b></td><td></td><td><b>' + total.toFixed(2) + '</b></td></tr></tfoot>'  );
+
+				$("#confirmPayment").find(".detalle").html('');
+				$("#confirmPayment").find(".detalle").append(tableConfirmation);
+	      $("#confirmPayment").modal();
 	    }
 	    else {
 	        $("#myModal").modal();
 	    }
 	    return false;
-
 	})
 
   </script>
