@@ -14,40 +14,24 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-      $companies =  Company::all();
+
+       $companies =  Company::all();
+      if($companies->count()==0){
+
+        $new_conpany = new Company();
+        $new_conpany->name="Mi Condominio";
+        $new_conpany->ruc="1234567896541";
+        $new_conpany->email="micondominio@example.com";
+        $new_conpany->phone="023333333";
+
+        $new_conpany->save();
+
+         $companies =  Company::all();
+        return view("Companies.index",compact('companies'));
+
+      }
+
       return view("Companies.index",compact('companies'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //return view("Companies.create");
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -79,14 +63,5 @@ class CompaniesController extends Controller
       return redirect()->route('Companies.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+
 }

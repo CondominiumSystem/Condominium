@@ -19,10 +19,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('Persons','PersonsController');
     Route::resource('Properties','PropertiesController');
     Route::resource('Payments','PaymentsController')->only(['index','store']);
-    Route::resource('Companies','CompaniesController')->only(['index','update','edit','store']);
+    Route::resource('Companies','CompaniesController')->only(['index','update'
+    ,'edit']);
 
     Route::resource('Periods','PeriodsController')->only(['index','store']);
 
+    Route::get('/Payments/{propertyId}/createCondonation', [
+                    'uses' => 'PaymentsController@createCondonation',
+                    'as' => 'Payments.createCondonation'
+            ]
+    );
+    Route::post('/Payments/{propertyId}/storeCondonation', [
+                    'uses' => 'PaymentsController@storeCondonation',
+                    'as' => 'Payments.storeCondonation'
+            ]
+    );
 
 	Route::get('/Persons/{id}/destroy', [
 					'uses' => 'PersonsController@destroy',
