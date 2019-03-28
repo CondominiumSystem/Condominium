@@ -25,6 +25,11 @@ class PropertyTypesTableSeeder extends Seeder
                 'name'=>'Departamento',
                 'created_at'=>date("Y-m-d H:i:s")
             ),
+            array(
+                'name'=>'Arriendo',
+                'created_at'=>date("Y-m-d H:i:s")
+            ),
+
         ];
         DB::Table('property_types')->insert($propertyTypes);
     }
