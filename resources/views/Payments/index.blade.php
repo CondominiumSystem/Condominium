@@ -102,7 +102,11 @@
 							<button type="button" id="btnPayment"
 								class="btn btn-success no-margin pull-right">
 								<i class="fa fa-money"></i>  Pagar
+
 							</button>
+							<a href="{{url('Payments/condonation')}}" type="button" class="btn btn-primary">
+								<i class="fa fa-plus" aria-hidden="true"></i> Condonar
+							</a>
 			            </div>
 						<div class="box-body">
 							<div class="bs-callout bs-callout-warning">
