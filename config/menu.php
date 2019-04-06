@@ -29,6 +29,7 @@ Menu::macro('sidebar', function () {
         ->action('PersonsController@index', '<i class="fa fa-users"></i><span>'. trans('menu.persons') .'</span>')
         ->action('PaymentsController@index', '<i class="fa fa-money"></i><span>'. trans('menu.payments') .'</span>')
         ->action('PropertiesController@index', '<i class="fa fa-home"></i><span>'.trans('menu.properties').'</span>')
+        ->action('CondonationsController@index', '<i class="fa fa-home"></i><span>'.trans('menu.condonations').'</span>')
         ->add(Menu::new()->prepend('<a href="#"><i class="fa fa-book"></i><span>Reportes</span> <i class="fa fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->action('ReportsController@getPaymentsIndex', '<i class="fa fa-money"></i><span>Pagos</span>')
@@ -46,6 +47,8 @@ Menu::macro('sidebarAdmin', function () {
         ->action('PersonsController@index', '<i class="fa fa-users"></i><span>'. trans('menu.persons') .'</span>')
         ->action('PaymentsController@index', '<i class="fa fa-money"></i><span>'. trans('menu.payments') .'</span>')
         ->action('PropertiesController@index', '<i class="fa fa-home"></i><span>'.trans('menu.properties').'</span>')
+        ->action('CondonationsController@index', '<i class="fa fa-home"></i><span>'.trans('menu.condonations').'</span>')
+
         ->add(Menu::new()->prepend('<a href="#"><i class="fa fa-book"></i><span>Reportes</span> <i class="fa fa-angle-left pull-right"></i></a>')
             ->addParentClass('treeview')
             ->action('ReportsController@totalPayments', '<i class="fa fa-money"></i><span>Pagos</span>')
