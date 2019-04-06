@@ -67,19 +67,19 @@
 									<th>Hasta</th>
 								</thead>
 								<tbody>
-			                @foreach ($properties as $property)
-			                  <tr>
-			                      <td>{{ $property->property_type_name}}</td>
-			                      <td>
-									  <a href="{{ route('Payments.index', $property->person_id )}}">
-										  {{ $property->lot_number}}</a>
-								  </td>
-			                      <td>{{ $property->person_name }}</td>
-								  <td>{{ $property->date_from }}</td>
-								  <td>{{ $property->date_to }}</td>
-			                  </tr>
-			                @endforeach
-
+									@foreach ($properties as $property)
+										<tr>
+									    <td>{{ $property->property_type_name}}</td>
+									    <td>{{ $property->lot_number}}</td>
+											<td>
+												<a href="{{ route('Payments.index', ['person_name' => $property->person_name ]  )}}">
+												{{ $property->person_name }}
+												</a>
+											</td>
+											<td>{{ $property->date_from }}</td>
+											<td>{{ $property->date_to }}</td>
+										</tr>
+									@endforeach
 			              </tbody>
 
 							</table>
