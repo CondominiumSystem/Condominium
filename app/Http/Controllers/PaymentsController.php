@@ -59,6 +59,26 @@ class PaymentsController extends Controller
             ));
      }
 
+     public function createCondonation($propertyId){
+       dd($propertyId);
+       //Con el propertyId vamos a buscar los PAGOS
+       // con las siguientes condiciones:
+       // 1. La fecha desde debe ser igual 01/01/2010
+       // 2. Debe tener fecha hasta que termine fin de mes por ejemplo 31/12/2015
+       // 3. El tipo de propiedad debe ser terreno
+       // Los prosesos  que se va a realizar son:
+       // 1. Con el propertyId Consultamos todos los PAGOS
+       // 2. Sacamos la fecha minima y maxima de los PAGOS
+       // 3. Contamos el numero de cuaotas pendientes
+       // 4. Consultamos del propitario y numero de lote
+       return View("Payments.condonation");
+     }
+
+
+     public function storeCondonation(Request $request){
+
+       return View("Payments.index");
+     }
 
     /**
      * Store a newly created resource in storage.
@@ -159,5 +179,7 @@ class PaymentsController extends Controller
     function GetPeriods(){
         return Period::distinct()->pluck('year','year');
     }
+
+
 
 }
