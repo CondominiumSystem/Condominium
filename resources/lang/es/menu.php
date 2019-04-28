@@ -21,6 +21,7 @@ return [
     'security'                => 'Seguridad',
     'users'                   => 'Usuarios',
     'roles'                   => 'Roles',
+    'condonations'            => 'Condonaciones',
 
 
 ];

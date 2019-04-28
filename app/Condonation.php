@@ -6,18 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Condonation extends Model
 {
-<<<<<<< HEAD
-  protected $table ="persons";
-  protected $fillable = [
-    'transaction_id',
-    'note'
-  ];
-=======
   protected $table ="condonations";
   protected $fillable = [
+      'user_id',
       'transaction_id',
-      'note'
+      'note',
+      'vaule'
+
       ];
 
->>>>>>> b666858e636746fbee7e9a679ebb3a99819c72ba
 }

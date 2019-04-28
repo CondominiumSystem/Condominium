@@ -11,18 +11,17 @@ class CreateCondonationsTable extends Migration
      *
      * @return void
      */
-     public function up()
-     {
-         Schema::create('condonations', function (Blueprint $table) {
-             $table->increments('id');
-             $table->integer('user_id')->unsigned();
-             $table->integer('transaction_id')->unsigned();
-             $table->string('note',60);
-             $table->decimal('value',8,2);
-             $table->timestamps();
-         });
-     }
-
+    public function up()
+    {
+        Schema::create('condonations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('transaction_id')->unsigned();
+            $table->string('note',60);
+            $table->decimal('value',8,2);
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.

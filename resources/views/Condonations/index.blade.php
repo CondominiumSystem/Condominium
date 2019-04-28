@@ -67,20 +67,21 @@
 									<th>Hasta</th>
 								</thead>
 								<tbody>
-			                @foreach ($properties as $property)
-			                  <tr>
-			                      <td>{{ $property->property_type_name}}</td>
-			                      <td>
-									  <a href="{{ route('Payments.index', $property->person_id )}}">
-										  {{ $property->lot_number}}</a>
-								  </td>
-			                      <td>{{ $property->person_name }}</td>
-								  <td>{{ $property->date_from }}</td>
-								  <td>{{ $property->date_to }}</td>
-			                  </tr>
-			                @endforeach
+								@foreach ($properties as $property)
+									<tr>
+								    <td>{{ $property->property_type_name}}</td>
+								    <td>{{ $property->lot_number}}</td>
+										<td>
+											<a href="{{ route('Condonations.index', $property->person_id )}}">
+											{{ $property->person_name }}
+											</a>
+										</td>
+										<td>{{ $property->date_from }}</td>
+										<td>{{ $property->date_to }}</td>
+									</tr>
+								@endforeach
 
-			              </tbody>
+								</tbody>
 
 							</table>
 						</div>
@@ -96,10 +97,11 @@
 				@endif
 				<div class="col-md-6">
 					<div class="box box-success">
+
 						<div class="box-header">
 			              	<h3 class="box-title">PAGOS AÑO:
 							</h3>
-							<button type="button" id="btnPayment"
+							<button type="button" id="btnCondonation"
 								class="btn btn-success no-margin pull-right">
 								<i class="fa fa-money"></i>  Condonar
 							</button>
@@ -108,14 +110,13 @@
 							<div class="row">
 								<div class="col-xs-9">
 									<div class="form-group">
-										<label for="MotivoCondonacion"> Motivo Condonacion</label>
-									<input id="MotivoCondonacion" type="text" name="" value="" class='form-control'maxlength="60">
-								</div>
+										<label for="condonationReason">Motivo Condonacion</label>
+										<input id="condonationReason" type="text" name="condonationReason" value="" class='form-control'maxlength="60">
+									</div>
 								</div>
 								<div class="col-xs-3">
-									<label for="ValorCondonacion"> Valor Condonacion</label>
-									<input id="ValorCondonacion"type="text" name="" value="" class='form-control'maxlength="3">>
-
+									<label for="condonationValue"> Valor Condonación</label>
+									{!! Form::text('condonationValue',null,['class'=>'form-control','id'=>'condonationValue', 'maxlength'=>3 ]) !!}
 								</div>
 
 							</div>
@@ -166,6 +167,7 @@
 				<!-- {!! Form::close() !!} -->
 			</form>
 		</div>
+
 <!-- Modal -->
 <div class="modal fade" id="confirmPayment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -189,7 +191,6 @@
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
-
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -197,13 +198,12 @@
         <h4 class="modal-title">Información</h4>
       </div>
       <div class="modal-body">
-        <p>No se encontro registros pedientes</p>
+        <p>El motivo y valor de condonación son obligatorios</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -216,56 +216,71 @@
 @section('customScript')
   <script type="text/javascript">
 
-	// Restricts input for each element in the set of matched elements to the given inputFilter.
-
-	$(document).ready(function(){
-
-		$("#lot_number").inputFilter(function(value) {
-		  return /^\d*$/.test(value);
-		});
-
-	});
-
-    $('#confirm-delete').on('show.bs.modal', function(e) {
-      $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-
-      $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
-    });
-
 		var tblProperties = $("#tblProperties");
 		var tblPayments = $("#tblPayments");
+
+		// Restricts input for each element in the set of matched elements to the given inputFilter.
+		$(document).ready(function(){
+			$("#lot_number").inputFilter(function(value) {
+			  return /^\d*$/.test(value);
+			});
+		});
+
+		$('#confirm-delete').on('show.bs.modal', function(e) {
+		  $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+		  $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+		});
+
 
 		$("#btnAceptPayment").on('click',function(event){
 			$("#formPayment").submit();
 		});
 
-	$("#btnPayment").on('click',function(event){
-		event.preventDefault();
+		$("#btnCondonation").on('click',function(event){
+			event.preventDefault();
+				var valorAbono = $("#condonationValue").val();
+		    if($("#condonationReason").val().length > 20 && Number(valorAbono) > 0 ){
+					var items = tblPayments.find('input[type=checkbox]');//.find('td');
+					var countItems = items.length;
+					var valorAbonoCuota = parseFloat(parseFloat(valorAbono) /  parseFloat(countItems)).toFixed(2);
+					var valorAjuste = parseFloat(valorAbono).toFixed(2) - parseFloat(valorAbonoCuota * countItems).toFixed(2);
+					var tableConfirmation = $("<table class='table table-bordered table-hover'><thead><th>Año</th><th>Mes</th><th>Valor</th><th>abono</th></thead><tbody></tbody></table>");
+					var total = 0.0;
+					var totalabono= 0.0;
 
+					for (var i = 0; i < items.length; i++){
+						var rows = $(items[i]).parent().parent().find('td');
+						var valorCuotaAjuste= 0.0;
+						total = total + parseFloat(rows[2].innerText);
+						if (parseFloat(valorAjuste).toFixed(2) > 0 ){
+							valorCuotaAjuste = parseFloat(valorAbonoCuota) + parseFloat(0.01);
+							valorCuotaAjuste = parseFloat(valorCuotaAjuste).toFixed(2);
+							valorAjuste = parseFloat(valorAjuste) - parseFloat(0.01);
+							valorAjuste = parseFloat(valorAjuste).toFixed(2);
+						}
+						else if (parseFloat(valorAjuste).toFixed(2) < 0){
+							valorCuotaAjuste = parseFloat(valorAbonoCuota) - parseFloat(0.01);
+							valorCuotaAjuste = parseFloat(valorCuotaAjuste).toFixed(2);
+							valorAjuste = parseFloat(valorAjuste) + parseFloat(0.01);
+							valorAjuste = parseFloat(valorAjuste).toFixed(2);
+						}
+						else {
+							valorCuotaAjuste = valorAbonoCuota;
+						}
+						totalabono= parseFloat(totalabono) + parseFloat(valorCuotaAjuste);
+						tableConfirmation.append('<tr><td>' + rows[0].innerText + '</td><td>'+ rows[1].innerText + '</td><td>' + rows[2].innerText + '</td><td>'+ valorCuotaAjuste+'</td</tr>');
+					}
+					tableConfirmation.append('<tfoot><tr><td><b>TOTAL</b></td><td></td><td><b>' + total.toFixed(2) + '</b></td><td>'+ parseFloat(totalabono).toFixed(2)+'</td></tr></tfoot>');
 
-	    if($("#MotivoCondonacion").val().length > 20 ){
-
-				var items = tblPayments.find('input[type=checkbox]:checked');//.find('td');
-				var tableConfirmation = $("<table class='table table-bordered table-hover'><thead><th>Año</th><th>Mes</th><th>Valor</th></thead><tbody></tbody></table>");
-				var total = 0.0;
-
-				for (var i = 0; i < items.length; i++){
-					var rows = $(items[i]).parent().parent().find('td');
-					total = total + parseFloat(rows[2].innerText);
-					tableConfirmation.append('<tr><td>' + rows[0].innerText + '</td><td>'+ rows[1].innerText + '</td><td>' + rows[2].innerText + '</td></tr>'  );
-				}
-
-				tableConfirmation.append('<tfoot><tr><td><b>TOTAL</b></td><td></td><td><b>' + total.toFixed(2) + '</b></td></tr></tfoot>'  );
-
-				$("#confirmPayment").find(".detalle").html('');
-				$("#confirmPayment").find(".detalle").append(tableConfirmation);
-	      $("#confirmPayment").modal();
-	    }
-	    else {
-	        $("#myModal").modal();
-	    }
-	    return false;
-	})
+					$("#confirmPayment").find(".detalle").html('');
+					$("#confirmPayment").find(".detalle").append(tableConfirmation);
+		      $("#confirmPayment").modal();
+		    }
+		    else {
+		        $("#myModal").modal();
+		    }
+		    return false;
+		});
 
   </script>
 @endsection

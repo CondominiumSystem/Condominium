@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -19,13 +20,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('Persons','PersonsController');
     Route::resource('Properties','PropertiesController');
     Route::resource('Payments','PaymentsController')->only(['index','store']);
-<<<<<<< HEAD
     Route::resource('Condonations','CondonationsController')->only(['index','store']);
     Route::resource('Companies','CompaniesController')->only(['index','update','edit','store']);
-=======
-    Route::resource('Companies','CompaniesController')->only(['index','update'
-    ,'edit']);
->>>>>>> b666858e636746fbee7e9a679ebb3a99819c72ba
 
     Route::resource('Periods','PeriodsController')->only(['index','store']);
 

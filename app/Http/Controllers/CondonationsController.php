@@ -69,6 +69,28 @@ class CondonationsController extends Controller
      */
     public function store(Request $request)
     {
+        $totalcuotas = 0;
+
+        $strConsulta='select
+        lot_number, month_name, month_id,value,payment_value,
+        year, period_id
+        from paymentsview where value is not null  and property_id = ' . $request->property_id;
+        $payments = DB::select($strConsulta);
+
+        $strConsulta='select sum(value) as total
+        from paymentsview where value is not null  and property_id = ' . $request->property_id;
+        $totalPayments = DB::select($strConsulta);
+
+
+
+        $totalcuotas= count($payments);
+        $condonationValue = $request->condonationValue;
+
+        $cuotaAbono = round(($condonationValue / $totalcuotas),2);
+
+        $valorAjuste = round($condonationValue - ($cuotaAbono * $totalcuotas),2);
+        //dd($valorAjuste);
+
         // $result_value=DB::Table('properties')
         // ->join('aliquot_values','aliquot_values.property_type_id','=','properties.property_type_id')
         // ->select('aliquot_values.value')
@@ -77,24 +99,52 @@ class CondonationsController extends Controller
         $transaction_id = time();
 
         $periods = $request->active;
-
-        //dd($periods);
-        foreach ($periods as $period) {
-            list($periodo_id,$valor_cuata) = (explode("-", $period));
+        DB::beginTransaction();
+        try{
+        foreach ($payments as $paymentItem) {
             //dd($periodo_id);
+            $valorCuotaAjuste = 0.0;
+            if ($valorAjuste >0){
+
+            $valorCuotaAjuste = round($cuotaAbono + 0.01,2);
+            $valorAjuste = round($valorAjuste - 0.01,2);
+          }
+          else if ($valorAjuste < 0){
+            $valorCuotaAjuste = round($cuotaAbono - 0.01,2);
+            $valorAjuste = round($valorAjuste + 0.01,2);
+          }
+          else {
+            $valorCuotaAjuste = $cuotaAbono;
+          }
             $payment = new Payment();
             $payment->property_id = $request->property_id;
             $payment->user_id = \Auth::user()->id;
             $payment->transaction_id = $transaction_id;
             $payment->transaction_parent_id = 0;
-            $payment->value = $valor_cuata;//$result_value->value;
+            $payment->value = $valorCuotaAjuste;//$result_value->value;
             $payment->active = true;
-            $payment->period_id = $periodo_id;
+            $payment->period_id = $paymentItem->period_id;
             //dd($payment);
             $payment->save();
         }
+
+            $condonation = new Condonation();
+            $condonation->user_id = \Auth::user()->id;
+            $condonation->transaction_id = $transaction_id;
+            $condonation->note =$request->condonationReason;
+            $condonation->value=$request->condonationValue;
+            $condonation->save();
+
+
         flash("Pago Grabado correctamente. Transacción: ".$transaction_id)->success();
-        return redirect()->route('Payments.index');
+      }
+        catch(Exception $ex)
+        {
+             DB::rollBack();
+             flash('Condonación no fue Creada.', 'info')->important();
+        }
+        DB::commit();
+        return redirect()->route('Condonations.index');
     }
 
 
