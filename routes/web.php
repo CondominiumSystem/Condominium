@@ -107,6 +107,11 @@ Route::group(['middleware' => 'auth'], function () {
 					'as' => 'ReportsController.totalPorfolioReceivable'
 			]
 	);
+  Route::get('/TotalCondonation', [
+        'uses' => 'ReportsController@totalCondonation',
+        'as' => 'ReportsController.totalCondonation'
+    ]
+);
 
 
 Route::get('/PaymentsExcel',[
@@ -118,6 +123,12 @@ Route::get('/PortofolioExcel',[
     'uses'=> 'ReportsController@exportPorfolioReceivable',
     'as' => 'Reports.exportPorfolioReceivable'
 ]);
+
+Route::get('/CondonationExcel',[
+    'uses'=> 'ReportsController@exportCondonation',
+    'as' => 'Reports.exportCondonation'
+]);
+
 
 
 
