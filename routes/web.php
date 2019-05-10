@@ -20,6 +20,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('Persons','PersonsController');
     Route::resource('Properties','PropertiesController');
     Route::resource('Payments','PaymentsController')->only(['index','store']);
+
+    Route::resource('AliquotValues','AliquotValuesController');
+
     Route::resource('Condonations','CondonationsController')->only(['index','store']);
     Route::resource('Companies','CompaniesController')->only(['index','update','edit','store']);
 
