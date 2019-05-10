@@ -22,6 +22,7 @@ return [
     'users'                   => 'Usuarios',
     'roles'                   => 'Roles',
     'condonations'            => 'Condonaciones',
+    'aliquotValue'            => 'Valores Alicuotas'
 
 
 ];

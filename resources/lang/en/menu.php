@@ -23,6 +23,7 @@ return [
     'users'                   => 'Users',
     'roles'                   => 'Roles',
     'condonations'            => 'Condonations',
+    'aliquotValue'            => 'Aliquot Values'
 
 
 ];
