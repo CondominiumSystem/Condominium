@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\UsersDataTable;
 use App\DataTables\PortfolioReceivableDataTable;
 use App\DataTables\PaymentsDataTable;
+use App\Datatables\CondonationDataTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
@@ -34,6 +35,13 @@ class ReportsController extends Controller
         $years = $this->GetPeriods();
         $person_types=PersonType::pluck('name','id');
         return $dataTable->render('Reports.totalPayments',compact('years','person_types'));
+    }
+
+    public function totalCondonation(CondonationDataTable $dataTable)
+    {
+        $years = $this->GetPeriods();
+        $person_types=PersonType::pluck('name','id');
+        return $dataTable->render('Reports.totalCondonation',compact('years','person_types'));
     }
 
     /**
@@ -230,6 +238,74 @@ class ReportsController extends Controller
     public function portfolioReceivableData(Request $request){
         $payments = $this->getPorforlioReceivable($request);
         return Datatables::of($payments)->make(true);
+    }
+
+    public function exportCondonation(Request $request){
+
+      $strConsulta='select
+        lot_number,year,person_name,person_type_name,date_from,date_to,
+        ENE,FEB,MAR,ABR,MAY,JUN,JUL,AGO,SEP,OCT,NOV,DIC,TOTAL,Note
+        from condonation_view';
+
+      $validYear = ($request->has('year') && $request->get('year') != "" );
+      $validPersonType = ($request->has('person_type_id') && $request->get('person_type_id') != "" );
+      $year = $request->get('year');
+      $personType = $request->get('person_type_id');
+
+      if( $validYear || $validPersonType ){
+          $strConsulta .= ' where';
+          if ($validYear && !$validPersonType) {
+              $strConsulta = $strConsulta . ' year = ' . $year;
+          }
+          if (!$validYear && $validPersonType) {
+              $strConsulta = $strConsulta . ' person_type_id = ' . $personType;
+          }
+          if ($validYear && $validPersonType) {
+              $strConsulta = $strConsulta . ' year = ' . $year;
+              $strConsulta = $strConsulta . ' and person_type_id = ' . $personType;
+          }
+      }
+
+      $condonations= DB::select($strConsulta);
+
+      $condonations_array[] = array('Lote','Año','Nombre Persona',
+          'Desde','Hasta','Enero','Febrero','Marzo','Abril',
+          'Mayo','Junio','Julio','Agosto','Septiembre','Octubre',
+          'Noviembre','Diciembre','Total','Note'
+          );
+
+          foreach ($condonations as $condonation) {
+            $condonations_array[] = array(
+              'Lote'=> $condonation->lot_number,
+              'Año'=> $condonation->year,
+              'Nombre Persona'=>$condonation->person_name,
+              'Desde'=> $condonation->date_from,
+              'Hasta'=> $condonation->date_to,
+              'Enero'=> $condonation->ENE,
+              'Febrero'=> $condonation->FEB,
+              'Marzo'=> $condonation->MAR,
+              'Abril'=> $condonation->ABR,
+              'Mayo'=> $condonation->MAY,
+              'Junio'=> $condonation->JUN,
+              'Julio'=> $condonation->JUL,
+              'Agosto'=> $condonation->AGO,
+              'Septiembre'=> $condonation->SEP,
+              'Octubre'=> $condonation->OCT,
+              'Noviembre'=> $condonation->NOV,
+              'Diciembre'=> $condonation->DIC,
+              'Total'=> $condonation->TOTAL,
+              'Nota'=> $condonation->Note
+
+            );
+          }
+
+      Excel::create('Reporte de Condonaciones'. date('YmdHis'), function($excel) use ($condonations_array){
+          $excel->setTitle('Condonaciones');
+          $excel->Sheet('Condonaciones',function($sheet) use ($condonations_array){
+            $sheet->fromArray($condonations_array,null,'A1',false,false);
+          });
+      })->download('xlsx');
+
     }
 
     public function getPorforlioReceivable(Request $request){

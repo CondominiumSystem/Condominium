@@ -72,7 +72,7 @@
 								    <td>{{ $property->property_type_name}}</td>
 								    <td>{{ $property->lot_number}}</td>
 										<td>
-											<a href="{{ route('Condonations.index', $property->person_id )}}">
+											<a href="{{ route('Condonations.index', ['person_name'=> $property->person_name ] )}}">
 											{{ $property->person_name }}
 											</a>
 										</td>
