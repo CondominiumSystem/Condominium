@@ -31,14 +31,15 @@ class AliquotValuesController extends Controller
 
       $validatedData = $request->validate([
           'property_type_id' => 'required',
-          'value' => 'required|max:255',
+          'value' => 'required|integer|between:1,50',
           'start_date' => 'required'
       ]);
 
       $aliquotValueFind = AliquotValue::where('property_type_id', $request->property_type_id)
       ->where('end_date',null)->first();
 
-      $start_date = Carbon::create($request->date_from);
+      $start_date = Carbon::parse($request->start_date);
+
 
       $start_date = $start_date->subDay($start_date->day - 1);
       //Grabar nueva

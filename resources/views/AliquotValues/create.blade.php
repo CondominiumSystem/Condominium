@@ -42,7 +42,7 @@
                 <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                 </div>
-                {!! Form::text('start_date', \Carbon\Carbon::now()->format('Y/m/d'),['class'=>' form-control pull-righ']) !!}
+                {!! Form::text('start_date', null,['class'=>' form-control pull-righ']) !!}
             </div>
         </div>
       </div>
@@ -64,7 +64,7 @@
 @section('customScript')
 	<script>
         //Date picker
-      $('#date_from').datepicker({
+      $('#start_date').datepicker({
           format: 'yyyy/mm/dd',
           autoclose: true,
 	        language: 'es'
