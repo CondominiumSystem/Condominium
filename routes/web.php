@@ -39,7 +39,11 @@ Route::group(['middleware' => 'auth'], function () {
             ]
     );
 
-
+    Route::get('/AliquotValues/{id}/destroy', [
+  					'uses' => 'AliquotValuesController@destroy',
+  					'as' => 'AliquotValues.destroy'
+  			]
+  	);
 
 	Route::get('/Persons/{id}/destroy', [
 					'uses' => 'PersonsController@destroy',

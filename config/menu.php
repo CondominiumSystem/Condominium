@@ -53,6 +53,7 @@ Menu::macro('sidebarAdmin', function () {
             ->addParentClass('treeview')
             ->action('ReportsController@totalPayments', '<i class="fa fa-bar-chart"></i><span>Pagos</span>')
             ->action('ReportsController@totalPorfolioReceivable', '<i class="fa fa-line-chart"></i><span>Cartera</span>')
+            ->action('ReportsController@totalCondonation', '<i class="fa fa-line-chart"></i><span>Condonacion</span>')
             ->addClass('treeview-menu')
         )
         ->add(Menu::new()->prepend('<a href="#"><i class="fa fa-lock"></i><span>Seguridad</span> <i class="fa fa-angle-left pull-right"></i></a>')

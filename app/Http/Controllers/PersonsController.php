@@ -105,11 +105,14 @@ class PersonsController extends Controller
      */
     public function destroy($id)
     {
+
         $property = Person::find($id);//orderBy('id','desc');
         $property->delete();
         flash('Se ha eliminado correctamente.', 'danger')->important();
         return redirect()->route('Persons.index');
     }
+
+
 
 
 }

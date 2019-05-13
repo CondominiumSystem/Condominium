@@ -49,6 +49,7 @@ class AliquotValuesController extends Controller
       $aliquotValue->value = $request->value;
       $aliquotValue->save();
 
+
       if($aliquotValueFind->count() > 0 ){
         if($aliquotValueFind->start_date < $start_date){
 
@@ -68,17 +69,18 @@ class AliquotValuesController extends Controller
       return redirect()->route('AliquotValues.index');
     }
 
-    public function GetAliquotValueByPropertyTypeId($propertyTypeId)
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-        $getstamps = DB::table('timestamps')
-                        ->where('videoid', '=', $video)
-                        ->orderByRaw('LENGTH(timestamp_time)', 'ASC')
-                        ->orderBy('timestamp_time', 'asc')
-                        ->get();
-
-        return response()->json(array('success' => true, 'getstamps' => $getstamps));
+        $aliquotValue = AliquotValue::find($id);//orderBy('id','desc');
+        $aliquotValue->delete();
+        flash('Se ha eliminado correctamente.', 'danger')->important();
+        return redirect()->route('AliquotValues.index');
     }
-
-
-
 }
