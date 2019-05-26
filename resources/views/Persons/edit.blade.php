@@ -47,7 +47,7 @@
                             <span class="input-group-addon" id="sizing-addon2">
                                 <i class="fa fa-envelope-o" aria-hidden="true"></i>
                             </span>
-                            {!! Form::text('email',$person->document_number,['class'=>'form-control','placeholder'=>'Cédula/Ruc','maxlength' => 13, 'requerid' ]) !!}
+                            {!! Form::text('document_number',$person->document_number,['class'=>'form-control','placeholder'=>'Cédula/Ruc','maxlength' => 13, 'requerid' ]) !!}
                         </div>
                     </div>
                 </div>

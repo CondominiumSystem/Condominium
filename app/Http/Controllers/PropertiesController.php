@@ -70,8 +70,19 @@ class PropertiesController extends Controller
      */
      public function create($personId)
      {
-        $propertyTypes = PropertyType::pluck('name','id');
-         return view("Properties.create",compact('propertyTypes','personId'));
+       $inquilino = 2;
+       $propertyTypes=null;
+
+       if($personId !=null){
+         $person = Person::find($personId);
+         if( $person->person_type_id == $inquilino ){
+           $propertyTypes = PropertyType::where('id',4)->pluck('name','id');;
+         }
+         else{
+           $propertyTypes = PropertyType::pluck('name','id');
+         }
+       }
+       return view("Properties.create",compact('propertyTypes','personId'));
      }
 
      public function store(PropertyRequest $request){
