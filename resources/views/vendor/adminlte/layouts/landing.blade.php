@@ -139,7 +139,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     <section id="contact" name="contact">
         <div id="footerwrap">
             <div class="container">
-                <div class="col-lg-5">
+                <!-- <div class="col-lg-5">
                     <h3>{{ trans('adminlte_lang::message.address') }}</h3>
                     <p>
                         Av. Greenville 987,<br/>
@@ -147,7 +147,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                         90873<br/>
                         United States
                     </p>
-                </div>
+                </div> -->
 
                 <div class="col-lg-7">
                     <h3>{{ trans('adminlte_lang::message.dropus') }}</h3>

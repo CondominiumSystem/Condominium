@@ -111,7 +111,7 @@
 								<div class="col-xs-9">
 									<div class="form-group">
 										<label for="condonationReason">Motivo Condonacion</label>
-										<input id="condonationReason" type="text" name="condonationReason" value="" class='form-control'maxlength="60">
+										<input id="condonationReason" type="text" name="condonationReason" value="" class='form-control'maxlength="80">
 									</div>
 								</div>
 								<div class="col-xs-3">
