@@ -41,7 +41,7 @@ class CreatePortfolioReceivableView extends Migration
       join `persons` on(`persons`.`id` = `person_property`.`person_id`))
       join `person_types` on(`person_types`.`id` = `persons`.`person_type_id`))
       join `property_types` on(`property_types`.`id` = `properties`.`property_type_id`))
-      join `aliquot_values` on(`aliquot_values`.`id` = `properties`.`property_type_id`)) left
+      join `aliquot_values` on(`aliquot_values`.`property_type_id` = `properties`.`property_type_id`)) left
       join `payments` on(`payments`.`period_id` = `periods`.`id` and `payments`.`property_id` = `properties`.`id`))
       join  `condonations` on (`condonations`.transaction_id=`payments`.transaction_id )
       where cast(concat(`periods`.`year`,'-',`periods`.`month_id`,'-','01') as date) >= `person_property`.`date_from`
