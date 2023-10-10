@@ -39,8 +39,6 @@ class AliquotValuesController extends Controller
       ->where('end_date',null)->first();
 
       $start_date = Carbon::parse($request->start_date);
-
-
       $start_date = $start_date->subDay($start_date->day - 1);
       //Grabar nueva
       $aliquotValue = new AliquotValue();
@@ -49,20 +47,17 @@ class AliquotValuesController extends Controller
       $aliquotValue->value = $request->value;
       $aliquotValue->save();
 
-
-      if($aliquotValueFind->count() > 0 ){
-        if($aliquotValueFind->start_date < $start_date){
-
-            //Actualizamos anterior
-            $end_date = $start_date->subDay(1);
-
-            $aliquotValuePrevius = AliquotValue::find($aliquotValueFind->id);
-            $aliquotValuePrevius->end_date = $end_date;
-            $aliquotValuePrevius->save();
+      if($aliquotValueFind != null){
+        if($aliquotValueFind->count() > 0 ){
+          if($aliquotValueFind->start_date < $start_date){
+              //Actualizamos anterior
+              $end_date = $start_date->subDay(1);
+              $aliquotValuePrevius = AliquotValue::find($aliquotValueFind->id);
+              $aliquotValuePrevius->end_date = $end_date;
+              $aliquotValuePrevius->save();
+          }
         }
       }
-
-
 
       flash("Grabado correctamente")->success();
 

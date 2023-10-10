@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     protected $table ="payments";
-    protected $fillable = ['property_id','user_id,value','property_id','user_id'];
+    protected $fillable = ['property_id','user_id,value','user_id'];
 
     public function property()
     {

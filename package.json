@@ -14,7 +14,7 @@
   "devDependencies": {
     "acacha-forms": "^1.0.0",
     "admin-lte": "^2.4.8",
-    "axios": "^0.8",
+    "axios": "^0.24.0",
     "babel-eslint": "^7.1.1",
     "bootstrap": "3.3.7",
     "cross-env": "^5.0.1",
@@ -28,9 +28,9 @@
     "font-awesome": "^4.7.0",
     "icheck": "^1.0.2",
     "ionicons": "^3.0.0",
-    "jquery": "^3.2",
+    "jquery": "^3.6.0",
     "laravel-mix": "^2.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.21",
     "popper.js": "^1.12",
     "vue": "^2.5.7"
   },

@@ -17,7 +17,7 @@ class CreateAliquotValuesTable extends Migration
             $table->increments('id');
             $table->decimal('value',8,2);
             $table->date('start_date');
-            $table->date('end_date');
+            $table->date('end_date')->nullable();
             $table->integer('property_type_id')->unsigned();
             $table->foreign('property_type_id')->references('id')->on('property_types');
             $table->timestamps();

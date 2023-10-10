@@ -23,7 +23,8 @@
           <input type="hidden" name="_method" value="DELETE">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <a class="btn btn-labeled btn-default" href="{{ route('entrust-gui::users.edit', $userAdmin->id) }}"><span class="btn-label"><i class="fa fa-pencil"></i></span>{{ trans('entrust-gui::button.edit') }}</a>
-          <button type="submit" class="btn btn-labeled btn-danger"><span class="btn-label"><i class="fa fa-trash"></i></span>{{ trans('entrust-gui::button.delete') }}</button>
+          <button type="submit" class="btn btn-labeled btn-danger">
+            <span class="btn-label"><i class="fa fa-trash"></i></span>{{ trans('entrust-gui::button.delete') }}</button>
         </form>
       </td>
     </tr>

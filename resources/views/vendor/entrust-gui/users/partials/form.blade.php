@@ -1,11 +1,13 @@
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 <div class="form-group">
     <label for="name">Name</label>
-    <input type="name" class="form-control" id="name" placeholder="Name" name="name" value="{{ (Session::has('errors')) ? old('name', '') : $userAdmin->name }}">
+    <input type="name" class="form-control" id="name" placeholder="Name" name="name" 
+    value="{{ (Session::has('errors')) ? old('name', '') : $user->name }}">
 </div>
 <div class="form-group {{ $errors->has('email') ? 'has-error' : ''}}">
     <label for="email">Email address</label>
-    <input type="email" class="form-control" id="email" placeholder="Email" name="email" value="{{ (Session::has('errors')) ? old('email', '') : $userAdmin->email }}">
+    <input type="email" class="form-control" id="email" placeholder="Email" name="email" 
+    value="{{ (Session::has('errors')) ? old('email', '') : $user->email }}">
     {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group">
