@@ -158,10 +158,10 @@ class PaymentsController extends Controller
           from paymentsview';
 
       if( $person_id > 0 && $property_id > 0 ){
-          $strConsulta .= ' where';
+          $strConsulta .= ' where payment_value is null ';
 
           if ($person_id > 0) {
-              $strConsulta = $strConsulta . ' person_id = ' . $person_id;
+              $strConsulta = $strConsulta . ' and person_id = ' . $person_id;
           }
           if ($property_id > 0) {
               $strConsulta = $strConsulta . ' and property_id = ' . $property_id;

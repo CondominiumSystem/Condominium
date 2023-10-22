@@ -168,6 +168,7 @@ class ReportsController extends Controller
       })->download('xlsx');
 
     }
+    
     public function exportPorfolioReceivable(Request $request){
 
       $strConsulta='select

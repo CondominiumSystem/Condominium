@@ -241,7 +241,15 @@
 				var valorAbono = $("#condonationValue").val();
 		    if($("#condonationReason").val().length > 20 && Number(valorAbono) > 0 ){
 					var items = tblPayments.find('input[type=checkbox]');//.find('td');
-					var countItems = items.length;
+					//var countItems = items.length;
+					var countItems = 0;
+					
+					for(var j = 0; j<items.length; j++){
+						if($(items[j]).is(':checked')==true){
+							countItems= countItems +1;
+
+						}
+					}
 					var valorAbonoCuota = parseFloat(parseFloat(valorAbono) /  parseFloat(countItems)).toFixed(2);
 					var valorAjuste = parseFloat(valorAbono).toFixed(2) - parseFloat(valorAbonoCuota * countItems).toFixed(2);
 					var tableConfirmation = $("<table class='table table-bordered table-hover'><thead><th>Año</th><th>Mes</th><th>Valor</th><th>abono</th></thead><tbody></tbody></table>");
@@ -251,25 +259,31 @@
 					for (var i = 0; i < items.length; i++){
 						var rows = $(items[i]).parent().parent().find('td');
 						var valorCuotaAjuste= 0.0;
-						total = total + parseFloat(rows[2].innerText);
-						if (parseFloat(valorAjuste).toFixed(2) > 0 ){
-							valorCuotaAjuste = parseFloat(valorAbonoCuota) + parseFloat(0.01);
-							valorCuotaAjuste = parseFloat(valorCuotaAjuste).toFixed(2);
-							valorAjuste = parseFloat(valorAjuste) - parseFloat(0.01);
-							valorAjuste = parseFloat(valorAjuste).toFixed(2);
+						if($(items[i]).is(':checked')==true){
+
+						
+							total = total + parseFloat(rows[2].innerText);
+							if (parseFloat(valorAjuste).toFixed(2) > 0 ){
+								valorCuotaAjuste = parseFloat(valorAbonoCuota) + parseFloat(0.01);
+								valorCuotaAjuste = parseFloat(valorCuotaAjuste).toFixed(2);
+								valorAjuste = parseFloat(valorAjuste) - parseFloat(0.01);
+								valorAjuste = parseFloat(valorAjuste).toFixed(2);
+							}
+							else if (parseFloat(valorAjuste).toFixed(2) < 0){
+								valorCuotaAjuste = parseFloat(valorAbonoCuota) - parseFloat(0.01);
+								valorCuotaAjuste = parseFloat(valorCuotaAjuste).toFixed(2);
+								valorAjuste = parseFloat(valorAjuste) + parseFloat(0.01);
+								valorAjuste = parseFloat(valorAjuste).toFixed(2);
+							}
+							else {
+								valorCuotaAjuste = valorAbonoCuota;
+							}
+						
+							totalabono= parseFloat(totalabono) + parseFloat(valorCuotaAjuste);
+							tableConfirmation.append('<tr><td>' + rows[0].innerText + '</td><td>'+ rows[1].innerText + '</td><td>' + rows[2].innerText + '</td><td>'+ valorCuotaAjuste+'</td</tr>');
 						}
-						else if (parseFloat(valorAjuste).toFixed(2) < 0){
-							valorCuotaAjuste = parseFloat(valorAbonoCuota) - parseFloat(0.01);
-							valorCuotaAjuste = parseFloat(valorCuotaAjuste).toFixed(2);
-							valorAjuste = parseFloat(valorAjuste) + parseFloat(0.01);
-							valorAjuste = parseFloat(valorAjuste).toFixed(2);
-						}
-						else {
-							valorCuotaAjuste = valorAbonoCuota;
-						}
-						totalabono= parseFloat(totalabono) + parseFloat(valorCuotaAjuste);
-						tableConfirmation.append('<tr><td>' + rows[0].innerText + '</td><td>'+ rows[1].innerText + '</td><td>' + rows[2].innerText + '</td><td>'+ valorCuotaAjuste+'</td</tr>');
 					}
+				
 					tableConfirmation.append('<tfoot><tr><td><b>TOTAL</b></td><td></td><td><b>' + total.toFixed(2) + '</b></td><td>'+ parseFloat(totalabono).toFixed(2)+'</td></tr></tfoot>');
 
 					$("#confirmPayment").find(".detalle").html('');

@@ -20,6 +20,7 @@ class CondonationsController extends Controller
      */
      public function index(Request $request )
      {
+      
        $lot_number = $request->lot_number;
        $document_number = $request->document_number;
        $name = $request->person_name;
@@ -69,21 +70,22 @@ class CondonationsController extends Controller
      */
     public function store(Request $request)
     {
+      $periods= $request->active;
+      
         $totalcuotas = 0;
 
-        $strConsulta='select
-        lot_number, month_name, month_id,value,payment_value,
-        year, period_id
-        from paymentsview where value is not null  and property_id = ' . $request->property_id;
-        $payments = DB::select($strConsulta);
+        //$strConsulta='select
+       // lot_number, month_name, month_id,value,payment_value,
+       // year, period_id
+        //from paymentsview where value is not null  and property_id = ' . $request->property_id;
+        
+        //$payments = DB::select($strConsulta);
 
-        $strConsulta='select sum(value) as total
-        from paymentsview where value is not null  and property_id = ' . $request->property_id;
-        $totalPayments = DB::select($strConsulta);
+        //$strConsulta='select sum(value) as total
+        //from paymentsview where value is not null  and property_id = ' . $request->property_id;
+        //$totalPayments = DB::select($strConsulta);
 
-
-
-        $totalcuotas= count($payments);
+        $totalcuotas= count($request->active);
         $condonationValue = $request->condonationValue;
 
         $cuotaAbono = round(($condonationValue / $totalcuotas),2);
@@ -101,43 +103,43 @@ class CondonationsController extends Controller
         $periods = $request->active;
         DB::beginTransaction();
         try{
-        foreach ($payments as $paymentItem) {
-            //dd($periodo_id);
-            $valorCuotaAjuste = 0.0;
-            if ($valorAjuste >0){
 
-            $valorCuotaAjuste = round($cuotaAbono + 0.01,2);
-            $valorAjuste = round($valorAjuste - 0.01,2);
+          foreach ($periods as $period) {
+            list($periodo_id,$valor_cuata) = (explode("-", $period));
+              $valorCuotaAjuste = 0.0;
+              if ($valorAjuste >0){
+                $valorCuotaAjuste = round($cuotaAbono + 0.01,2);
+                $valorAjuste = round($valorAjuste - 0.01,2);
+              }
+              else if ($valorAjuste < 0){
+                $valorCuotaAjuste = round($cuotaAbono - 0.01,2);
+                $valorAjuste = round($valorAjuste + 0.01,2);
+              }
+              else {
+                $valorCuotaAjuste = $cuotaAbono;
+              }
+              $payment = new Payment();
+              $payment->property_id = $request->property_id;
+              $payment->user_id = \Auth::user()->id;
+              $payment->transaction_id = $transaction_id;
+              $payment->transaction_parent_id = 0;
+              $payment->value = $valorCuotaAjuste;//$result_value->value;
+              $payment->active = true;
+              $payment->period_id =  $periodo_id;
+              //dd($payment);
+              $payment->save();
+
           }
-          else if ($valorAjuste < 0){
-            $valorCuotaAjuste = round($cuotaAbono - 0.01,2);
-            $valorAjuste = round($valorAjuste + 0.01,2);
-          }
-          else {
-            $valorCuotaAjuste = $cuotaAbono;
-          }
-            $payment = new Payment();
-            $payment->property_id = $request->property_id;
-            $payment->user_id = \Auth::user()->id;
-            $payment->transaction_id = $transaction_id;
-            $payment->transaction_parent_id = 0;
-            $payment->value = $valorCuotaAjuste;//$result_value->value;
-            $payment->active = true;
-            $payment->period_id = $paymentItem->period_id;
-            //dd($payment);
-            $payment->save();
+
+          $condonation = new Condonation();
+          $condonation->user_id = \Auth::user()->id;
+          $condonation->transaction_id = $transaction_id;
+          $condonation->note =$request->condonationReason;
+          $condonation->value=$request->condonationValue;
+          $condonation->save();
+
+          flash("Pago Grabado correctamente. Transacción: ".$transaction_id)->success();
         }
-
-            $condonation = new Condonation();
-            $condonation->user_id = \Auth::user()->id;
-            $condonation->transaction_id = $transaction_id;
-            $condonation->note =$request->condonationReason;
-            $condonation->value=$request->condonationValue;
-            $condonation->save();
-
-
-        flash("Pago Grabado correctamente. Transacción: ".$transaction_id)->success();
-      }
         catch(Exception $ex)
         {
              DB::rollBack();
