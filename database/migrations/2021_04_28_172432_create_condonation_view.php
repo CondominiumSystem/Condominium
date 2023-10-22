@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePortfolioReceivableView extends Migration
+class CreateCondonationView extends Migration
 {
     /**
      * Run the migrations.
@@ -58,6 +58,6 @@ class CreatePortfolioReceivableView extends Migration
      */
     public function down()
     {
-      DB::statement('DROP VIEW IF EXISTS payments_views');
+      DB::statement('DROP VIEW IF EXISTS condonation_view');
     }
 }

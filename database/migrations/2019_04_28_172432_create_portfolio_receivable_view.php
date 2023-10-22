@@ -57,6 +57,6 @@ class CreatePortfolioReceivableView extends Migration
      */
     public function down()
     {
-      DB::statement('DROP VIEW IF EXISTS payments_views');
+      DB::statement('DROP VIEW IF EXISTS portfolio_receivable_view');
     }
 }
