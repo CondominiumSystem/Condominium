@@ -7,6 +7,7 @@ use App\Person;
 use App\Period;
 use App\Payment;
 use App\PersonProperty;
+use App\Transaction; 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -95,6 +96,10 @@ class PaymentsController extends Controller
         // ->first();
         $transaction_id = time();
 
+        $transaction = new Transaction();
+        $transaction->tipoTransaccion = 'Activo';
+        $transaction->save();
+        
         $periods = $request->active;
 
         //dd($periods);
